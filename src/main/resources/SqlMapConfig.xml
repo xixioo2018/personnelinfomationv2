@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!-- 设置 -->
+    <settings>
+        <!-- 二级缓存必须手动开启 
+			 不会经常发生变化的数据，就可以保存在二级缓存中
+		<setting name="cacheEnabled" value="true"/>
+		-->
+
+        <!-- 在全局启用懒加载（按需加载），默认值为true -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 积极的懒加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <!-- 别名 -->
+    <typeAliases>
+        <!-- 单个别名设置  
+		     type:po类的全限定名
+		     alias:别名名称，一般和po类型保持一致，首字母小写
+		<typeAlias type="com.gh.model.User" alias="user"/>-->
+
+        <!-- 批量定义po类的别名 ,model包下的所有po类都可以用别名代替，写法是
+		            类名首字母小写,开发时用这个-->
+        <package name="com.gh.personinfo.model"/>
+
+    </typeAliases>
+
+    <!-- 
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${db.driver}" />
+				<property name="url" value="${db.url}" />
+				<property name="username" value="${db.username}" />
+				<property name="password" value="${db.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	 -->
+
+    <mappers>
+        <!-- 单个文件导入：将关系映射文件加载到核心配置文件 
+		<mapper resource="com/gh/mapper/UserMapper.xml" />
+		<mapper resource="com/gh/mapper/ItemsMapper.xml" />
+		-->
+        <!-- 批量导入关系映射文件，前提是：
+		     mapper接口的名称要和映射文件的名称一样，同时他们必须放在同一目录下 
+		           开发推荐使用-->
+        <!--<package name="com.gh.personinfo.dao"/>-->
+    </mappers>
+</configuration>
