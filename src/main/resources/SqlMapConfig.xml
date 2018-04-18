@@ -27,7 +27,9 @@
 
         <!-- 批量定义po类的别名 ,model包下的所有po类都可以用别名代替，写法是
 		            类名首字母小写,开发时用这个-->
-        <package name="com.gh.personinfo.model"/>
+        <package name="com.gh.personinfo.user.model"/>
+<!--        <package name="com.gh.personinfo.other.model"/>
+        <package name="com.gh.personinfo.company.model"/>-->
 
     </typeAliases>
 

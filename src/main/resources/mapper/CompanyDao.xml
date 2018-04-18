@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.gh.personinfo.dao.CompanyDao">
+<mapper namespace="com.gh.personinfo.company.dao.CompanyDao">
     <!--auto generated Code-->
 
     <!-- resultMap映射 -->
-    <resultMap type="com.gh.personinfo.model.Company" id="companyRM">
+    <resultMap type="com.gh.personinfo.company.model.Company" id="companyRM">
         <!-- 主键 -->
         <id property="id" column="id" jdbcType="VARCHAR" />
         <!-- 一般属性 -->
@@ -15,12 +15,12 @@
         <result property="contactName" column="contact_name"/>
         <result property="contactPhone" column="contact_phone"/>
         <result property="address" column="address"/>
-        <association property="industry" column="industry" javaType="com.gh.personinfo.model.Industry">
+        <association property="industry" column="industry" javaType="com.gh.personinfo.other.model.Industry">
             <id property="id" column="id"/>
             <result property="name" column="name"/>
             <result property="status" column="status"/>
         </association>
-        <association property="position" column="position" javaType="com.gh.personinfo.model.Position">
+        <association property="position" column="position" javaType="com.gh.personinfo.other.model.Position">
             <id property="id" column="id"/>
             <result property="name" column="name"/>
             <result property="status" column="status"/>
