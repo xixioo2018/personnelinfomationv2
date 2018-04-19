@@ -16,7 +16,6 @@ public class CompanyDaoImp extends BaseDaoImpl<Company> implements CompanyDao {
         super.setNs("com.gh.personinfo.company.dao.CompanyDao");
     }
 
-    @Override
     public List<Company> findAll(Map map) {
         List<Company> companyList = this.getSqlSession().selectList(this.getNs()+".find，map");
         return companyList;

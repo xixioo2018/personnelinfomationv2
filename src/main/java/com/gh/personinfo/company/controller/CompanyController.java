@@ -21,9 +21,10 @@ public class CompanyController {
         map.put("name","zs");
         map.put("name","ls");
         List<Company> companyList = companyService.findAll(map);*/
-        Company company = companyService.get("1");
+        /*Company company = companyService.get("1");
         model.addAttribute("company",company);
-        System.out.println(company.toString());
+        System.out.println(company.toString());*/
+        System.out.println("2");
         return "/success.jsp";
     }
 }

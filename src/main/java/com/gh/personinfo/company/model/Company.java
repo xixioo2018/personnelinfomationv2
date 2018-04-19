@@ -1,19 +1,25 @@
 package com.gh.personinfo.company.model;
 
-import com.gh.personinfo.other.model.Industry;
-import com.gh.personinfo.other.model.Position;
+import com.gh.personinfo.dict.model.Dict;
 
 public class Company {
-    private Integer id;
-    private String name;
-    private Integer scale;
-    private Industry industry;
-    private Position position;
-    private Integer number;
-    private String requirements;
-    private String contactName;
-    private String contactPhone;
-    private String address;
+    private Integer id;//编号
+
+    private String name;//公司名
+
+    private Dict scale;//公司规模
+
+    private Dict business;//业务类型 多条
+
+    private String conname;//联系人姓名
+
+    private String conphone;//联系人电话
+
+    private String conemail;//联系人邮箱
+
+    private String address;//公司地址
+
+    private String description;//公司简介
 
     public Integer getId() {
         return id;
@@ -31,60 +37,44 @@ public class Company {
         this.name = name;
     }
 
-    public Integer getScale() {
+    public Dict getScale() {
         return scale;
     }
 
-    public void setScale(Integer scale) {
+    public void setScale(Dict scale) {
         this.scale = scale;
     }
 
-    public Industry getIndustry() {
-        return industry;
+    public Dict getBusiness() {
+        return business;
     }
 
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
+    public void setBusiness(Dict business) {
+        this.business = business;
     }
 
-    public Position getPosition() {
-        return position;
+    public String getConname() {
+        return conname;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setConname(String conname) {
+        this.conname = conname;
     }
 
-    public Integer getNumber() {
-        return number;
+    public String getConphone() {
+        return conphone;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setConphone(String conphone) {
+        this.conphone = conphone;
     }
 
-    public String getRequirements() {
-        return requirements;
+    public String getConemail() {
+        return conemail;
     }
 
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
+    public void setConemail(String conemail) {
+        this.conemail = conemail;
     }
 
     public String getAddress() {
@@ -95,19 +85,11 @@ public class Company {
         this.address = address;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", scale=" + scale +
-                ", industry=" + industry +
-                ", position=" + position +
-                ", number=" + number +
-                ", requirements='" + requirements + '\'' +
-                ", contactName='" + contactName + '\'' +
-                ", contactPhone='" + contactPhone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

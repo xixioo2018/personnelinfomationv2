@@ -18,12 +18,10 @@ public class CompanyServiceImp implements CompanyService {
     CompanyDao companyDao;
 
 
-    @Override
     public List<Company> findAll(Map map) {
         return companyDao.findAll(map);
     }
 
-    @Override
     public Company get(Serializable id) {
         System.out.println("CompanyService");
         return companyDao.get(id);
