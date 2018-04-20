@@ -27,4 +27,9 @@ public class CompanyController {
         System.out.println("2");
         return "/success.jsp";
     }
+    @RequestMapping("company/toaddcompany")
+    public String toaddcompany(){
+        System.out.println("toaddcompany");
+        return "/addcompany.jsp";
+    }
 }

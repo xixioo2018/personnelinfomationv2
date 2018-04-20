@@ -1,0 +1,39 @@
+.link{
+    width: 170px;
+    height: 400px;
+    position: fixed;
+    top: 100px;
+    right: -140px;
+    transition: 1s;
+}
+.left{
+    width: 30px;
+    height:150px;
+    font-size: 16px;
+    margin-top: 125px;
+    text-align: center;
+    line-height: 30px;
+    float: left;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    background-color: #009aff;
+    font-weight: bold;
+    color: white;
+}
+.right{
+    height: 100%;
+    width: 140px;
+    float: right;
+    padding-left: 30px;
+    background-color: #009aff;
+}
+.right ul li{
+    list-style-type: none;
+    padding: 7px;
+}
+.right ul li a{
+    color: white;
+}
+.link:hover{
+    right: 0px;
+}

@@ -18,20 +18,19 @@ public class LoginInterceptor implements HandlerInterceptor {
 	            //说明已经登录过，放行 
 	            return true;
 	        }else{
-	        	if(uri.contains("css")||uri.contains("js")||uri.contains("images")){  
+	        	if(uri.contains("css")||uri.contains("js")||uri.contains("img")||uri.contains("font")){
 	        		//如果是静态资源请求，放行
 	        		return true;
 	        	}else{
 	        		//没有登录,跳转到登录界面
-					return true;
-	        		/*response.sendRedirect(request.getContextPath()+"/user/toLogin.action");  */
+	        		response.sendRedirect(request.getContextPath()+"/user/toLogin.action");
 	        	}
 	        }  
 	    }else{  
 	        //登录请求，直接放行  
 	    	return true; 
 	    }  
-		/*return false;*/
+		return false;
 	}
 
 	public void postHandle(HttpServletRequest request,

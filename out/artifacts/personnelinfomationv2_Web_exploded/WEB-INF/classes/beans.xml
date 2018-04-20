@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       					http://www.springframework.org/schema/beans/spring-beans.xsd
+       					http://www.springframework.org/schema/aop 
+       					http://www.springframework.org/schema/aop/spring-aop.xsd
+       					http://www.springframework.org/schema/context 
+       					http://www.springframework.org/schema/context/spring-context.xsd
+       					http://www.springframework.org/schema/tx 
+       					http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- 注解组件扫描 -->
+    <context:component-scan base-package="com.gh.personinfo.*.dao,com.gh.personinfo.*.service"></context:component-scan>
+
+    <!-- 加载dbcp.properties -->
+    <context:property-placeholder location="classpath*:db.properties"/>
+
+    <!-- sm框架整合，第一件事就是托管数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <!-- 连接池中保留的最大连接数。默认为15 -->
+        <property name="maxPoolSize" value="${c3p0.pool.maxPoolSize}"/>
+        <!-- 连接池中保留的最小连接数。默认为15 -->
+        <property name="minPoolSize" value="${c3p0.pool.minPoolSize}" />
+        <!-- 初始化时创建的连接数，应在minPoolSize与maxPoolSize之间取值。默认为3 -->
+        <property name="initialPoolSize" value="${c3p0.pool.initialPoolSize}"/>
+        <!-- 定义在从数据库获取新连接失败后重复尝试获取的次数，默认为30 -->
+        <property name="acquireIncrement" value="${c3p0.pool.acquireIncrement}"/>
+    </bean>
+
+    <!-- mybaits的sqlSeesionFacroty交给spring去托管 -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
+
+    <!--事务管理-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--事务通知-->
+    <tx:advice id="txAdivce" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+
+            <tx:method name="find*" read-only="false"/>
+            <tx:method name="get*" read-only="false"/>
+            <tx:method name="view*" read-only="false"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.gh.personinfo.other.service.*.*(..))" id="txPointcut"/>
+        <aop:advisor advice-ref="txAdivce" pointcut-ref="txPointcut"/>
+    </aop:config>
+    <!-- 注解事务 -->
+    <!--<tx:annotation-driven transaction-manager="txManager"/>-->
+
+</beans>
