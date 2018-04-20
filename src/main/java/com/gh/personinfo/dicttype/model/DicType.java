@@ -1,4 +1,4 @@
-package com.gh.personinfo.dictionary.model;
+package com.gh.personinfo.dicttype.model;
 
 public class DicType {
     private Integer id;
