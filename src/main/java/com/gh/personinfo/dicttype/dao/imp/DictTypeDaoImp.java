@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DictTypeDaoImp extends BaseDaoImpl<DicType> implements DicTypeDao {
     public DictTypeDaoImp() {
-        super.setNs("com.gh.personinfo.dictionary.dao.DicTypeDao");
+        super.setNs("com.gh.personinfo.dicttype.dao.DicTypeDao");
     }
 }
