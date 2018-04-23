@@ -8,30 +8,37 @@ import java.util.Date;
 
 public class Person {
     private Integer id;
-
     private String name;
-
     private Integer age;
-
     private String gender;
-
     private Integer education;
-
     private String school;
-
     private Dict category;
-
-    private Company company;
-
+    private String company;
     private Job job;
-
     private Integer experience;
-
     private Integer status;
-
     private String resume;
-
     private Integer priority;
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", education=" + education +
+                ", school='" + school + '\'' +
+                ", category=" + category +
+                ", company='" + company + '\'' +
+                ", job=" + job +
+                ", experience=" + experience +
+                ", status=" + status +
+                ", resume='" + resume + '\'' +
+                ", priority=" + priority +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -89,11 +96,11 @@ public class Person {
         this.category = category;
     }
 
-    public Company getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(Company company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 

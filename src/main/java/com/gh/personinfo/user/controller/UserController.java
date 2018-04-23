@@ -12,18 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 @Controller
 public class UserController {
     @Resource
     UserService userService;
 
-    @RequestMapping("user/toLogin.action")
+    @RequestMapping("toLogin.action")
     public String toLogin(){
         return "/home.jsp";//转向登录页面
     }
 
-    @RequestMapping("login")
+    @RequestMapping("/user-login")
     public String login(User user, Model model, HttpServletRequest request, HttpServletResponse response){
         Map<String,String> map = new HashMap<String,String>();
         map.put("username", user.getUsername());

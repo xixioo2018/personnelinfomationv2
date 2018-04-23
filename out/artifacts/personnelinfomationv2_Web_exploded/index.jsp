@@ -83,7 +83,7 @@
     <p>构建企业未来敏捷组织</p>
     <p>核心人力云（人力资源管理系统）</p>
     <p>激活、人才、创造智慧HR新世代&nbsp;!</p>
-    <form class="login" action="login" method="post">
+    <form class="login" action="user-login" method="post">
         <input type="text" class="form-control" placeholder="username" name="username">
         <input type="password" class="form-control" placeholder="password" name="password">
         <input type="submit" class="form-control" value="Login">

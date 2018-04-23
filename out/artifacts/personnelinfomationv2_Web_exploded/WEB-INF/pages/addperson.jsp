@@ -117,7 +117,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <h2>欢迎录入人才信息</h2>
     <p>建设一个强大的人才库，让你接触过的候选人都成为未来的人才储备</p>
     <div class="mid">
-        <form action="https://www.baidu.com">
+        <form action="person-uploadperson" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="resume" value="abc">
              <table>
                  <tr>
                      <td><strong>姓名:</strong></td>
@@ -142,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td><input type="text" class="form-control" placeholder="毕业院校" name="school"></td>
                      <td><strong>行业类别:</strong></td>
                      <td>
-                         <select class="form-control" name="category">
+                         <select class="form-control" name="category.id">
                              <option>1</option>
                              <option>2</option>
                              <option>3</option>
@@ -153,10 +154,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  </tr>
                  <tr>
                      <td><strong>所在公司:</strong></td>
-                     <td><input type="text" class="form-control" placeholder="所在公司" name="company"></td>
+                     <td><input type="text" class="form-control" placeholder="所在公司" name="company.id"></td>
                      <td><strong>求职方向:</strong></td>
                      <td>
-                         <select class="form-control" name="job">
+                         <select class="form-control" name="job.id">
                              <option>1</option>
                              <option>2</option>
                              <option>3</option>
@@ -171,7 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td colspan="2"></td>
                      <td><strong>上传简历:</strong></td>
                      <td>
-                         <input type="file" class="btn btn-primary" name="resume">
+                         <input type="file" class="btn btn-primary" name="file">
                      </td>
                      <td colspan="2"></td>
                  </tr>

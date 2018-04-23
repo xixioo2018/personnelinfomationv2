@@ -1,4 +1,4 @@
-package com.gh.personinfo.user.interceptor;
+package com.gh.personinfo.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +14,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	    //判断当前请求地址是否是登录地址  
 	    if(!(uri.contains("Login")||uri.contains("login")||uri.contains("register"))){  
 	        //非登录请求
+
 	        if(request.getSession().getAttribute("user")!=null){  
 	            //说明已经登录过，放行 
 	            return true;

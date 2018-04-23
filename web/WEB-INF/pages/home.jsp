@@ -123,16 +123,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li>
             <h6>企业</h6>
             <div>
-                <p><a href="company/toaddcompany">企业维护</a></p>
-                <p><a href="company/company">企业查询</a></p>
-                <p><a href="company/project">职位匹配</a></p>
+                <p><a href="company-toaddcompany.a">企业维护</a></p>
+                <p><a href="company-tocompany.a">企业查询</a></p>
+                <p><a href="company-toproject.a">职位匹配</a></p>
             </div>
         </li>
         <li>
             <h6>人才</h6>
             <div>
-                <p><a href="addperson.jsp">人才维护</a></p>
-                <p><a href="person.jsp">人才查询</a></p>
+                <p><a href="person-toaddperson.a">人才维护</a></p>
+                <p><a href="person-toperson.a">人才查询</a></p>
                 <p><a href="">敬请期待</a></p>
             </div>
         </li>

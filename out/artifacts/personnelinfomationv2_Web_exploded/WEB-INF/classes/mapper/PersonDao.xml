@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gh.personinfo.person.dao.PersonDao">
-    <!--auto generated Code-->
-
+    <insert id="insert" parameterType="com.gh.personinfo.person.model.Person" useGeneratedKeys="true" keyProperty="id">
+		insert into person
+		(name,age,gender,education,category,company,job,school,experience,resume)
+		values
+		(	#{name,jdbcType=VARCHAR},
+		    #{age,jdbcType=INTEGER},
+		    #{gender,jdbcType=VARCHAR},
+		    #{education,jdbcType=INTEGER},
+			#{category.id,jdbcType=INTEGER},
+			#{company,jdbcType=VARCHAR},
+			#{job.id,jdbcType=INTEGER},
+			#{school,jdbcType=VARCHAR},
+			#{experience,jdbcType=INTEGER},
+			#{resume,jdbcType=VARCHAR}
+		)
+	</insert>
 </mapper>
 
