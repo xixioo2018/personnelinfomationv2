@@ -10,9 +10,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
     <title>主页</title>
 </head>
-<link rel="stylesheet" href="bootstrap.min.css">
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <style>
     *{
         margin: 0px;
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         color: white;
     }
 </style>
-<script src="js/jquery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <script>
        $(function () {
            var num=0;
@@ -107,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 <body>
 <div class="top">
-    <img src="img/logo.png" alt="光环国际">
+    <img src="${pageContext.request.contextPath}/img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
 </div>
 <div class="main">
@@ -115,16 +115,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li>
             <h6>企业</h6>
             <div>
-                <p><a href="addcompany.jsp">企业维护</a></p>
-                <p><a href="company.jsp">企业查询</a></p>
-                <p><a href="project.jsp">职位匹配</a></p>
+                <p><a href="company-toaddcompany.a">企业维护</a></p>
+                <p><a href="company-tocompany.a">企业查询</a></p>
+                <p><a href="company-toproject.a">职位匹配</a></p>
             </div>
         </li>
         <li>
             <h6>人才</h6>
             <div>
-                <p><a href="addperson.jsp">人才维护</a></p>
-                <p><a href="people.jsp">人才查询</a></p>
+                <p><a href="person-toaddperson.a">人才维护</a></p>
+                <p><a href="person-toperson.a">人才查询</a></p>
                 <p><a href="#">敬请期待</a></p>
             </div>
         </li>

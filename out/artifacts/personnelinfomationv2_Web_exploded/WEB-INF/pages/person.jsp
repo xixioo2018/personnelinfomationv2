@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
-<script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <style>
     *{
         margin: 0px;

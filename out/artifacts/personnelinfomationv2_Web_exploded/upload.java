@@ -1,19 +1,13 @@
 package com.gh.easy.model;
 
-public class Job2person {
+public class Dict {
     private Integer id;
 
-    private Integer jobid;
+    private Integer dctypeid;
 
-    private Integer jobtype;
+    private String dictname;
 
-    private Integer perid;
-
-    private Integer status;
-
-    private Integer isinter;
-
-    private Integer ishire;
+    private Integer dictvalue;
 
     public Integer getId() {
         return id;
@@ -23,51 +17,27 @@ public class Job2person {
         this.id = id;
     }
 
-    public Integer getJobid() {
-        return jobid;
+    public Integer getDctypeid() {
+        return dctypeid;
     }
 
-    public void setJobid(Integer jobid) {
-        this.jobid = jobid;
+    public void setDctypeid(Integer dctypeid) {
+        this.dctypeid = dctypeid;
     }
 
-    public Integer getJobtype() {
-        return jobtype;
+    public String getDictname() {
+        return dictname;
     }
 
-    public void setJobtype(Integer jobtype) {
-        this.jobtype = jobtype;
+    public void setDictname(String dictname) {
+        this.dictname = dictname == null ? null : dictname.trim();
     }
 
-    public Integer getPerid() {
-        return perid;
+    public Integer getDictvalue() {
+        return dictvalue;
     }
 
-    public void setPerid(Integer perid) {
-        this.perid = perid;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getIsinter() {
-        return isinter;
-    }
-
-    public void setIsinter(Integer isinter) {
-        this.isinter = isinter;
-    }
-
-    public Integer getIshire() {
-        return ishire;
-    }
-
-    public void setIshire(Integer ishire) {
-        this.ishire = ishire;
+    public void setDictvalue(Integer dictvalue) {
+        this.dictvalue = dictvalue;
     }
 }

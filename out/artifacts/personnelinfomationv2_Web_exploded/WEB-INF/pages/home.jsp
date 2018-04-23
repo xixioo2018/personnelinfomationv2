@@ -43,75 +43,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         background-color: #2585d2;
         padding-top: 100px;
     }
-    .main ul{
-        margin-left: 100px;
-    }
-    ul li{
-        list-style-type: none;
-        float: left;
-        margin-left: 100px;
-        position: relative;
-    }
     h6{
         width: 200px;
         height: 200px;
-        border-radius: 50%;
         border: 5px solid white;
         text-align: center;
         line-height: 200px;
-        color: #ffffff;
-        font-size: 22px;
+        border-radius: 50%;
+        color: white;
         font-weight: bold;
+        font-size: 22px;
+    }
+    .main ul li{
+        float: left;
+        margin-left: 192px;
+        position: relative;
     }
     ul li p{
-        width: 10px;
-        height: 10px;
-        text-align: center;
-        line-height: 10px;
-        font-size: 1px;
-        font-weight: bold;
-        border: 5px solid white;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
-        float: left;
+        border:  5px solid white;
+        font-weight: bold;
+        text-align: center;
+        line-height: 120px;
+        color: white;
         position: absolute;
-        bottom: 50px;
-        left: 50px;
-        display: none;
+        left: -120px;
+        bottom: 45px;
         opacity: 0;
     }
     ul li a{
-        color: #ffffff;
+        color: white;
+    }
+    ul li p:nth-child(1){
+           bottom: 165px;
+    }
+    ul li p:nth-child(3){
+        bottom: -75px;
+    }
+    ul li a{
+        text-decoration: none;
     }
     ul li a:hover{
         text-decoration: none;
-        color: #ffffff;
-    }
-    ul li div{
-
+        color: white;
     }
 </style>
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <script>
-        $(function () {
-            var num=0;
-            $("li").find("h6").click(function () {
+       $(function () {
+           var num=0;
+           $("h6").click(function () {
                 if(num%2==0){
-                     if($(this).is("h6")){
-                         console.log($(this).is("h6"));
-                         $(this).parent().find("p").css("display",'block');
-                         $(this).parent().find("p").animate({left:"-100px",opacity:1,width:"100px",height:"100px",lineHeight:"100px",fontSize:"18px"},1000);
-                         $(this).parent().find("p").eq(1).animate({bottom:"150px"},1000);
-                         $(this).parent().find("p").eq(2).animate({bottom:"-50px"},1000);
-                         num++;
-                     }
+                    $(this).parent("li").find("p").animate({opacity:1},400);
+                    num++;
                 }else if(num%2!=0){
-                    if($(this).is("h6")) {
-                        $(this).parent().find("p").animate({left: "50px", opacity: 0.5,width:"10px",height:"10px",lineHeight:"10px",fontSize:"1px", opacity: 0}, 1000);
-                        $(this).parent().find("p").animate({bottom: "50px"}, 1000);
-                        num++;
-                    }
+                    $(this).parent("li").find("p").animate({opacity:0},400);
+                    num++;
                 }
-            })
-        })
+           })
+       })
 </script>
 <body>
 <div class="top">
@@ -133,15 +125,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div>
                 <p><a href="person-toaddperson.a">人才维护</a></p>
                 <p><a href="person-toperson.a">人才查询</a></p>
-                <p><a href="">敬请期待</a></p>
+                <p><a href="#">敬请期待</a></p>
             </div>
         </li>
         <li>
             <h6>系统</h6>
             <div>
-                <p><a href="">数据字典</a></p>
-                <p><a href="">字典维护</a></p>
-                <p><a href="">敬请期待</a></p>
+                <p><a href="#">数据字典</a></p>
+                <p><a href="#">字典维护</a></p>
+                <p><a href="#">敬请期待</a></p>
             </div>
         </li>
     </ul>

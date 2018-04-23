@@ -10,11 +10,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
     <title>人才查询</title>
 </head>
-<link rel="stylesheet" href="bootstrap.min.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/link.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
 <script src="js/jquery.min.js"></script>
 <style>
     *{
@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </style>
 <body>
 <div class="top">
-    <img src="img/logo.png" alt="光环国际">
+    <img src="${pageContext.request.contextPath}/img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
 </div>
 <div class="main">

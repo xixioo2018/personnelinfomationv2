@@ -10,10 +10,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
     <title>人才维护</title>
 </head>
-<link rel="stylesheet" href="bootstrap.min.css">
-<link rel="stylesheet" href="css/link.css">
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <style>
     *{
         margin: 0px;
@@ -110,14 +110,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 <body>
 <div class="top">
-    <img src="img/logo.png" alt="光环国际">
+    <img src="${pageContext.request.contextPath}/img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
 </div>
 <div class="main">
     <h2>欢迎录入人才信息</h2>
     <p>建设一个强大的人才库，让你接触过的候选人都成为未来的人才储备</p>
     <div class="mid">
-        <form action="https://www.baidu.com">
+        <form action="person-uploadperson"  method="post" enctype="multipart/form-data">
+            <input type="hidden" name="resume" value="abc">
              <table >
                  <tr align="right">
                      <td><strong>姓名:</strong></td>
@@ -142,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td><input type="text" class="form-control" placeholder="毕业院校" name="school"></td>
                      <td><strong>行业类别:</strong></td>
                      <td>
-                         <select class="form-control" name="category">
+                         <select class="form-control" name="category.id">
                              <option>1</option>
                              <option>2</option>
                              <option>3</option>
@@ -156,7 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td><input type="text" class="form-control" placeholder="所在公司" name="company"></td>
                      <td><strong>求职方向:</strong></td>
                      <td>
-                         <select class="form-control" name="job">
+                         <select class="form-control" name="job.id">
                              <option>1</option>
                              <option>2</option>
                              <option>3</option>
@@ -180,7 +181,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      </td>
                      <td><strong>上传简历:</strong></td>
                      <td>
-                         <input type="file" class="btn btn-primary" name="resume">
+                         <input type="file" class="btn btn-primary" name="file">
                      </td>
                      <td colspan="2"></td>
                  </tr>

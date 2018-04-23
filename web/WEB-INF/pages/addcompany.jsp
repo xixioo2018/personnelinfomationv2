@@ -10,10 +10,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta charset="UTF-8">
     <title>企业维护</title>
 </head>
-<link rel="stylesheet" href="bootstrap.min.css">
-<link rel="stylesheet" href="css/link.css">
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}css/link.css">
+<script src="${pageContext.request.contextPath}js/jquery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}js/bootstrap.min.js"></script>
 <style>
     *{
         margin: 0px;
@@ -105,7 +105,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 <body>
 <div class="top">
-    <img src="img/logo.png" alt="光环国际">
+    <img src="${pageContext.request.contextPath}img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
 </div>
 <div class="main">
@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td> <strong>公司名称:</strong></td>
                     <td>  <input type="text" class="form-control" placeholder="公司名称" name="name"></td>
                     <td>  <strong>公司规模:</strong></td>
-                    <td>  <select class="form-control" name="scale">
+                    <td>  <select class="form-control" name="scale.id">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <option>5</option>
                     </select></td>
                     <td> <strong>业务类型:</strong></td>
-                    <td> <select class="form-control" name="business">
+                    <td> <select class="form-control" name="business.id">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
