@@ -21,25 +21,6 @@ public class Person {
     private String resume;
     private Integer priority;
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                ", education=" + education +
-                ", school='" + school + '\'' +
-                ", category=" + category +
-                ", company='" + company + '\'' +
-                ", job=" + job +
-                ", experience=" + experience +
-                ", status=" + status +
-                ", resume='" + resume + '\'' +
-                ", priority=" + priority +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }
@@ -142,5 +123,24 @@ public class Person {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", education=" + education +
+                ", school='" + school + '\'' +
+                ", category=" + category +
+                ", company='" + company + '\'' +
+                ", job=" + job +
+                ", experience=" + experience +
+                ", status=" + status +
+                ", resume='" + resume + '\'' +
+                ", priority=" + priority +
+                '}';
     }
 }

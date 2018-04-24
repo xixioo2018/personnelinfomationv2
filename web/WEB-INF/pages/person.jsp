@@ -67,6 +67,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
 </style>
 <body>
+<script type="application/javascript">
+
+</script>
 <div class="top">
     <img src="${pageContext.request.contextPath}/img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
@@ -74,7 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="main">
     <div class="query">
         <input type="text" class="form-control" class="">
-        <button class="btn btn-default" >搜索</button>
+        <button class="btn btn-default" onclick="test()"> 搜索</button>
         <div style="width:946px; margin:0 auto;">
             <div class="clearfix">
                 <p class="shaixuan-tj floatLeft clearfix">
@@ -88,40 +91,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="page-search-store" class="mb10 border sxcon">
                 <div class="search-by by-category relative">
                     <dl class="relative clearfix">
-                        <dt class="floatLeft"><a href="/">年龄</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">小于20岁</a>
+                        <dt class="floatLeft"><a href="/"> 年龄</a></dt>
+                        <dd id="ageajax" class="floatLeft show-con">
+                            <%--<a href="/" class="">小于20岁</a>
                             <a href="/" class="">20-25</a>
                             <a href="/" class="">25-30</a>
                             <a href="/" class="">30-35</a>
                             <a href="/" class="nzw12">35-40</a>
                             <a href="/" class="">40-45</a>
-                            <a href="/" class="">45-50</a>
+                            <a href="/" class="">45-50</a>--%>
                         </dd>
                         <dd class="floatLeft show-more"><h3 class="pointer clearfix"><span>更多</span><i class="icon-angle-down"></i></h3></dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">性别</a></dt>
+                        <dt class="floatLeft"><a href="/"> 性别</a></dt>
                         <dd class="floatLeft show-con">
                             <a href="/" class="">男</a>
                             <a href="/" class="">女</a>
                         </dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">学历</a></dt>
-                        <dd class="floatLeft show-con">
+                        <dt class="floatLeft"><a href="/"> 学历</a></dt>
+                        <dd id="educationajax" class="floatLeft show-con">
                             <a href="/" class="">高中</a>
-                            <a href="/" class="">专科</a>
+                            <%--<a href="/" class="">专科</a>
                             <a href="/" class="">本科</a>
                             <a href="/" class="">硕士</a>
                             <a href="/" class="">博士</a>
-                            <a href="/" class="">博士后</a>
+                            <a href="/" class="">博士后</a>--%>
                         </dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">行业类别</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">餐饮行业</a>
+                        <dt class="floatLeft"><a href="/"> 行业类别</a></dt>
+                        <dd id="categoryajax" class="floatLeft show-con">
+                            <%--<a href="/" class="">餐饮行业</a>
                             <a href="/" class="">服务行业</a>
                             <a href="/" class="">广告业</a>
                             <a href="/" class="">IT行业</a>
@@ -133,12 +136,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <a href="/" class="">化工</a>
                             <a href="/" class="">艺术</a>
                             <a href="/" class="">医疗服务</a>
-                            <a href="/" class="">旅游业</a>
+                            <a href="/" class="">旅游业</a>--%>
                         </dd>
                         <dd class="floatLeft show-more"><h3 class="pointer clearfix"><span>更多</span><i class="icon-angle-down"></i></h3></dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">求职方向</a></dt>
+                        <dt class="floatLeft"><a href="/"> 求职方向</a></dt>
                         <dd class="floatLeft show-con">
                             <a href="/" class="">H5工程师</a>
                             <a href="/" class="">前端工程师</a>
@@ -154,7 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <dd class="floatLeft show-more"><h3 class="pointer clearfix"><span>更多</span><i class="icon-angle-down"></i></h3></dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">工作经验</a></dt>
+                        <dt class="floatLeft"><a href="/"> 工作经验</a></dt>
                         <dd class="floatLeft show-con">
                             <a href="/" class="">应届毕业生</a>
                             <a href="/" class="">小于1年</a>
@@ -386,7 +389,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </body>
 <script>
+    function test () {
+        var serch = $(".crumb-select-item").find("a").text();
+        alert(serch)
+        /*var boxIds = new Array();
+        boxIds.push("age=23");
+        boxIds.push("school=jdwl");
+        boxIds.push("category=12");
+        alert(boxIds)*/
+        /*var param = {list : boxIds};
+        alert(param.list)*/
+        $.ajax({
+            timeout : 20000,
+            type : "POST",
+            dataType : "JSON",
+            /*traditional:true,*/
+            url : "person-queryperson",
+            data : {serch: serch},
+            success : function(data){
+                /*if (data.flag){
+                    alert(data.flag+""+data.massage)
+                }else {
+                    alert("error")
+                }*/
+
+                /*data.each(function (n,value) {
+                    alert(n)
+                })*/
+
+                alert(data[0])
+            }
+            //注意：这里不能加下面这行，否则数据会传不到后台
+            //contentType:'application/json;charset=UTF-8',
+        });
+    }
     $(function(){
+        /*请求数据年龄*/
+        $.ajax({
+            timeout : 20000,
+            type : "POST",
+            dataType : "JSON",
+            /*traditional:true,*/
+            url : "dict-queryage",
+            data : {age: 1,education:2,category:3},
+            success : function(data){
+                var jsonStr1 = eval(data)
+                var lenth = jsonStr1.length;
+                for (var i=0;i<lenth;i++){
+                    if (jsonStr1[i].dctypeid==1){
+                        $("#ageajax").append("<a href=\"/\" class=\"\">"+jsonStr1[i].dictname+"</a>");
+                    }
+                    if (jsonStr1[i].dctypeid==2){
+                        $("#educationajax").append("<a href=\"/\" class=\"\">"+jsonStr1[i].dictname+"</a>");
+                    }
+                    if (jsonStr1[i].dctypeid==3){
+                        $("#categoryajax").html("<a href=\"/\" class=\"\">"+jsonStr1[i].dictname+"</a>");
+                    }
+                }
+            }
+            //注意：这里不能加下面这行，否则数据会传不到后台
+            //contentType:'application/json;charset=UTF-8',
+        });
         $("tr:even").addClass("active");
         $("tr:odd").addClass("info")
         $(".shaixuan-tj span.crumb-select-item").live('hover',function(event){
@@ -407,6 +470,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 if(TTR==TT){
                     THI.removeClass("nzw12");
                     THIPP.css("display","block");
+                    /*得到TT*/
                 }
             })
         });

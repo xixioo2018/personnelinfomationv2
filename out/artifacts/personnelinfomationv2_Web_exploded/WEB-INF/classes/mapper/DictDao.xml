@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gh.personinfo.dict.dao.DictDao">
     <!--auto generated Code-->
-
+    <resultMap type="com.gh.personinfo.dict.model.Dict" id="dictRM">
+        <!-- 主键 -->
+        <id property="id" column="did" />
+        <!-- 一般属性 -->
+        <result property="dctypeid" column="dctypeId"/>
+        <result property="dictname" column="dictname"/>
+        <result property="dictvalue" column="dictvalue"/>
+    </resultMap>
+    <select id="find" parameterType="java.util.Map" resultMap="dictRM">
+        select * from dict d
+        where 1=1
+    </select>
 </mapper>
 

@@ -40,4 +40,14 @@ public class Dict {
     public void setDictvalue(Integer dictvalue) {
         this.dictvalue = dictvalue;
     }
+
+    @Override
+    public String toString() {
+        return "Dict{" +
+                "id=" + id +
+                ", dctypeid=" + dctypeid +
+                ", dictname='" + dictname + '\'' +
+                ", dictvalue=" + dictvalue +
+                '}';
+    }
 }

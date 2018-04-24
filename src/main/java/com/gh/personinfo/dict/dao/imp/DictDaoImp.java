@@ -10,4 +10,5 @@ public class DictDaoImp extends BaseDaoImpl<Dict> implements DictDao {
     public DictDaoImp() {
         super.setNs("com.gh.personinfo.dict.dao.DictDao");
     }
+
 }

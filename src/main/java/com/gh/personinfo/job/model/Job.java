@@ -63,4 +63,16 @@ public class Job {
     public void setJobtype(Dict jobtype) {
         this.jobtype = jobtype;
     }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", proid=" + proid +
+                ", reqnum=" + reqnum +
+                ", nownum=" + nownum +
+                ", matnum=" + matnum +
+                ", jobtype=" + jobtype +
+                '}';
+    }
 }
