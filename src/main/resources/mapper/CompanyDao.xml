@@ -29,6 +29,19 @@
 		select * from company c,industry i,position p
 		where c.position = p.id AND c.industry = i.id and c.id = #{id}
 	</select>-->
-
+    <insert id="insert" parameterType="com.gh.personinfo.company.model.Company" useGeneratedKeys="true" keyProperty="id">
+		insert into company
+		(name,scale,business,conName,conPhone,conEmail,description,address)
+		values
+		(	#{name},
+		    #{scale.id},
+		    #{business.id},
+		    #{conname},
+			#{conphone},
+			#{conemail},
+			#{description},
+			#{address}
+		)
+	</insert>
 </mapper>
 

@@ -111,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <h1>人才信息管理系统</h1>
 </div>
 <div class="main">
-    <ul>
+    <ul style="list-style: none">
         <li>
             <h6>企业</h6>
             <div>

@@ -11,9 +11,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>企业维护</title>
 </head>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}css/link.css">
-<script src="${pageContext.request.contextPath}js/jquery-2.1.4.min.js"></script>
-<script src="${pageContext.request.contextPath}js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <style>
     *{
         margin: 0px;
@@ -96,11 +96,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $("button").click(function moveTo() {
             var mymessage=confirm("要继续添加信息吗?");
             if(mymessage==true){
+                $("#flag").val("true");
+                $("#form").submit();
             }
             else{
-                window.open("company.html");
+                $("#flag").val("false");
+                $("#form").submit();
             }
-        })
+        });
+        $.ajax({
+            type: "GET",
+            url: "dict-queryCompanySize",
+            dataType: "json",
+            success: function(data){
+                var date = eval(data);
+                for (var i=0;i<data.length;i++) {
+                    $("#CompanySize").append("<option value="+data[i].dictname+">"+data[i].dictname+"</option>");
+                }
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "dict-queryage",
+            dataType: "json",
+            success: function(data){
+                var date = eval(data);
+                for (var i=0;i<data.length;i++) {
+                    if(data[i].dctypeid==1){
+                        $("#CompanySize").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+
+                    }else if(data[i].dctypeid==3){
+                        $("#CompanyType").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+                    }
+                }
+            }
+        });
     })
 </script>
 <body>
@@ -114,26 +144,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <p>致力于打造最完善的企业搜索平台</p>
 </div>
     <div class="mid">
-                <form action="#">
+                <form action="company-addCompany">
                     <table>
                 <tr>
                     <td> <strong>公司名称:</strong></td>
                     <td>  <input type="text" class="form-control" placeholder="公司名称" name="name"></td>
                     <td>  <strong>公司规模:</strong></td>
-                    <td>  <select class="form-control" name="scale.id">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <td>  <select id="CompanySize" class="form-control" name="scale.id">
+
+
                     </select></td>
                     <td> <strong>业务类型:</strong></td>
-                    <td> <select class="form-control" name="business.id">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <td> <select id="CompanyType" class="form-control" name="business.id">
+
                     </select></td>
                 </tr>
                 <tr>
@@ -154,7 +177,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </tr>
             </table>
                     <p align="center"><button type="submit" class="btn btn-primary">提交表单</button></p>
-        </form>
+                    <input type="hidden" name="flag" id="flag">
+            </form>
 
     </div>
 </div>

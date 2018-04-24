@@ -26,4 +26,8 @@ public class CompanyServiceImp implements CompanyService {
         System.out.println("CompanyService");
         return companyDao.get(id);
     }
+    @Override
+    public void addCompany(Company company) {
+        companyDao.insert(company);
+    }
 }

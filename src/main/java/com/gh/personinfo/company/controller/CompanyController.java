@@ -5,6 +5,7 @@ import com.gh.personinfo.company.service.CompanyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,5 +25,16 @@ public class CompanyController {
     @RequestMapping("/company-toproject.a")
     public String toproject(){
         return "/project.jsp";
+    }
+    @RequestMapping("company-addCompany")
+    public String addCompany(Company company,@RequestParam String flag){
+        System.out.println(company);
+        System.out.println("flag="+flag);
+        companyService.addCompany(company);
+        if(flag.equals("true")){
+            return "/addcompany.jsp";
+        }else{
+            return "/home.jsp";
+        }
     }
 }
