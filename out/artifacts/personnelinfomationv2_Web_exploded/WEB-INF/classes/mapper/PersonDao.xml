@@ -71,8 +71,8 @@
         where 1=1 and p.job=j.jid
 		<if test="年龄 != null"> and age between #{age0} and #{age1}</if>
 		<if test="性别 != null"> and gender=#{性别}</if>
-		<if test="学历 != null">and p.education=d.did and d.dictName=#{学历}</if>
-		<if test="行业类别 != null"> and p.category=d.did and d.dictName=#{行业类别}</if>
+		<if test="学历 != null">and p.education=#{学历}</if>
+		<if test="行业类别 != null"> and p.category=#{行业类别}</if>
 		<if test="求职方向 != null"> and p.job=#{求职方向}</if>
 		<if test="工作经验 != null"> and p.experience between #{workage0} and #{workage1}</if>
 		<!--<if test="telphone != null"> and telphone = #{telphone}</if>-->

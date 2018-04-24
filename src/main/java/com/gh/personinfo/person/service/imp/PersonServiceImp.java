@@ -1,5 +1,7 @@
 package com.gh.personinfo.person.service.imp;
 
+import com.gh.personinfo.dict.dao.DictDao;
+import com.gh.personinfo.dict.model.Dict;
 import com.gh.personinfo.person.dao.PersonDao;
 import com.gh.personinfo.person.model.Person;
 import com.gh.personinfo.person.service.PersonService;
@@ -14,6 +16,8 @@ import java.util.Map;
 public class PersonServiceImp implements PersonService {
     @Autowired
     PersonDao personDao;
+    @Autowired
+    DictDao dictDao;
 
     public int addPerson(Person person) {
         personDao.insert(person);
@@ -30,6 +34,8 @@ public class PersonServiceImp implements PersonService {
 
     @Override
     public Map<String, Object> deal(String search) {
+        Map<String,String> map1 = new HashMap<String, String>();
+        List<Dict> dictList = dictDao.find(map1);
         Map<String,Object> map = new HashMap<String, Object>();
         String[] example = {"年龄","性别","学历","行业类别","求职方向","工作经验"};
         String[] newSearch = search.split(" ");
@@ -40,20 +46,46 @@ public class PersonServiceImp implements PersonService {
                     System.out.println(newStr[1]);
                     System.out.println("key："+example[j]);
                     if(example[j].equals("年龄")){
+                        /*对应数据字典*/
                         System.out.println("进入年龄");
                         //newStr1是关键字
                         String[] str2 = changge(newStr[1],map);
                         map.put("age0",str2[0]);
                         map.put("age1",str2[1]);
                         map.forEach((k,v)->System.out.println(k + " = " + v));
-                    }if (example[j].equals("工作经验")){
+                    }else if (example[j].equals("工作经验")){
                         String[] str3 = changge(newStr[1],map);
                         map.put("workage0",str3[0]);
                         map.put("workage1",str3[1]);
-                    }
-                    else {
+                    }else if (example[j].equals("行业类别")){
+                        /*对应的数据字典*/
+                        System.out.println("进入"+newStr[1]);
+                        for (Dict dict:
+                             dictList) {
+                            if (newStr[1].equals(dict.getDictname())){
+                                map.put("行业类别",dict.getId());
+                                System.out.println(dict.getId());
+                                map.forEach((k,v)->System.out.println(k + " = " + v));
+                            }
+                        }
+                    }else if(example[j].equals("学历")){
+                        /*对应数据字典*/
+                        System.out.println("进入"+newStr[1]);
+                        for (Dict dict:
+                                dictList) {
+                            if (newStr[1].equals(dict.getDictname())){
+                                map.put("学历",dict.getId());
+                                System.out.println(dict.getId());
+                                map.forEach((k,v)->System.out.println(k + " = " + v));
+                            }
+                        }
+                    }else if(example[j].equals("求职方向")){
+                        /*对应Job*/
+
+                    }else {
                         map.put(example[j],newStr[1]);
                     }
+                    map.forEach((k,v)->System.out.println(k + " = " + v));
                 }
             }
         }

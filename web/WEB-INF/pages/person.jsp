@@ -93,13 +93,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <dl class="relative clearfix">
                         <dt class="floatLeft"><a href="/"> 年龄</a></dt>
                         <dd id="ageajax" class="floatLeft show-con">
-                            <%--<a href="/" class="">小于20岁</a>
+                            <a href="/" class="">小于20岁</a>
                             <a href="/" class="">20-25</a>
                             <a href="/" class="">25-30</a>
                             <a href="/" class="">30-35</a>
                             <a href="/" class="nzw12">35-40</a>
                             <a href="/" class="">40-45</a>
-                            <a href="/" class="">45-50</a>--%>
+                            <a href="/" class="">45-50</a>
                         </dd>
                         <dd class="floatLeft show-more"><h3 class="pointer clearfix"><span>更多</span><i class="icon-angle-down"></i></h3></dd>
                     </dl>
@@ -113,8 +113,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <dl class="relative clearfix" style="border-bottom:0">
                         <dt class="floatLeft"><a href="/"> 学历</a></dt>
                         <dd id="educationajax" class="floatLeft show-con">
-                            <a href="/" class="">高中</a>
-                            <%--<a href="/" class="">专科</a>
+                            <%--<a href="/" class="">高中</a>
+                            <a href="/" class="">专科</a>
                             <a href="/" class="">本科</a>
                             <a href="/" class="">硕士</a>
                             <a href="/" class="">博士</a>
@@ -416,7 +416,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 /*data.each(function (n,value) {
                     alert(n)
                 })*/
-
                 alert(data[0])
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
@@ -436,19 +435,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 var jsonStr1 = eval(data)
                 var lenth = jsonStr1.length;
                 for (var i=0;i<lenth;i++){
-                    if (jsonStr1[i].dctypeid==1){
-                        $("#ageajax").append("<a href=\"/\" class=\"\">"+jsonStr1[i].dictname+"</a>");
-                    }
+                    /*if (jsonStr1[i].dctypeid==1){
+                        $("#ageajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
+                    }*/
                     if (jsonStr1[i].dctypeid==2){
-                        $("#educationajax").append("<a href=\"/\" class=\"\">"+jsonStr1[i].dictname+"</a>");
+                        $("#educationajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
                     }
                     if (jsonStr1[i].dctypeid==3){
-                        $("#categoryajax").html("<a href=\"/\" class=\"\">"+jsonStr1[i].dictname+"</a>");
+                        $("#categoryajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
                     }
                 }
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
             //contentType:'application/json;charset=UTF-8',
+        });
+        $(".show-con").on('click','.abc',function(){
+            event.preventDefault();
+            THIP = $(this).parents("dl");
+            if($(this).hasClass("nzw12")){
+            }else{
+                $(this).addClass("nzw12");
+                var zhiclass = $(this).parents("dd").siblings("dt").find("a").text();
+                zhicon = $(this).text();
+                tianjaneir="<span class='crumb-select-item'><a href='/'><b>"+zhiclass+"</b><em>"+zhicon+"</em><i class='icon-remove'></i></a></span>"
+                $(".shaixuan-tj").children().last().after(tianjaneir);
+                THIP.css("display","none");
+            }
         });
         $("tr:even").addClass("active");
         $("tr:odd").addClass("info")
