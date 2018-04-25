@@ -10,8 +10,9 @@
 		<result property="gender" column="gender"/>
 		<result property="education" column="education"/>
 		<result property="school" column="school"/>
-        <!--<result property="category" column="category" />-->
+        <result property="category" column="category" />
 		<result property="company" column="company"/>
+		<result property="job" column="job"/>
 		<result property="experience" column="experience"/>
 		<result property="status" column="status"/>
 		<result property="resume" column="resume"/>
@@ -25,20 +26,20 @@
 				<result property="kind" column="kind" />
 			</association>
 		</association>-->
-		<association property="category" column="category" javaType="com.gh.personinfo.dict.model.Dict">
+		<!--<association property="category" column="category" javaType="com.gh.personinfo.dict.model.Dict">
 			<id property="id" column="did" />
 			<result property="dictname" column="dictName" />
-			<result property="dictvalue" column="dictValue" />
+			<result property="dictvalue" column="dictValue" />-->
 			<!--<association property="dctypeid" column="dictypeId" javaType="com.gh.personinfo.dicttype.model.DicType">
 				<id property="id" column="id" />
 				<result property="kind" column="kind" />
-			</association>-->
-		</association>
-		<association property="job" column="job" javaType="com.gh.personinfo.job.model.Job">
+			</association>
+		</association>-->
+		<!--<association property="job" column="job" javaType="com.gh.personinfo.job.model.Job">
 			<id property="id" column="jid" />
 			<result property="reqnum" column="reqNum" />
 			<result property="nownum" column="nowNum" />
-			<result property="matnum" column="matNum" />
+			<result property="matnum" column="matNum" />-->
 			<!--<association property="proid" column="proId" javaType="com.gh.personinfo.project.model.Project">
 				<id property="id" column="id" />
 				<result property="name" column="name" />
@@ -46,8 +47,8 @@
 				<result property="reqnum" column="reqNum" />
 				<result property="statime" column="staTime" />
 				<result property="endtime" column="endTime" />
-			</association>-->
-		</association>
+			</association>
+		</association>-->
 	</resultMap>
     <insert id="insert" parameterType="com.gh.personinfo.person.model.Person" useGeneratedKeys="true" keyProperty="id">
 		insert into person
@@ -67,8 +68,8 @@
 	</insert>
 
 	<select id="find" parameterType="java.util.HashMap" resultMap="personRM">
-		select * from person p,job j,dict d
-        where 1=1 and p.job=j.jid
+		select * from person p
+        where 1=1
 		<if test="年龄 != null"> and age between #{age0} and #{age1}</if>
 		<if test="性别 != null"> and gender=#{性别}</if>
 		<if test="学历 != null">and p.education=#{学历}</if>

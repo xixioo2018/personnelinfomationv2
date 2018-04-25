@@ -16,6 +16,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
 <script src="js/jquery.min.js"></script>
+
+<!--easyui-->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/insdep/themes/insdep/easyui.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/insdep/themes/insdep/icon.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
+<!--国际化-->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/locale/easyui-lang-zh_CN.js"></script>
 <style>
     *{
         margin: 0px;
@@ -142,8 +151,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
                         <dt class="floatLeft"><a href="/"> 求职方向</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">H5工程师</a>
+                        <dd id="jobajax" class="floatLeft show-con">
+                            <!--<a href="/" class="">H5工程师</a>
                             <a href="/" class="">前端工程师</a>
                             <a href="/" class="">JAVA开发工程师</a>
                             <a href="/" class="">php开发工程师</a>
@@ -152,7 +161,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <a href="/" class="">架构师</a>
                             <a href="/" class="">项目经理</a>
                             <a href="/" class="">项目总监</a>
-                            <a href="/" class="">技术总监</a>
+                            <a href="/" class="">技术总监</a>-->
                         </dd>
                         <dd class="floatLeft show-more"><h3 class="pointer clearfix"><span>更多</span><i class="icon-angle-down"></i></h3></dd>
                     </dl>
@@ -172,201 +181,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <div class="information">
-        <table class="table table-striped table-bordered table-hover " style="background-color: white" width="200">
+        <!--person表-->
+        <table id="ptb"class="easyui-datagrid" style="width:100%;height:250px"
+               data-options="fitColumns:true,singleSelect:true">
+            <thead>
             <tr>
-                <th>No</th>
-                <th>名称</th>
-                <th>公司规模</th>
-                <th>行业类别</th>
-                <th>招聘方向</th>
-                <th>招聘人数</th>
-                <th>职位要求</th>
-                <th>联系人姓名</th>
-                <th>联系人电话</th>
-                <th>公司地址</th>
+                <th data-options="field:'operate',width:100,align:'center',hidden:true">学生编号</th>
+                <th data-options="field:'id',width:100,align:'center',hidden:true">学生编号</th>
+                <th data-options="field:'name',width:100,align:'center'">名称</th>
+                <th data-options="field:'age',width:100,align:'center'">年龄</th>
+                <th data-options="field:'gender',width:100,align:'center'">性别</th>
+                <th data-options="field:'education',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">学历</th>
+                <th data-options="field:'school',width:100,align:'center'">毕业院校</th>
+                <th data-options="field:'category',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">行业类别</th>
+                <th data-options="field:'company',width:100,align:'center'">在职公司</th>
+                <th data-options="field:'job',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">求职方向</th>
+                <th data-options="field:'experience',width:100,align:'center',formatter:function(val){
+                    return val+'年'}">工作经验</th>
+                <th data-options="field:'status',width:100,align:'center'">状态</th>
+                <th data-options="field:'resume',width:100,align:'center',hidden:true">简历附件</th>
+                <th data-options="field:'priority',width:100,align:'center',hidden:true">优先度</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
+            </thead>
         </table>
-
     </div>
 </div>
 <div class="link">
@@ -389,9 +229,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </body>
 <script>
+    var dicts;
     function test () {
         var serch = $(".crumb-select-item").find("a").text();
-        alert(serch)
+        //alert(serch);
         /*var boxIds = new Array();
         boxIds.push("age=23");
         boxIds.push("school=jdwl");
@@ -416,13 +257,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 /*data.each(function (n,value) {
                     alert(n)
                 })*/
-                alert(data[0])
+                $('#ptb').datagrid('loadData',data);
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
             //contentType:'application/json;charset=UTF-8',
         });
     }
     $(function(){
+
         /*请求数据年龄*/
         $.ajax({
             timeout : 20000,
@@ -430,9 +272,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             dataType : "JSON",
             /*traditional:true,*/
             url : "dict-queryage",
-            data : {age: 1,education:2,category:3},
+            data : {age: 1,education:2,category:3,job:4},
             success : function(data){
-                var jsonStr1 = eval(data)
+                var jsonStr1 = eval(data);
+                dicts=jsonStr1;
                 var lenth = jsonStr1.length;
                 for (var i=0;i<lenth;i++){
                     /*if (jsonStr1[i].dctypeid==1){
@@ -444,7 +287,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     if (jsonStr1[i].dctypeid==3){
                         $("#categoryajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
                     }
+                    if (jsonStr1[i].dctypeid==4){
+                        $("#jobajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
+                    }
                 }
+               //alert(dicts.length);
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
             //contentType:'application/json;charset=UTF-8',
@@ -534,11 +381,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $(".sxcon").slideUp();
                 $(this).addClass("zkon")
             }
-        })
+        });
         $("dd a").click(function () {
             //  console.log($(this).parent("dd").prev().find("a").text()+$(this).text());
             console.log($(".shaixuan-tj span:gt(1) a").text());
-        })
+        });
+
+
+
     })
+
+    function formatDict(num){
+        for(var i=0 ;i<dicts.length;i++){
+            if(num==dicts[i].id){
+                return dicts[i].dictname;
+            }
+        }
+    }
 </script>
 </html>

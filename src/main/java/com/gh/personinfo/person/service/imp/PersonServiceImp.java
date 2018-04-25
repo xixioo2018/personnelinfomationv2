@@ -50,16 +50,20 @@ public class PersonServiceImp implements PersonService {
                         System.out.println("进入年龄");
                         //newStr1是关键字
                         String[] str2 = changge(newStr[1],map);
+                        map.put("年龄",12);
                         map.put("age0",str2[0]);
                         map.put("age1",str2[1]);
                         map.forEach((k,v)->System.out.println(k + " = " + v));
                     }else if (example[j].equals("工作经验")){
                         String[] str3 = changge(newStr[1],map);
+                        map.put("工作经验","123");
                         map.put("workage0",str3[0]);
                         map.put("workage1",str3[1]);
+                        map.forEach((k,v)->System.out.println(k + " = " + v));
                     }else if (example[j].equals("行业类别")){
                         /*对应的数据字典*/
                         System.out.println("进入"+newStr[1]);
+
                         for (Dict dict:
                              dictList) {
                             if (newStr[1].equals(dict.getDictname())){
@@ -81,7 +85,15 @@ public class PersonServiceImp implements PersonService {
                         }
                     }else if(example[j].equals("求职方向")){
                         /*对应Job*/
-
+                        System.out.println("进入"+newStr[1]);
+                        for (Dict dict:
+                                dictList) {
+                            if (newStr[1].equals(dict.getDictname())){
+                                map.put("求职方向",dict.getId());
+                                System.out.println(dict.getId());
+                                map.forEach((k,v)->System.out.println(k + " = " + v));
+                            }
+                        }
                     }else {
                         map.put(example[j],newStr[1]);
                     }

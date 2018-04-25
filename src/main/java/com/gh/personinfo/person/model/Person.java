@@ -8,18 +8,18 @@ import java.util.Date;
 
 public class Person {
     private Integer id;
-    private String name;
-    private Integer age;
-    private String gender;
-    private Integer education;
-    private String school;
-    private Dict category;
-    private String company;
-    private Job job;
-    private Integer experience;
-    private Integer status;
-    private String resume;
-    private Integer priority;
+    private String name;//名称
+    private Integer age;//年龄
+    private String gender;//性别
+    private Integer education;//学历  数据字典
+    private String school;//毕业学校
+    private Integer category;//行业类别  数据字典
+    private String company;//所在公司
+    private Integer job;//求职方向  数据字典
+    private Integer experience;//工作经验
+    private Integer status;//状态
+    private String resume;//简历附件
+    private Integer priority;//优先度
 
     public Integer getId() {
         return id;
@@ -69,12 +69,20 @@ public class Person {
         this.school = school;
     }
 
-    public Dict getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(Dict category) {
+    public void setCategory(Integer category) {
         this.category = category;
+    }
+
+    public Integer getJob() {
+        return job;
+    }
+
+    public void setJob(Integer job) {
+        this.job = job;
     }
 
     public String getCompany() {
@@ -83,14 +91,6 @@ public class Person {
 
     public void setCompany(String company) {
         this.company = company;
-    }
-
-    public Job getJob() {
-        return job;
-    }
-
-    public void setJob(Job job) {
-        this.job = job;
     }
 
     public Integer getExperience() {
