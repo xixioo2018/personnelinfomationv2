@@ -101,11 +101,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $("button").click(function moveTo() {
             var mymessage=confirm("要继续添加信息吗?");
             if(mymessage==true){
+                $("#flag").val("true");
+                $("#form").submit();
             }
             else{
-                window.open("people.html");
+                $("#flag").val("false");
+                $("#form").submit();
             }
-        })
+        });
+        $.ajax({
+            type: "GET",
+            url: "dict-queryage",
+            dataType: "json",
+            success: function(data){
+                var date = eval(data);
+                for (var i=0;i<data.length;i++) {
+                    if(data[i].dctypeid==2){
+                        $("#education").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+
+                    }else if(data[i].dctypeid==3){
+                        $("#category").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+                    }else if(data[i].dctypeid==4){
+                        $("#job").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+                    }
+                }
+            }
+        });
     })
 </script>
 <body>
@@ -131,24 +152,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  <tr align="right">
                      <td><strong>学历:</strong></td>
                      <td>
-                         <select class="form-control" name="education">
-                             <option>1</option>
-                             <option>2</option>
-                             <option>3</option>
-                             <option>4</option>
-                             <option>5</option>
+                         <select class="form-control" name="education" id="education">
+                             <%--<option>1</option>--%>
+                             <%--<option>2</option>--%>
+                             <%--<option>3</option>--%>
+                             <%--<option>4</option>--%>
+                             <%--<option>5</option>--%>
                          </select>
                      </td>
                      <td><strong>毕业院校:</strong></td>
                      <td><input type="text" class="form-control" placeholder="毕业院校" name="school"></td>
                      <td><strong>行业类别:</strong></td>
                      <td>
-                         <select class="form-control" name="category.id">
-                             <option>1</option>
-                             <option>2</option>
-                             <option>3</option>
-                             <option>4</option>
-                             <option>5</option>
+                         <select class="form-control" name="category" id="category">
+                             <%--<option>1</option>--%>
+                             <%--<option>2</option>--%>
+                             <%--<option>3</option>--%>
+                             <%--<option>4</option>--%>
+                             <%--<option>5</option>--%>
                          </select>
                      </td>
                  </tr>
@@ -157,12 +178,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td><input type="text" class="form-control" placeholder="所在公司" name="company"></td>
                      <td><strong>求职方向:</strong></td>
                      <td>
-                         <select class="form-control" name="job.id">
-                             <option>1</option>
-                             <option>2</option>
-                             <option>3</option>
-                             <option>4</option>
-                             <option>5</option>
+                         <select class="form-control" name="job" id="job">
+                             <%--<option>1</option>--%>
+                             <%--<option>2</option>--%>
+                             <%--<option>3</option>--%>
+                             <%--<option>4</option>--%>
+                             <%--<option>5</option>--%>
                          </select>
                      </td>
                      <td><strong>工作经验:</strong></td>
@@ -172,11 +193,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td><strong>是否在职</strong></td>
                      <td>
                          <select class="form-control" name="status">
-                             <option>1</option>
-                             <option>2</option>
-                             <option>3</option>
+                             <option value="0">不在职</option>
+                             <option value="1">在职</option>
+                             <%--<option>3</option>
                              <option>4</option>
-                             <option>5</option>
+                             <option>5</option>--%>
                          </select>
                      </td>
                      <td><strong>上传简历:</strong></td>

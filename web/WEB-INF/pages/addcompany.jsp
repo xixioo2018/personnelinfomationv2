@@ -106,17 +106,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         $.ajax({
             type: "GET",
-            url: "dict-queryCompanySize",
-            dataType: "json",
-            success: function(data){
-                var date = eval(data);
-                for (var i=0;i<data.length;i++) {
-                    $("#CompanySize").append("<option value="+data[i].dictname+">"+data[i].dictname+"</option>");
-                }
-            }
-        });
-        $.ajax({
-            type: "GET",
             url: "dict-queryage",
             dataType: "json",
             success: function(data){

@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gh.personinfo.company.dao.CompanyDao">
+
+	<resultMap type="com.gh.personinfo.company.model.Company" id="companyRM">
+        <!-- 主键 -->
+        <id property="id" column="cid" />
+        <!-- 一般属性 -->
+        <result property="name" column="name"/>
+        <result property="scale" column="scale"/>
+        <result property="business" column="business"/>
+        <result property="conname" column="conName"/>
+        <result property="conphone" column="conPhone"/>
+        <result property="conemail" column="conEmail" />
+        <result property="description" column="description"/>
+        <result property="address" column="address"/>
+	</resultMap>
+
     <!--auto generated Code-->
 
 <!--    &lt;!&ndash; resultMap映射 &ndash;&gt;
@@ -43,5 +58,14 @@
 			#{address}
 		)
 	</insert>
+
+	<select id="find" parameterType="java.util.HashMap" resultMap="companyRM">
+		select * from company c
+		where 1=1
+		<if test="行业类别 != null"> and c.business=#{行业类别}</if>
+		<if test="公司规模 != null">and c.scale=#{公司规模}</if>
+		<if test="公司地址 != null"> and c.address=#{公司地址}</if>
+		<!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
+	</select>
 </mapper>
 

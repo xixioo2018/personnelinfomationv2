@@ -38,12 +38,15 @@ public class PersonController {
         String newFileName = null;
         if(file != null && orginalFilename != null && orginalFilename.length() > 0) {
             //存储图片的物理路径
-            String file_path = request.getSession().getServletContext().getRealPath("upload");
+            String file_path = request.getSession().getServletContext().getRealPath("WEB-INF/upload");
             newFileName = orginalFilename.substring(orginalFilename.lastIndexOf("."));
-            File newFile = new File(file_path + newFileName);
+            System.out.println(file_path);
+            System.out.println(newFileName);
+            File newFile = new File(file_path +"\\"+ orginalFilename);
+
             //写入磁盘
             file.transferTo(newFile);
-            person.setResume(file_path+newFileName);
+            person.setResume(file_path +"\\"+ orginalFilename);
             System.out.println(person.toString());
         }
         personService.addPerson(person);

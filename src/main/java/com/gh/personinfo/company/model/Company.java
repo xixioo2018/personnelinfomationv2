@@ -7,9 +7,9 @@ public class Company {
 
     private String name;//公司名
 
-    private Dict scale;//公司规模
+    private Integer scale;//公司规模
 
-    private Dict business;//业务类型 多条
+    private Integer business;//业务类型 多条
 
     private String conname;//联系人姓名
 
@@ -37,19 +37,19 @@ public class Company {
         this.name = name;
     }
 
-    public Dict getScale() {
+    public Integer getScale() {
         return scale;
     }
 
-    public void setScale(Dict scale) {
+    public void setScale(Integer scale) {
         this.scale = scale;
     }
 
-    public Dict getBusiness() {
+    public Integer getBusiness() {
         return business;
     }
 
-    public void setBusiness(Dict business) {
+    public void setBusiness(Integer business) {
         this.business = business;
     }
 

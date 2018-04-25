@@ -58,9 +58,9 @@
 		    #{age,jdbcType=INTEGER},
 		    #{gender,jdbcType=VARCHAR},
 		    #{education,jdbcType=INTEGER},
-			#{category.id,jdbcType=INTEGER},
+			#{category,jdbcType=INTEGER},
 			#{company,jdbcType=VARCHAR},
-			#{job.id,jdbcType=INTEGER},
+			#{job,jdbcType=INTEGER},
 			#{school,jdbcType=VARCHAR},
 			#{experience,jdbcType=INTEGER},
 			#{resume,jdbcType=VARCHAR}

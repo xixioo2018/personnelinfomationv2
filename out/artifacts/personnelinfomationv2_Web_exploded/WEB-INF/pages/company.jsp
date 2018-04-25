@@ -66,6 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         margin-top: 5px;
     }
 </style>
+
 <body>
 <div class="top">
     <img src="${pageContext.request.contextPath}/img/logo.png" alt="光环国际">
@@ -74,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="main">
     <div class="query">
         <input type="text" class="form-control" class="">
-        <button class="btn btn-default" >搜索</button>
+        <button class="btn btn-default" onclick="test()">搜索</button>
         <div style="width:946px; margin:0 auto;">
             <div class="clearfix">
                 <p class="shaixuan-tj floatLeft clearfix">
@@ -88,55 +89,55 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div id="page-search-store" class="mb10 border sxcon">
                 <div class="search-by by-category relative">
                     <dl class="relative clearfix">
-                        <dt class="floatLeft"><a href="/">行业类别：</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">餐饮行业</a>
-                            <a href="/" class="">服务行业</a>
-                            <a href="/" class="">广告业</a>
-                            <a href="/" class="">IT行业</a>
-                            <a href="/" class="nzw12">运输业</a>
-                            <a href="/" class="">机械制造</a>
-                            <a href="/" class="">保险业</a>
-                            <a href="/" class="">能源</a>
-                            <a href="/" class="">教育</a>
-                            <a href="/" class="">化工</a>
-                            <a href="/" class="">艺术</a>
-                            <a href="/" class="">医疗服务</a>
-                            <a href="/" class="">旅游业</a>
+                        <dt class="floatLeft"><a href="/"> 行业类别</a></dt>
+                        <dd class="floatLeft show-con" id="CompanyType">
+                            <%--<a href="/" class="">餐饮行业</a>--%>
+                            <%--<a href="/" class="">服务行业</a>--%>
+                            <%--<a href="/" class="">广告业</a>--%>
+                            <%--<a href="/" class="">IT行业</a>--%>
+                            <%--<a href="/" class="nzw12">运输业</a>--%>
+                            <%--<a href="/" class="">机械制造</a>--%>
+                            <%--<a href="/" class="">保险业</a>--%>
+                            <%--<a href="/" class="">能源</a>--%>
+                            <%--<a href="/" class="">教育</a>--%>
+                            <%--<a href="/" class="">化工</a>--%>
+                            <%--<a href="/" class="">艺术</a>--%>
+                            <%--<a href="/" class="">医疗服务</a>--%>
+                            <%--<a href="/" class="">旅游业</a>--%>
                         </dd>
                         <dd class="floatLeft show-more"><h3 class="pointer clearfix"><span>更多</span><i class="icon-angle-down"></i></h3></dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">公司规模：</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">少于50人</a>
-                            <a href="/" class="">50-100人</a>
-                            <a href="/" class="">150-500人</a>
-                            <a href="/" class="">500-1000人</a>
-                            <a href="/" class="">5000-10000人</a>
-                            <a href="/" class="">10000人以上</a>
+                        <dt class="floatLeft"><a href="/"> 公司规模</a></dt>
+                        <dd class="floatLeft show-con" id="CompanySize">
+                            <%--<a href="/" class="">少于50人</a>--%>
+                            <%--<a href="/" class="">50-100人</a>--%>
+                            <%--<a href="/" class="">150-500人</a>--%>
+                            <%--<a href="/" class="">500-1000人</a>--%>
+                            <%--<a href="/" class="">5000-10000人</a>--%>
+                            <%--<a href="/" class="">10000人以上</a>--%>
                         </dd>
                     </dl>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">招聘方向：</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">java开发</a>
-                            <a href="/" class="">php开发</a>
+                        <dt class="floatLeft"><a href="/"> 招聘方向</a></dt>
+                        <dd class="floatLeft show-con" id="recruitment">
+                            <%--<a href="/" class="">java开发</a>--%>
+                            <%--<a href="/" class="">php开发</a>--%>
                         </dd>
                     </dl>
+                    <%--<dl class="relative clearfix" style="border-bottom:0">--%>
+                        <%--<dt class="floatLeft"><a href="/">招聘人数：</a></dt>--%>
+                        <%--<dd class="floatLeft show-con">--%>
+                            <%--<a href="/" class="">少于5人</a>--%>
+                            <%--<a href="/" class="">5-10人</a>--%>
+                            <%--<a href="/" class="">10-50人</a>--%>
+                            <%--<a href="/" class="">50-100人</a>--%>
+                            <%--<a href="/" class="">100-200人</a>--%>
+                            <%--<a href="/" class="">200-500人</a>--%>
+                        <%--</dd>--%>
+                    <%--</dl>--%>
                     <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">招聘人数：</a></dt>
-                        <dd class="floatLeft show-con">
-                            <a href="/" class="">少于5人</a>
-                            <a href="/" class="">5-10人</a>
-                            <a href="/" class="">10-50人</a>
-                            <a href="/" class="">50-100人</a>
-                            <a href="/" class="">100-200人</a>
-                            <a href="/" class="">200-500人</a>
-                        </dd>
-                    </dl>
-                    <dl class="relative clearfix" style="border-bottom:0">
-                        <dt class="floatLeft"><a href="/">公司地址：</a></dt>
+                        <dt class="floatLeft"><a href="/"> 公司地址</a></dt>
                         <dd class="floatLeft show-con">
                             <a href="/" class="">武汉</a>
                             <a href="/" class="">北京</a>
@@ -364,6 +365,72 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </body>
 <script>
+    var dicts;
+    function test () {
+        var serch = $(".crumb-select-item").find("a").text();
+        //alert(serch);
+        /*var boxIds = new Array();
+        boxIds.push("age=23");
+        boxIds.push("school=jdwl");
+        boxIds.push("category=12");
+        alert(boxIds)*/
+        /*var param = {list : boxIds};
+        alert(param.list)*/
+        $.ajax({
+            timeout : 20000,
+            type : "POST",
+            dataType : "JSON",
+            /*traditional:true,*/
+            url : "company-querycompany",
+            data : {serch: serch},
+            success : function(data){
+                /*if (data.flag){
+                    alert(data.flag+""+data.massage)
+                }else {
+                    alert("error")
+                }*/
+
+                /*data.each(function (n,value) {
+                    alert(n)
+                })*/
+                $('#ptb').datagrid('loadData',data);
+            }
+            //注意：这里不能加下面这行，否则数据会传不到后台
+            //contentType:'application/json;charset=UTF-8',
+        });
+    }
+    $.ajax({
+        type: "GET",
+        url: "dict-queryage",
+        dataType: "json",
+        success: function(data){
+            var date = eval(data);
+            for (var i=0;i<data.length;i++) {
+                if(data[i].dctypeid==1){
+                    $("#CompanySize").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
+
+                }else if(data[i].dctypeid==3){
+                    $("#CompanyType").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
+                }else if(data[i].dctypeid==4){
+                    $("#recruitment").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
+                }
+            }
+        }
+    });
+    $(".show-con").on('click','.abc',function(){
+        event.preventDefault();
+        THIP = $(this).parents("dl");
+        if($(this).hasClass("nzw12")){
+        }else{
+            $(this).addClass("nzw12");
+            var zhiclass = $(this).parents("dd").siblings("dt").find("a").text();
+            zhicon = $(this).text();
+            tianjaneir="<span class='crumb-select-item'><a href='/'><b>"+zhiclass+"</b><em>"+zhicon+"</em><i class='icon-remove'></i></a></span>"
+            $(".shaixuan-tj").children().last().after(tianjaneir);
+            THIP.css("display","none");
+        }
+    });
+
     $(function(){
         $("tr:even").addClass("active");
         $("tr:odd").addClass("info")
