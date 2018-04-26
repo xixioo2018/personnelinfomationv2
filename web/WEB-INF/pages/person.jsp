@@ -186,7 +186,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                data-options="fitColumns:true,singleSelect:true">
             <thead>
             <tr>
-                <th data-options="field:'operate',width:100,align:'center',hidden:true">学生编号</th>
+                <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
+                    return operate(value,row,index);}">操作</th>
                 <th data-options="field:'id',width:100,align:'center',hidden:true">学生编号</th>
                 <th data-options="field:'name',width:100,align:'center'">名称</th>
                 <th data-options="field:'age',width:100,align:'center'">年龄</th>
@@ -230,6 +231,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script>
     var dicts;
+    $('#ptb').datagrid({
+        onDblClickRow:function(index,row){
+         alert(row.education);
+        },
+        onLoadSuccess:function(data){
+            $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-edit'});
+        },
+        onClickCell:function(index,field,value){
+            if(field!="operate"){
+                return;
+            }
+            $(this).datagrid('selectRow',index);
+            var row=$(this).datagrid('getSelected');
+            $('#dd').dialog('open');
+        }
+    });
     function test () {
         var serch = $(".crumb-select-item").find("a").text();
         //alert(serch);
@@ -398,5 +415,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         }
     }
+
+    function operate(value,row,index){
+        var str = '<a href="#" name="opera"  class="easyui-linkbutton" >修改</a>';
+        return str;
+    }
+
+
 </script>
+
+<div id="dd" class="easyui-dialog" style="width:600px;height:300px" closed="true"
+     data-options="title:'My Dialog',modal:true,
+			toolbar:[{
+				text:'编辑',
+				iconCls:'icon-edit',
+				handler:function(){alert('edit')}
+			},{
+				text:'帮助',
+				iconCls:'icon-help',
+				handler:function(){alert('help')}
+			}]">
+</div>
+
+
 </html>
