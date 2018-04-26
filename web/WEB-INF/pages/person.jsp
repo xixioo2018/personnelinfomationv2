@@ -274,6 +274,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 /*data.each(function (n,value) {
                     alert(n)
                 })*/
+
                 $('#ptb').datagrid('loadData',data);
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
