@@ -20,4 +20,6 @@ public class CompanyDaoImp extends BaseDaoImpl<Company> implements CompanyDao {
         List<Company> companyList = this.getSqlSession().selectList(this.getNs()+".find，map");
         return companyList;
     }
+
+
 }

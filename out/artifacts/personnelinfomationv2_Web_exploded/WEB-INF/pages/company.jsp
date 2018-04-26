@@ -16,6 +16,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+
+<!--easyui-->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/insdep/themes/insdep/easyui.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/insdep/themes/insdep/icon.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
+<!--国际化-->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/locale/easyui-lang-zh_CN.js"></script>
+<style>
 <style>
     *{
         margin: 0px;
@@ -118,13 +128,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <%--<a href="/" class="">10000人以上</a>--%>
                         </dd>
                     </dl>
-                    <dl class="relative clearfix" style="border-bottom:0">
+                    <!--<dl class="relative clearfix" style="border-bottom:0">
                         <dt class="floatLeft"><a href="/"> 招聘方向</a></dt>
                         <dd class="floatLeft show-con" id="recruitment">
                             <%--<a href="/" class="">java开发</a>--%>
                             <%--<a href="/" class="">php开发</a>--%>
                         </dd>
-                    </dl>
+                    </dl>-->
                     <%--<dl class="relative clearfix" style="border-bottom:0">--%>
                         <%--<dt class="floatLeft"><a href="/">招聘人数：</a></dt>--%>
                         <%--<dd class="floatLeft show-con">--%>
@@ -138,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <%--</dl>--%>
                     <dl class="relative clearfix" style="border-bottom:0">
                         <dt class="floatLeft"><a href="/"> 公司地址</a></dt>
-                        <dd class="floatLeft show-con">
+                        <dd class="floatLeft show-con" id="address">
                             <a href="/" class="">武汉</a>
                             <a href="/" class="">北京</a>
                         </dd>
@@ -148,201 +158,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <div class="information">
-        <table class="table table-striped table-bordered table-hover " style="background-color: white" width="200">
+        <!--company表-->
+        <table id="ctb"class="easyui-datagrid" style="width:100%;height:250px"
+               data-options="fitColumns:true,singleSelect:true">
+            <thead>
             <tr>
-                <th>No</th>
-                <th>名称</th>
-                <th>公司规模</th>
-                <th>行业类别</th>
-                <th>招聘方向</th>
-                <th>招聘人数</th>
-                <th>职位要求</th>
-                <th>联系人姓名</th>
-                <th>联系人电话</th>
-                <th>公司地址</th>
+                <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
+                    return operate(value,row,index);}">操作</th>
+                <th data-options="field:'id',width:100,align:'center',hidden:true">公司编号</th>
+                <th data-options="field:'name',width:100,align:'center'">公司名称</th>
+                <th data-options="field:'scale',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">公司规模(人)</th>
+                <th data-options="field:'business',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">行业类别</th>
+                <th data-options="field:'conname',width:100,align:'center'">联系人姓名</th>
+                <th data-options="field:'conphone',width:100,align:'center'">联系人电话</th>
+                <th data-options="field:'conemail',width:100,align:'center'">联系人邮箱</th>
+                <th data-options="field:'desription',width:100,align:'center',hidden:true">公司简介</th>
+                <th data-options="field:'address',width:100,align:'center'">公司地址</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-            </tr>
+            </thead>
         </table>
-
     </div>
 </div>
 <div class="link">
@@ -366,6 +202,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script>
     var dicts;
+    $('#ctb').datagrid({
+        onDblClickRow:function(index,row){
+            alert(row.id);
+        },
+        onLoadSuccess:function(data){
+            $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-search'});
+        },
+        onClickCell:function(index,field,value){
+            if(field!="operate"){
+                return;
+            }
+            $(this).datagrid('selectRow',index);
+            var row=$(this).datagrid('getSelected');
+            window.location.href = "company-querycompanyById?id="+row.id;
+        }
+    });
     function test () {
         var serch = $(".crumb-select-item").find("a").text();
         //alert(serch);
@@ -393,7 +245,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 /*data.each(function (n,value) {
                     alert(n)
                 })*/
-                $('#ptb').datagrid('loadData',data);
+                $('#ctb').datagrid('loadData',data);
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
             //contentType:'application/json;charset=UTF-8',
@@ -405,14 +257,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         dataType: "json",
         success: function(data){
             var date = eval(data);
+            dicts=date;
             for (var i=0;i<data.length;i++) {
                 if(data[i].dctypeid==1){
                     $("#CompanySize").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
-
                 }else if(data[i].dctypeid==3){
                     $("#CompanyType").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
                 }else if(data[i].dctypeid==4){
                     $("#recruitment").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
+                }else if(data[i].dctypeid==5){
+                    $("#address").append("<a href=\"/\" class=\"abc\">"+data[i].dictname+"</a>");
                 }
             }
         }
@@ -509,5 +363,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             console.log($(".shaixuan-tj span:gt(1) a").text());
         })
     })
+
+
+    function operate(value,row,index){
+        var str = '<a href="#" name="opera"  class="easyui-linkbutton"  >查看</a>';
+        return str;
+    }
+
+    function formatDict(num){
+        for(var i=0 ;i<dicts.length;i++){
+            if(num==dicts[i].id){
+                return dicts[i].dictname;
+            }
+        }
+    }
 </script>
 </html>

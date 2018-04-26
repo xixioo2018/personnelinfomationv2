@@ -215,6 +215,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
             $(this).datagrid('selectRow',index);
             var row=$(this).datagrid('getSelected');
+            window.location.href = "company-querycompanyById?id="+row.id;
         }
     });
     function test () {

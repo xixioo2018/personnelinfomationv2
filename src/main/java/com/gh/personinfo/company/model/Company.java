@@ -92,4 +92,19 @@ public class Company {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", scale=" + scale +
+                ", business=" + business +
+                ", conname='" + conname + '\'' +
+                ", conphone='" + conphone + '\'' +
+                ", conemail='" + conemail + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

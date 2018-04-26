@@ -67,5 +67,9 @@
 		<if test="公司地址 != null"> and c.address=#{公司地址}</if>
 		<!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
 	</select>
+
+	<select id="get" parameterType="java.lang.Integer" resultMap="companyRM">
+		select * from company where cid = #{id}
+	</select>
 </mapper>
 

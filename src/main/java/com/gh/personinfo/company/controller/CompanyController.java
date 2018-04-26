@@ -8,9 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,4 +60,17 @@ public class CompanyController {
         }
         return companyList;
     }
+
+
+    @RequestMapping("company-querycompanyById")
+    public ModelAndView querycompanyById(@RequestParam int id ){
+        ModelAndView mv = new ModelAndView("/project.jsp");
+        System.out.println(id);
+        Company company = companyService.get(id);
+        System.out.println(company);
+        mv.addObject("company", company);
+        return mv;
+    }
+
+
 }

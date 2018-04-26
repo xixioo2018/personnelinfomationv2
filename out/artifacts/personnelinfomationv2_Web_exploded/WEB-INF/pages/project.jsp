@@ -14,6 +14,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/link.css">
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<!--easyui-->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/insdep/themes/insdep/easyui.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/insdep/themes/insdep/icon.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
+<!--国际化-->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/locale/easyui-lang-zh_CN.js"></script>
 <style>
     *{
         margin: 0px;
@@ -99,6 +107,117 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         padding: 5px;
     }
 </style>
+<script>
+    $(function(){
+        $('#tt').datagrid({
+            title:'项目一览',
+            width:1100,
+            height:'auto',
+            remoteSort:false,
+            singleSelect:true,
+            nowrap:false,
+            fitColumns:true,
+            url:'testServlet',
+            columns:[[
+                {field:'id',title:'编号',width:80},
+                {field:'name',title:'项目名称',width:100,sortable:true},
+                {field:'category',title:'业务类型',width:80,align:'right',sortable:true},
+                {field:'reqnum',title:'需要人数',width:80,align:'right',sortable:true},
+                {field:'nownum',title:'当前人数',width:150,sortable:true},
+                {field:'comid',title:'公司id',width:60,align:'center'},
+                {field:'state',title:'状态',width:60,align:'center'},
+                {field:'require',title:'项目需求',width:60,align:'center'}
+            ]],
+            view: detailview,
+            detailFormatter: function(Index, row){
+                return '<div style="padding:2px;position:relative;height:250px"><table id="ttc"></table></div>';
+            },
+            onExpandRow: function(index,row){
+                var ttc = $(this).datagrid('getRowDetail',index).find('table#ttc');
+                ttc.datagrid({
+                    fitColumns:true,
+                    singleSelect:true,
+                    loadMsg:'正在加载...',
+                    height:'auto',
+                    pagination:true,
+                    pageSize:5,
+                    pageList:[5],
+                    pagePosition:'top',
+                    columns:[[
+                        {field:'operate',
+                            title:'操作',
+                            align:'center',
+                            width:110,
+                            formatter:function(value, row, index){
+                                var str = '<a href="#" name="opera"  class="easyui-linkbutton"  >匹配</a>';
+                                return str;
+                            }},
+                        {
+                            title:'岗位编号',
+                            field: 'id',
+                            width:100
+                        },
+                        {
+                            title:'所属项目',
+                            field: 'proid',
+                            width:100
+                        },
+                        {
+                            title:'需求人数',
+                            field: 'reqnum',
+                            width:100
+                        },
+                        {
+                            title:'当前人数',
+                            field: 'nownum',
+                            width:100
+                        },
+                        {
+                            title:'匹配人数',
+                            field: 'matnum',
+                            width:100
+                        },
+                        {
+                            title:'岗位类型',
+                            field: 'jobtype',
+                            width:100
+                        }
+                    ]],
+                    onLoadSuccess:function(data){
+                        $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-search'});
+                    },
+                    onClickRow:function(index,row){
+                        //匹配
+                        /*
+                        $.post('matchServlet',row,function(){
+                          $('#none').datagrid('reload');
+                          $('#done').datagrid('reload');
+                        });
+                        $('#dd').dialog('open');
+                        */
+                    },
+                    onClickCell:function(index,field,value){
+                        if(field!="operate"){
+                            return;
+                        }
+                        $(this).datagrid('selectRow',index);
+                        var row=$(this).datagrid('getSelected');
+                        $.post('matchServlet',row,function(){
+                            $('#none').datagrid('reload');
+                            $('#done').datagrid('reload');
+                        });
+                        $('#dd').dialog('open');
+                    }
+                });
+                var data=row.jobs;
+                ttc.datagrid('loadData',data);
+            }
+        });
+
+    });
+
+
+</script>
 <body>
 <div class="top">
     <img src="img/logo.png" alt="光环国际">
@@ -106,38 +225,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div class="main">
     <div class="companyinf">
-        <h3>光环国际</h3>
+        <h3>${company.name}</h3>
         <div class="introduce">
             <h4>公司介绍</h4>
              <p>
-                 光环国际教育集团创办于2001年，在管理培训领域，光环卓而不凡的服务品质，已经成为国内该领域的著名品牌。多年来我们一直致力于传播国际领先的管理思想和方法，并推动其在中国企业的广泛应用，帮助个人与组织取得持久竞争力，以此助推国家发展。目前，光环国际教育集团在项目管理、国际财会、国际MBA教育等领域积累了丰富成熟的经验，并取得了令人骄傲的成绩，荣获08年腾讯网主办的“中国最具实力教育集团”的称号。
-                 光环国际一如既往全力推动项目管理在中国的发展，以“诚信，专注，高效，进取，共赢”为理念，为客户创造价值，引领管理实践，提升企业的管理成熟度，帮助企业和管理者实现自我突破和超越！以此推动国家发展！
-
+                ${company.description}
              </p>
         </div>
         <div class="information">
         <span>公司基本信息</span>
             <ul>
-                <li><strong>业务类型:</strong><span>互联网/培训</span></li>
-                <li><strong>公司规模:</strong><span>2000人以上</span></li>
-                <li><strong>企业邮箱:</strong><span>328852120@qq.com</span></li>
-                <li><strong>公司地点:</strong><span>光谷软件园</span></li>
+                <li><strong>业务类型:</strong><span>${company.business}</span></li>
+                <li><strong>公司规模:</strong><span>${company.scale}</span></li>
+                <li><strong>企业邮箱:</strong><span>${company.conemail}</span></li>
+                <li><strong>公司地点:</strong><span>${company.address}</span></li>
             </ul>
         </div>
         <div class="contact">
-<p><strong>联系人姓名:</strong><span>老王</span></p>
-<p><strong>联系人电话:</strong><span>18627857490</span></p>
+<p><strong>联系人姓名:</strong><span>${company.conname}</span></p>
+<p><strong>联系人电话:</strong><span>${company.conphone}</span></p>
         </div>
     </div>
     <div class="project">
 
     </div>
-    <div class="job">
 
-    </div>
-    <div class="mate">
-
-    </div>
 </div>
 <div class="link">
     <div class="left">快速导航&lt;&lt;</div>
@@ -155,6 +267,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="#">字典维护</a></li>
             <li><a href="#">数据字典</a></li>
         </ul>
+    </div>
+</div>
+
+
+
+<table id="tt"></table>
+<div id="dd" class="easyui-dialog" closed="true" title="人才匹配" closed="open"  modal="true" cache="true" style="width:1200px;height:600px;">
+    <div id="tabs" class="easyui-tabs" fit=true tabWidth=200 narrow=true>
+        <div title="未推送"  style="padding:20px;display:none;">
+            <table id="none" class="easyui-datagrid" style="width:1150px;" pagination="true"
+                   data-options="url:'noneServlet',fitColumns:false,singleSelect:true">
+                <thead>
+                <tr>
+                    <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
+                    <th data-options="field:'name',width:100,align:'center'">名称</th>
+                    <th data-options="field:'age',width:50,align:'center'">年龄</th>
+                    <th data-options="field:'gender',width:50,align:'center'">性别</th>
+                    <th data-options="field:'education',width:100,align:'center'">学历</th>
+                    <th data-options="field:'school',width:100,align:'center'">毕业学校</th>
+                    <th data-options="field:'category',width:100,align:'center'">种类</th>
+                    <th data-options="field:'company',width:100,align:'center'">公司</th>
+                    <th data-options="field:'job',width:100,align:'center'">求职方向</th>
+                    <th data-options="field:'experience',width:50,align:'center'">经验</th>
+                    <th data-options="field:'status',width:50,align:'center'">状态</th>
+                    <th data-options="field:'resume',width:100,align:'center'">简历附件</th>
+                    <th data-options="field:'priority',width:50,align:'center',hidden:'true'">优先度</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div title="已推送" style="padding:20px;display:none;">
+            <table id="done" class="easyui-datagrid" style="width:1150px;"
+                   data-options="url:'doneServlet',fitColumns:false,singleSelect:true">
+                <thead>
+                <tr>
+                    <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
+                    <th data-options="field:'jobId',width:100,align:'center'">名称</th>
+                    <th data-options="field:'jobType',width:50,align:'center'">年龄</th>
+                    <th data-options="field:'person',width:50,align:'center',formatter:function(val){
+                    return val.name;
+                }">学生</th>
+                    <th data-options="field:'status',width:100,align:'center'">学历</th>
+                    <th data-options="field:'isInter',width:100,align:'center'">毕业学校</th>
+                    <th data-options="field:'isHire',width:100,align:'center'">种类</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 </body>
