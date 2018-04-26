@@ -10,7 +10,7 @@ public class Project {
 
     private String name;//项目名称
 
-    private Dict category;//分类
+    private Integer category;//分类
 
     private Integer reqnum;//应有人数
 
@@ -42,11 +42,11 @@ public class Project {
         this.name = name;
     }
 
-    public Dict getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(Dict category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 

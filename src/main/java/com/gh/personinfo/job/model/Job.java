@@ -6,7 +6,7 @@ import com.gh.personinfo.project.model.Project;
 public class Job {
     private Integer id;
 
-    private Project proid;//项目
+    private Integer proid;//项目
 
     private Integer reqnum;//应有人数
 
@@ -14,7 +14,7 @@ public class Job {
 
     private Integer matnum;//匹配人数
 
-    private Dict jobtype;//业务类型
+    private Integer jobtype;//业务类型
 
     public Integer getId() {
         return id;
@@ -24,11 +24,11 @@ public class Job {
         this.id = id;
     }
 
-    public Project getProid() {
+    public Integer getProid() {
         return proid;
     }
 
-    public void setProid(Project proid) {
+    public void setProid(Integer proid) {
         this.proid = proid;
     }
 
@@ -56,11 +56,11 @@ public class Job {
         this.matnum = matnum;
     }
 
-    public Dict getJobtype() {
+    public Integer getJobtype() {
         return jobtype;
     }
 
-    public void setJobtype(Dict jobtype) {
+    public void setJobtype(Integer jobtype) {
         this.jobtype = jobtype;
     }
 
