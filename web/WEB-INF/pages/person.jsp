@@ -200,8 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th data-options="field:'company',width:100,align:'center'">在职公司</th>
                 <th data-options="field:'job',width:100,align:'center',formatter:function(val){
                     return formatDict(val);}">求职方向</th>
-                <th data-options="field:'experience',width:100,align:'center',formatter:function(val){
-                    return val+'年'}">工作经验</th>
+                <th data-options="field:'experience',width:100,align:'center'">工作经验(年)</th>
                 <th data-options="field:'status',width:100,align:'center'">状态</th>
                 <th data-options="field:'resume',width:100,align:'center',hidden:true">简历附件</th>
                 <th data-options="field:'priority',width:100,align:'center',hidden:true">优先度</th>
@@ -245,6 +244,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $(this).datagrid('selectRow',index);
             var row=$(this).datagrid('getSelected');
             $('#dd').dialog('open');
+            $('#fm').form('load',row);
         }
     });
     function test () {
@@ -300,12 +300,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }*/
                     if (jsonStr1[i].dctypeid==2){
                         $("#educationajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
+                        $("#education").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
                     }
                     if (jsonStr1[i].dctypeid==3){
                         $("#categoryajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
+                        $("#category").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
                     }
                     if (jsonStr1[i].dctypeid==4){
                         $("#jobajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
+                        $("#job").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
                     }
                 }
                //alert(dicts.length);
@@ -421,20 +424,70 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         return str;
     }
 
+    function a(){
+        alert(1);
+    }
+
 
 </script>
 
-<div id="dd" class="easyui-dialog" style="width:600px;height:300px" closed="true"
-     data-options="title:'My Dialog',modal:true,
-			toolbar:[{
-				text:'编辑',
-				iconCls:'icon-edit',
-				handler:function(){alert('edit')}
-			},{
-				text:'帮助',
-				iconCls:'icon-help',
-				handler:function(){alert('help')}
-			}]">
+<div id="dd" class="easyui-dialog" style="width:900px;height:250px" closed="true"
+     data-options="title:'修改人才信息',modal:true,buttons:'#tb'">
+    <form id="fm" action="person-uploadperson"  method="post" enctype="multipart/form-data">
+        <input type="hidden" name="resume" value="abc">
+        <table >
+            <tr align="right">
+                <td><strong>姓名:</strong></td>
+                <td><input type="text" class="form-control" placeholder="姓名" name="name"></td>
+                <td><strong>年龄:</strong></td>
+                <td><input type="text" class="form-control" placeholder="年龄" name="age"></td>
+                <td><strong>性别:</strong></td>
+                <td align="left"><strong>男</strong><input type="radio" name="gender" value="男"><strong>女</strong><input type="radio" name="gender" value="女"></td>
+            </tr>
+            <tr align="right">
+                <td><strong>学历:</strong></td>
+                <td>
+                    <select class="form-control" name="education" id="education">
+                    </select>
+                </td>
+                <td><strong>毕业院校:</strong></td>
+                <td><input type="text" class="form-control" placeholder="毕业院校" name="school"></td>
+                <td><strong>行业类别:</strong></td>
+                <td>
+                    <select class="form-control" name="category" id="category">
+                    </select>
+                </td>
+            </tr>
+            <tr align="right">
+                <td><strong>所在公司:</strong></td>
+                <td><input type="text" class="form-control" placeholder="所在公司" name="company"></td>
+                <td><strong>求职方向:</strong></td>
+                <td>
+                    <select class="form-control" name="job" id="job">
+                    </select>
+                </td>
+                <td><strong>工作经验:</strong></td>
+                <td><input type="text" class="form-control" placeholder="工作经验" name="experience"></td>
+            </tr>
+            <tr>
+                <td><strong>是否在职</strong></td>
+                <td>
+                    <select class="form-control" name="status">
+                        <option value="0">不在职</option>
+                        <option value="1">在职</option>
+                    </select>
+                </td>
+                <td><strong>上传简历:</strong></td>
+                <td>
+                    <input type="file" class="btn btn-primary" name="file">
+                </td>
+                <td colspan="2"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="tb">
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="a()">提交</a>
 </div>
 
 
