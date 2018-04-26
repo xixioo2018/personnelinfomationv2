@@ -6,7 +6,7 @@
         <result column="name" property="name"></result>
         <result column="require" property="require"></result>
         <result column="category" property="category"></result>
-        <result column="reqNum" property="nownum"></result>
+        <result column="reqNum" property="reqnum"></result>
         <result column="nowNum" property="nownum"></result>
         <result column="staTime" property="statime"></result>
         <result column="endTime" property="endtime"></result>

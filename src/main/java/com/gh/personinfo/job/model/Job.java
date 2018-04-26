@@ -1,7 +1,5 @@
 package com.gh.personinfo.job.model;
 
-import com.gh.personinfo.dict.model.Dict;
-import com.gh.personinfo.project.model.Project;
 
 public class Job {
     private Integer id;
@@ -15,6 +13,18 @@ public class Job {
     private Integer matnum;//匹配人数
 
     private Integer jobtype;//业务类型
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", proid=" + proid +
+                ", reqnum=" + reqnum +
+                ", nownum=" + nownum +
+                ", matnum=" + matnum +
+                ", jobtype=" + jobtype +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -62,17 +72,5 @@ public class Job {
 
     public void setJobtype(Integer jobtype) {
         this.jobtype = jobtype;
-    }
-
-    @Override
-    public String toString() {
-        return "Job{" +
-                "id=" + id +
-                ", proid=" + proid +
-                ", reqnum=" + reqnum +
-                ", nownum=" + nownum +
-                ", matnum=" + matnum +
-                ", jobtype=" + jobtype +
-                '}';
     }
 }

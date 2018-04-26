@@ -7,13 +7,13 @@ import com.gh.personinfo.person.model.Person;
 public class Job2person {
     private Integer id;
 
-    private Job jobid;//job Id
+    private Integer jobid;//job Id
 
-    private Dict jobtype;
+    private Integer jobtype;
 
-    private Person perid;
+    private Integer perid;
 
-    private Dict status;
+    private Integer status;
 
     private Integer isinter;//是否面试
 
@@ -27,35 +27,35 @@ public class Job2person {
         this.id = id;
     }
 
-    public Job getJobid() {
+    public Integer getJobid() {
         return jobid;
     }
 
-    public void setJobid(Job jobid) {
+    public void setJobid(Integer jobid) {
         this.jobid = jobid;
     }
 
-    public Dict getJobtype() {
+    public Integer getJobtype() {
         return jobtype;
     }
 
-    public void setJobtype(Dict jobtype) {
+    public void setJobtype(Integer jobtype) {
         this.jobtype = jobtype;
     }
 
-    public Person getPerid() {
+    public Integer getPerid() {
         return perid;
     }
 
-    public void setPerid(Person perid) {
+    public void setPerid(Integer perid) {
         this.perid = perid;
     }
 
-    public Dict getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Dict status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

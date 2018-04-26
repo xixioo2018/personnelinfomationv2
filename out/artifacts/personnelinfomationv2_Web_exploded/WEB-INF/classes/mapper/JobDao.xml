@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gh.personinfo.job.dao.JobDao">
     <!--auto generated Code-->
-
+    <resultMap id="jobRM" type="com.gh.personinfo.job.model.Job">
+        <id column="jid" property="id" ></id>
+        <result column="proId" property="proid"></result>
+        <result column="reqNum" property="reqnum"></result>
+        <result column="nowNum" property="nownum"></result>
+        <result column="matNum" property="matnum"></result>
+        <result column="jobType" property="jobtype"></result>
+    </resultMap>
+    <!--auto generated Code-->
+    <select id="find" parameterType="java.util.HashMap" resultMap="jobRM">
+        select * from job j where proId = #{proid}
+        <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
+    </select>
 </mapper>
 

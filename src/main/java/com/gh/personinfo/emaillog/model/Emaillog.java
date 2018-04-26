@@ -9,11 +9,11 @@ import java.util.Date;
 public class Emaillog {
     private Integer id;
 
-    private Project proid;
+    private Integer proid;
 
-    private Job jobid;
+    private Integer jobid;
 
-    private Person perid;
+    private Integer perid;
 
     private Date time;
 
@@ -25,27 +25,27 @@ public class Emaillog {
         this.id = id;
     }
 
-    public Project getProid() {
+    public Integer getProid() {
         return proid;
     }
 
-    public void setProid(Project proid) {
+    public void setProid(Integer proid) {
         this.proid = proid;
     }
 
-    public Job getJobid() {
+    public Integer getJobid() {
         return jobid;
     }
 
-    public void setJobid(Job jobid) {
+    public void setJobid(Integer jobid) {
         this.jobid = jobid;
     }
 
-    public Person getPerid() {
+    public Integer getPerid() {
         return perid;
     }
 
-    public void setPerid(Person perid) {
+    public void setPerid(Integer perid) {
         this.perid = perid;
     }
 

@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gh.personinfo.project.dao.ProjectDao">
+    <resultMap id="projectRM" type="com.gh.personinfo.project.model.Project">
+        <id column="proid" property="id" ></id>
+        <result column="name" property="name"></result>
+        <result column="require" property="require"></result>
+        <result column="category" property="category"></result>
+        <result column="reqNum" property="reqnum"></result>
+        <result column="nowNum" property="nownum"></result>
+        <result column="staTime" property="statime"></result>
+        <result column="endTime" property="endtime"></result>
+        <result column="comId" property="comid"></result>
+        <result column="state" property="state"></result>
+    </resultMap>
     <!--auto generated Code-->
-
+    <select id="find" parameterType="java.util.HashMap" resultMap="projectRM">
+        select * from project p where id = #{id}
+        <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
+    </select>
 </mapper>
 

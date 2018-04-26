@@ -20,9 +20,9 @@ public class Project {
 
     private Date endtime;//结束时间
 
-    private Company comid;//公司
+    private Integer comid;//公司
 
-    private Dict state;//状态:开始 完成
+    private Integer state;//状态:开始 完成
 
     private String require;//项目简介
 
@@ -82,19 +82,19 @@ public class Project {
         this.endtime = endtime;
     }
 
-    public Company getComid() {
+    public Integer getComid() {
         return comid;
     }
 
-    public void setComid(Company comid) {
+    public void setComid(Integer comid) {
         this.comid = comid;
     }
 
-    public Dict getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(Dict state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
@@ -104,5 +104,21 @@ public class Project {
 
     public void setRequire(String require) {
         this.require = require;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", reqnum=" + reqnum +
+                ", nownum=" + nownum +
+                ", statime=" + statime +
+                ", endtime=" + endtime +
+                ", comid=" + comid +
+                ", state=" + state +
+                ", require='" + require + '\'' +
+                '}';
     }
 }

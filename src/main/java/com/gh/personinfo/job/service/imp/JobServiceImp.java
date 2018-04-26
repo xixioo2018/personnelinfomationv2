@@ -17,9 +17,9 @@ public class JobServiceImp implements JobService {
     JobDao jobDao;
 
     @Override
-    public List<Job> queryJobById(int id) {
+    public List<Job> queryJobById(int proid) {
         Map<String,Integer> map = new HashMap<>();
-        map.put("id",id);
+        map.put("proid",proid);
         return jobDao.find(map);
     }
 }

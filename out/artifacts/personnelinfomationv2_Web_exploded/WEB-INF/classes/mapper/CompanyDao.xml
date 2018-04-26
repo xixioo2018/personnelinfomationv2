@@ -49,8 +49,8 @@
 		(name,scale,business,conName,conPhone,conEmail,description,address)
 		values
 		(	#{name},
-		    #{scale.id},
-		    #{business.id},
+		    #{scale},
+		    #{business},
 		    #{conname},
 			#{conphone},
 			#{conemail},

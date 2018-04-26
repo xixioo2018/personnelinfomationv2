@@ -12,7 +12,7 @@
     </resultMap>
     <!--auto generated Code-->
     <select id="find" parameterType="java.util.HashMap" resultMap="jobRM">
-        select * from job j where id = #{id}
+        select * from job j where proId = #{proid}
         <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
     </select>
 </mapper>
