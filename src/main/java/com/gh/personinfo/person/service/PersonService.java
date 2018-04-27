@@ -11,4 +11,6 @@ public interface PersonService {
     public List<Person> queryperson(Map<String,Object> map);
 
     public Map<String,Object> deal(String serch);
+
+    List<Person> matchPerson(int jobtype, int jobid);
 }

@@ -78,5 +78,11 @@
 		<if test="工作经验 != null"> and p.experience between #{workage0} and #{workage1}</if>
 		<!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
 	</select>
+
+	<select id="match" parameterType="java.util.HashMap" resultMap="personRM">
+		select p.* from person p where p.job=#{jobtype} and p.perid not in (
+			select j2.perId from  job2Person j2 where j2.jobId =#{jobid}
+		)
+	</select>
 </mapper>
 

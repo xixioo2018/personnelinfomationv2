@@ -103,6 +103,15 @@ public class PersonServiceImp implements PersonService {
         }
         return map;
     }
+
+    @Override
+    public List<Person> matchPerson(int jobtype, int jobid) {
+        Map map=new HashMap();
+        map.put("jobtype",jobtype );
+        map.put("jobid", jobid);
+        return personDao.match(map);
+    }
+
     public String[] changge(String s1,Map<String,Object> map){
         String[] s2 = new String[2];
         System.out.println(s1);

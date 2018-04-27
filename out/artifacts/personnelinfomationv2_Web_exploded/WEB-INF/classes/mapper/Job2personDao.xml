@@ -2,6 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gh.personinfo.job2person.dao.Job2personDao">
     <!--auto generated Code-->
+    <resultMap id="job2PersonRM" type="com.gh.personinfo.job2person.model.Job2person">
+        <id property="id" column="j2id"></id>
+        <result property="jobid" column="jobId"></result>
+        <result property="jobtype" column="jobType"></result>
+        <result property="status" column="status"></result>
+        <result property="isinter" column="isInter"></result>
+        <result property="ishire" column="isHire"></result>
+        <association property="perid" column="perId" javaType="com.gh.personinfo.person.model.Person" >
+            <id property="id" column="perid" />
+            <!-- 一般属性 -->
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+            <result property="gender" column="gender"/>
+            <result property="education" column="education"/>
+            <result property="school" column="school"/>
+            <result property="category" column="category" />
+            <result property="company" column="company"/>
+            <result property="job" column="job"/>
+            <result property="experience" column="experience"/>
+            <result property="status" column="status"/>
+            <result property="resume" column="resume"/>
+            <result property="priority" column="priority"/>
+        </association>
 
+
+    </resultMap>
+
+    <select id="find" parameterType="java.util.HashMap" resultMap="job2PersonRM">
+        select * from  job2Person j2,person p where j2.perId=p.perid and j2.jobId = #{jobId}
+    </select>
 </mapper>
 

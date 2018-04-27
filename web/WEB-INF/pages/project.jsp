@@ -108,7 +108,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
 </style>
 <script>
+    var dicts;//数据字典
+
     $(function(){
+        /*数据字典查找*/
+        $.ajax({
+            timeout : 20000,
+            type : "POST",
+            dataType : "JSON",
+            /*traditional:true,*/
+            url : "dict-queryage",
+            data : {age: 1,education:2,category:3,job:4},
+            success : function(data){
+                var jsonStr1 = eval(data);
+                dicts=jsonStr1;
+            }
+            //注意：这里不能加下面这行，否则数据会传不到后台
+            //contentType:'application/json;charset=UTF-8',
+        });
+
+
         $('#tt').datagrid({
             title:'项目一览',
             width:'100%',
@@ -204,11 +223,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         }
                         $(this).datagrid('selectRow',index);
                         var row=$(this).datagrid('getSelected');
-                        $.post('matchServlet',row,function(){
-                            $('#none').datagrid({url:''});
-                            $('#done').datagrid({url:''});
-                            //$('#none').datagrid('reload');
+
+                        $('#none').datagrid({
+                            url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id,
+                            onLoadSuccess:function(data){
+                                $("a[name='opera2']").linkbutton({plain:true,iconCls:'icon-redo',text:'推送'});
+                            },
+                            onClickCell:function (index,field,value) {
+                                if(field!="operate"){
+                                    return;
+                                }
+                                $(this).datagrid('selectRow',index);
+                                var row=$(this).datagrid('getSelected');
+                                alert(row.name);
+                            }
                         });
+                        $('#done').datagrid({
+                            url:'job2person-queryJob2personByJid?id='+row.id,
+                            onLoadSuccess:function(data){
+                                $("a[name='opera3']").linkbutton({plain:true,iconCls:'icon-edit',text:'操作'});
+                            }
+                        });
+                        $('#done').datagrid('reload');
+                        $('#none').datagrid('reload');
+
                         $('#dd').dialog('open');
                     }
                 });
@@ -218,7 +256,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
 
     });
+    function formatDict(num){
+        for(var i=0 ;i<dicts.length;i++){
+            if(num==dicts[i].id){
+                return dicts[i].dictname;
+            }
+        }
+    }
 
+    function operate2(value,row,index){
+        var str = '<a href="#" name="opera2"  class="easyui-linkbutton" ></a>';
+        return str;
+    }
+    function operate3(value,row,index){
+        var str = '<a href="#" name="opera3"  class="easyui-linkbutton" ></a>';
+        return str;
+    }
 
 </script>
 <body>
@@ -254,41 +307,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="dd" class="easyui-dialog" closed="true" title="人才匹配" closed="open"  modal="true" cache="true" style="width:1200px;height:600px;">
             <div id="tabs" class="easyui-tabs" fit=true tabWidth=200 narrow=true>
                 <div title="未推送"  style="padding:20px;display:none;">
-                    <table id="none" class="easyui-datagrid" style="width:100%;" pagination="true"
+                    <table id="none" class="easyui-datagrid" style="width:100%;" pagination="true" pagePosition="top"
                            data-options="fitColumns:true,singleSelect:true">
                         <thead>
                         <tr>
-                            <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
+                            <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
+                    return operate2(value,row,index);}">操作</th>
+                            <th data-options="field:'id',width:100,align:'center',hidden:true">学生编号</th>
                             <th data-options="field:'name',width:100,align:'center'">名称</th>
-                            <th data-options="field:'age',width:50,align:'center'">年龄</th>
-                            <th data-options="field:'gender',width:50,align:'center'">性别</th>
-                            <th data-options="field:'education',width:100,align:'center'">学历</th>
-                            <th data-options="field:'school',width:100,align:'center'">毕业学校</th>
-                            <th data-options="field:'category',width:100,align:'center'">种类</th>
-                            <th data-options="field:'company',width:100,align:'center'">公司</th>
-                            <th data-options="field:'job',width:100,align:'center'">求职方向</th>
-                            <th data-options="field:'experience',width:50,align:'center'">经验</th>
-                            <th data-options="field:'status',width:50,align:'center'">状态</th>
-                            <th data-options="field:'resume',width:100,align:'center'">简历附件</th>
-                            <th data-options="field:'priority',width:50,align:'center',hidden:'true'">优先度</th>
+                            <th data-options="field:'age',width:100,align:'center'">年龄</th>
+                            <th data-options="field:'gender',width:100,align:'center'">性别</th>
+                            <th data-options="field:'education',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">学历</th>
+                            <th data-options="field:'school',width:100,align:'center'">毕业院校</th>
+                            <th data-options="field:'category',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">行业类别</th>
+                            <th data-options="field:'company',width:100,align:'center'">在职公司</th>
+                            <th data-options="field:'job',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">求职方向</th>
+                            <th data-options="field:'experience',width:100,align:'center'">工作经验(年)</th>
+                            <th data-options="field:'status',width:100,align:'center'">状态</th>
+                            <th data-options="field:'resume',width:100,align:'center',hidden:true">简历附件</th>
+                            <th data-options="field:'priority',width:100,align:'center',hidden:true">优先度</th>
                         </tr>
                         </thead>
                     </table>
                 </div>
                 <div title="已推送" style="padding:20px;display:none;">
-                    <table id="done" class="easyui-datagrid" style="width:100%;"
+                    <table id="done" class="easyui-datagrid" style="width:100%;" pagination="true" pagePosition="top"
                            data-options="fitColumns:true,singleSelect:true">
                         <thead>
                         <tr>
-                            <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
-                            <th data-options="field:'jobId',width:100,align:'center'">名称</th>
-                            <th data-options="field:'jobType',width:50,align:'center'">年龄</th>
-                            <th data-options="field:'person',width:50,align:'center',formatter:function(val){
+                            <th data-options="field:'operate',width:50,align:'center',formatter:function(value,row,index){
+                    return operate3(value,row,index);}">操作</th>
+                            <th data-options="field:'id',width:100,align:'center',hidden:'true'">id</th>
+                            <th data-options="field:'jobid',width:100,align:'center',hidden:'true'">所属岗位</th>
+                            <th data-options="field:'jobtype',width:90,align:'center',formatter:function(val){
+                    return formatDict(val);}">岗位类型</th>
+                            <th data-options="field:'perid',width:50,align:'center',formatter:function(val){
                     return val.name;
-                }">学生</th>
-                            <th data-options="field:'status',width:100,align:'center'">学历</th>
-                            <th data-options="field:'isInter',width:100,align:'center'">毕业学校</th>
-                            <th data-options="field:'isHire',width:100,align:'center'">种类</th>
+                }">姓名</th>
+                            <th data-options="field:'status',width:100,align:'center',formatter:function(val){
+                    return formatDict(val);}">推送状态</th>
+                            <th data-options="field:'isinter',width:100,align:'center',formatter:function(val){
+                    if(val==1){return '已面试';}else{return '未面试';}}">是否面试</th>
+                            <th data-options="field:'ishire',width:100,align:'center',formatter:function(val){
+                    if(val==1){return '已录用';}else{return '未录用';}}">是否录用</th>
                         </tr>
                         </thead>
                     </table>

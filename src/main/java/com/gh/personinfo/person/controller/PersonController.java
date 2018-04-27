@@ -69,4 +69,22 @@ public class PersonController {
         }
         return personList;
     }
+
+    /*
+    匹配功能
+     */
+    @ResponseBody
+    @RequestMapping("person-matchperson")
+    /*(value = "boxIds[]")*/
+    public List<Person> queryperson(@RequestParam int jobtype,int jobid){
+        System.out.println("jobid---"+jobid);
+        System.out.println("jobtype---"+jobtype);
+
+        List<Person> personList = personService.matchPerson(jobtype,jobid);
+        for (Person p:
+                personList) {
+            System.out.println(p.toString());
+        }
+        return personList;
+    }
 }

@@ -11,7 +11,7 @@ public class Job2person {
 
     private Integer jobtype;
 
-    private Integer perid;
+    private Person perid;
 
     private Integer status;
 
@@ -43,14 +43,6 @@ public class Job2person {
         this.jobtype = jobtype;
     }
 
-    public Integer getPerid() {
-        return perid;
-    }
-
-    public void setPerid(Integer perid) {
-        this.perid = perid;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -73,5 +65,26 @@ public class Job2person {
 
     public void setIshire(Integer ishire) {
         this.ishire = ishire;
+    }
+
+    public Person getPerid() {
+        return perid;
+    }
+
+    public void setPerid(Person perid) {
+        this.perid = perid;
+    }
+
+    @Override
+    public String toString() {
+        return "Job2person{" +
+                "id=" + id +
+                ", jobid=" + jobid +
+                ", jobtype=" + jobtype +
+                ", perid=" + perid +
+                ", status=" + status +
+                ", isinter=" + isinter +
+                ", ishire=" + ishire +
+                '}';
     }
 }
