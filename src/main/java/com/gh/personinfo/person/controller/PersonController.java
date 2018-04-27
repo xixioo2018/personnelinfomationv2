@@ -87,4 +87,12 @@ public class PersonController {
         }
         return personList;
     }
+
+    @ResponseBody
+    @RequestMapping("company-updatePersonById")
+    /*(value = "boxIds[]")*/
+    public String updatePersonById(Person person){
+        personService.updatePersonById(person);
+        return "1";
+    }
 }

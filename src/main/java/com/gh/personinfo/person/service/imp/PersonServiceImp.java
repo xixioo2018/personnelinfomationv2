@@ -112,6 +112,11 @@ public class PersonServiceImp implements PersonService {
         return personDao.match(map);
     }
 
+    @Override
+    public void updatePersonById(Person person) {
+        personDao.update(person);
+    }
+
     public String[] changge(String s1,Map<String,Object> map){
         String[] s2 = new String[2];
         System.out.println(s1);

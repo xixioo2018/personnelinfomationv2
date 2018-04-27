@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface Job2personService {
     List<Job2person> queryJob2personByJid(int id);
+
+    public void updateJob2personById(Job2person job2person);
 }

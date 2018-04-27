@@ -32,5 +32,10 @@
     <select id="find" parameterType="java.util.HashMap" resultMap="job2PersonRM">
         select * from  job2Person j2,person p where j2.perId=p.perid and j2.jobId = #{jobId}
     </select>
+
+    <update id="update" parameterType="com.gh.personinfo.job2person.model.Job2person" useGeneratedKeys="true" keyProperty="id">
+		update job2Person set jobId= #{jobid},jobType= #{jobtype},perId= #{perid.id},status= #{status},isInter= #{isinter},isHire=#{ishire}
+		 where j2id = #{id}
+	</update>
 </mapper>
 

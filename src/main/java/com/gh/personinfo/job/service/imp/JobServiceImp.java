@@ -22,4 +22,14 @@ public class JobServiceImp implements JobService {
         map.put("proid",proid);
         return jobDao.find(map);
     }
+
+    @Override
+    public void addJob(Job job) {
+        jobDao.insert(job);
+    }
+
+    @Override
+    public void updateJobById(Job job) {
+        jobDao.update(job);
+    }
 }

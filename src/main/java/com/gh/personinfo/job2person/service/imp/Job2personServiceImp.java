@@ -21,4 +21,9 @@ public class Job2personServiceImp implements Job2personService {
         map.put("jobId", id);
         return job2personDao.find(map);
     }
+
+    @Override
+    public void updateJob2personById(Job2person job2person) {
+        job2personDao.update(job2person);
+    }
 }

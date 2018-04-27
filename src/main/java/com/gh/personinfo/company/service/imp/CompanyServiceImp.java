@@ -44,6 +44,12 @@ public class CompanyServiceImp implements CompanyService {
         System.out.println("查询后");
         return companyList;
     }
+
+    @Override
+    public void updateCompanyById(Company company) {
+        companyDao.update(company);
+    }
+
     @Override
     public Map<String, Object> deal(String search) {
         Map<String,String> map1 = new HashMap<String, String>();

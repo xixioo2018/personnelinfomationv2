@@ -15,5 +15,22 @@
         select * from job j where proId = #{proid}
         <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
     </select>
+
+    <insert id="insert" parameterType="com.gh.personinfo.job.model.Job" useGeneratedKeys="true" keyProperty="id">
+		insert into job
+		(proId,reqNum,nowNum,matNum,jobType)
+		values
+		(	#{proid},
+		    #{reqnum},
+		    #{nownum},
+		    #{matnum},
+			#{jobtype}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.gh.personinfo.job.model.Job" useGeneratedKeys="true" keyProperty="id">
+		update job set proId= #{proid},reqNum= #{reqnum},nowNum= #{nownum},matNum= #{matnum},jobType= #{jobtype}
+		 where jid = #{id}
+	</update>
 </mapper>
 

@@ -29,4 +29,12 @@ public class Job2personController {
 
         return job2peopleList;
     }
+
+    @ResponseBody
+    @RequestMapping("company-updateJob2personById")
+    /*(value = "boxIds[]")*/
+    public String updateJob2personById(Job2person job2person){
+        job2personService.updateJob2personById(job2person);
+        return "1";
+    }
 }

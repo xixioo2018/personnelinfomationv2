@@ -13,4 +13,6 @@ public interface PersonService {
     public Map<String,Object> deal(String serch);
 
     List<Person> matchPerson(int jobtype, int jobid);
+
+    public void updatePersonById(Person person);
 }

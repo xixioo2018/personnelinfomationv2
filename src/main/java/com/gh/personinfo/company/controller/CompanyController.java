@@ -72,6 +72,12 @@ public class CompanyController {
         return mv;
     }
 
-
+    @ResponseBody
+    @RequestMapping("company-updateCompanyById")
+    /*(value = "boxIds[]")*/
+    public String updateCompanyById(Company company){
+        companyService.updateCompanyById(company);
+        return "1";
+    }
 
 }

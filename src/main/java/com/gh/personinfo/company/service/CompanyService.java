@@ -13,4 +13,6 @@ public interface CompanyService {
     public void addCompany(Company company);//添加企业信息
     public Map<String,Object> deal(String serch);
     public List<Company> queryCompany(Map<String,Object> map);
+
+    public void updateCompanyById(Company company);
 }
