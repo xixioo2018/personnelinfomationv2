@@ -16,7 +16,7 @@ public class JobController {
     @Resource
     JobService jobService;
 
-    @RequestMapping("project-queryProjectById")
+    @RequestMapping("job-queryJobById")
     @ResponseBody
     public List<Job> queryJobById(@RequestParam int id ){
         List<Job> jobList = jobService.queryJobById(id);

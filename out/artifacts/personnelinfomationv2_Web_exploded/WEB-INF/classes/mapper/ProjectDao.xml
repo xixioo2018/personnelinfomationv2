@@ -15,7 +15,7 @@
     </resultMap>
     <!--auto generated Code-->
     <select id="find" parameterType="java.util.HashMap" resultMap="projectRM">
-        select * from project p where id = #{id}
+        select * from project p where comId = #{id}
         <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
     </select>
 </mapper>

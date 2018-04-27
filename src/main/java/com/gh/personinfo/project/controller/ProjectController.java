@@ -22,6 +22,10 @@ public class ProjectController {
     @ResponseBody
     public List<Project> queryProjectById(@RequestParam int id ){
         List<Project> projectList = projectService.queryProjectById(id);
+        System.out.println("---------------");
+        System.out.println(projectList.size());
+        System.out.println("---------------");
+
         return projectList;
     }
 }

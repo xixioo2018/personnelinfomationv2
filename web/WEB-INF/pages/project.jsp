@@ -111,19 +111,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     $(function(){
         $('#tt').datagrid({
             title:'项目一览',
-            width:1100,
+            width:'100%',
             height:'auto',
             remoteSort:false,
             singleSelect:true,
             nowrap:false,
             fitColumns:true,
-            url:'testServlet',
+            url:'project-queryProjectById?id='+${company.id},
             columns:[[
                 {field:'id',title:'编号',width:80},
-                {field:'name',title:'项目名称',width:100,sortable:true},
-                {field:'category',title:'业务类型',width:80,align:'right',sortable:true},
-                {field:'reqnum',title:'需要人数',width:80,align:'right',sortable:true},
-                {field:'nownum',title:'当前人数',width:150,sortable:true},
+                {field:'name',title:'项目名称',width:100,align:'center'},
+                {field:'category',title:'业务类型',width:80,align:'right',sortable:true,align:'center'},
+                {field:'reqnum',title:'需要人数',width:80,align:'right',align:'center'},
+                {field:'nownum',title:'当前人数',width:150,align:'center'},
                 {field:'comid',title:'公司id',width:60,align:'center'},
                 {field:'state',title:'状态',width:60,align:'center'},
                 {field:'require',title:'项目需求',width:60,align:'center'}
@@ -140,6 +140,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     loadMsg:'正在加载...',
                     height:'auto',
                     pagination:true,
+                    //查找岗位
+                    url:'job-queryJobById?id='+row.id,
                     pageSize:5,
                     pageList:[5],
                     pagePosition:'top',
@@ -203,14 +205,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         $(this).datagrid('selectRow',index);
                         var row=$(this).datagrid('getSelected');
                         $.post('matchServlet',row,function(){
-                            $('#none').datagrid('reload');
-                            $('#done').datagrid('reload');
+                            $('#none').datagrid({url:''});
+                            $('#done').datagrid({url:''});
+                            //$('#none').datagrid('reload');
                         });
                         $('#dd').dialog('open');
                     }
                 });
-                var data=row.jobs;
-                ttc.datagrid('loadData',data);
+                //var data=row.jobs;
+                //ttc.datagrid('loadData',data);
             }
         });
 
@@ -247,7 +250,51 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
     <div class="project">
-
+        <table id="tt"></table>
+        <div id="dd" class="easyui-dialog" closed="true" title="人才匹配" closed="open"  modal="true" cache="true" style="width:1200px;height:600px;">
+            <div id="tabs" class="easyui-tabs" fit=true tabWidth=200 narrow=true>
+                <div title="未推送"  style="padding:20px;display:none;">
+                    <table id="none" class="easyui-datagrid" style="width:100%;" pagination="true"
+                           data-options="fitColumns:true,singleSelect:true">
+                        <thead>
+                        <tr>
+                            <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
+                            <th data-options="field:'name',width:100,align:'center'">名称</th>
+                            <th data-options="field:'age',width:50,align:'center'">年龄</th>
+                            <th data-options="field:'gender',width:50,align:'center'">性别</th>
+                            <th data-options="field:'education',width:100,align:'center'">学历</th>
+                            <th data-options="field:'school',width:100,align:'center'">毕业学校</th>
+                            <th data-options="field:'category',width:100,align:'center'">种类</th>
+                            <th data-options="field:'company',width:100,align:'center'">公司</th>
+                            <th data-options="field:'job',width:100,align:'center'">求职方向</th>
+                            <th data-options="field:'experience',width:50,align:'center'">经验</th>
+                            <th data-options="field:'status',width:50,align:'center'">状态</th>
+                            <th data-options="field:'resume',width:100,align:'center'">简历附件</th>
+                            <th data-options="field:'priority',width:50,align:'center',hidden:'true'">优先度</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div title="已推送" style="padding:20px;display:none;">
+                    <table id="done" class="easyui-datagrid" style="width:100%;"
+                           data-options="fitColumns:true,singleSelect:true">
+                        <thead>
+                        <tr>
+                            <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
+                            <th data-options="field:'jobId',width:100,align:'center'">名称</th>
+                            <th data-options="field:'jobType',width:50,align:'center'">年龄</th>
+                            <th data-options="field:'person',width:50,align:'center',formatter:function(val){
+                    return val.name;
+                }">学生</th>
+                            <th data-options="field:'status',width:100,align:'center'">学历</th>
+                            <th data-options="field:'isInter',width:100,align:'center'">毕业学校</th>
+                            <th data-options="field:'isHire',width:100,align:'center'">种类</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -272,50 +319,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 
-<table id="tt"></table>
-<div id="dd" class="easyui-dialog" closed="true" title="人才匹配" closed="open"  modal="true" cache="true" style="width:1200px;height:600px;">
-    <div id="tabs" class="easyui-tabs" fit=true tabWidth=200 narrow=true>
-        <div title="未推送"  style="padding:20px;display:none;">
-            <table id="none" class="easyui-datagrid" style="width:1150px;" pagination="true"
-                   data-options="url:'noneServlet',fitColumns:false,singleSelect:true">
-                <thead>
-                <tr>
-                    <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
-                    <th data-options="field:'name',width:100,align:'center'">名称</th>
-                    <th data-options="field:'age',width:50,align:'center'">年龄</th>
-                    <th data-options="field:'gender',width:50,align:'center'">性别</th>
-                    <th data-options="field:'education',width:100,align:'center'">学历</th>
-                    <th data-options="field:'school',width:100,align:'center'">毕业学校</th>
-                    <th data-options="field:'category',width:100,align:'center'">种类</th>
-                    <th data-options="field:'company',width:100,align:'center'">公司</th>
-                    <th data-options="field:'job',width:100,align:'center'">求职方向</th>
-                    <th data-options="field:'experience',width:50,align:'center'">经验</th>
-                    <th data-options="field:'status',width:50,align:'center'">状态</th>
-                    <th data-options="field:'resume',width:100,align:'center'">简历附件</th>
-                    <th data-options="field:'priority',width:50,align:'center',hidden:'true'">优先度</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-        <div title="已推送" style="padding:20px;display:none;">
-            <table id="done" class="easyui-datagrid" style="width:1150px;"
-                   data-options="url:'doneServlet',fitColumns:false,singleSelect:true">
-                <thead>
-                <tr>
-                    <th data-options="field:'id',width:50,align:'center',hidden:'true'">id</th>
-                    <th data-options="field:'jobId',width:100,align:'center'">名称</th>
-                    <th data-options="field:'jobType',width:50,align:'center'">年龄</th>
-                    <th data-options="field:'person',width:50,align:'center',formatter:function(val){
-                    return val.name;
-                }">学生</th>
-                    <th data-options="field:'status',width:100,align:'center'">学历</th>
-                    <th data-options="field:'isInter',width:100,align:'center'">毕业学校</th>
-                    <th data-options="field:'isHire',width:100,align:'center'">种类</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-</div>
+
 </body>
 </html>
