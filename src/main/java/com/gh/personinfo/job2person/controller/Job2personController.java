@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Job2personController {
@@ -31,10 +33,14 @@ public class Job2personController {
     }
 
     @ResponseBody
-    @RequestMapping("company-updateJob2personById")
+    @RequestMapping("job2person-updateJob2personById")
     /*(value = "boxIds[]")*/
-    public String updateJob2personById(Job2person job2person){
+    public Map updateJob2personById( Job2person job2person){
+        Map map=new HashMap();
+        System.out.println("-------update---------");
+        System.out.println(job2person);
+        map.put("result", 1);
         job2personService.updateJob2personById(job2person);
-        return "1";
+        return map;
     }
 }

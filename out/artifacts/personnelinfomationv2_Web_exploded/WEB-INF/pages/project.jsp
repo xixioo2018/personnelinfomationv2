@@ -110,7 +110,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script>
     var dicts;//数据字典
 
+
+    var xx;
+    var yy;
+
+
+
+
     $(function(){
+        //对鼠标定位
+        $('body').mousemove(function(e) {
+            e = e || window.event;
+            xx = e.pageX || e.clientX + document.body.scroolLeft;
+            yy = e.pageY || e.clientY + document.body.scrollTop;
+        });
+
         /*数据字典查找*/
         $.ajax({
             timeout : 20000,
@@ -149,15 +163,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             ]],
             view: detailview,
             detailFormatter: function(Index, row){
-                return '<div style="padding:2px;position:relative;height:250px"><table id="ttc"></table></div>';
+                return '<div style="padding:2px;position:relative;height:250px"><table name="ttc"></table></div>';
             },
             onExpandRow: function(index,row){
-                var ttc = $(this).datagrid('getRowDetail',index).find('table#ttc');
+                var ttc = $(this).datagrid('getRowDetail',index).find("table[name='ttc']");
                 ttc.datagrid({
                     fitColumns:true,
                     singleSelect:true,
                     loadMsg:'正在加载...',
                     height:'auto',
+                    toolbar:'#jtb',
                     pagination:true,
                     //查找岗位
                     url:'job-queryJobById?id='+row.id,
@@ -241,13 +256,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         $('#done').datagrid({
                             url:'job2person-queryJob2personByJid?id='+row.id,
                             onLoadSuccess:function(data){
-                                $("a[name='opera3']").linkbutton({plain:true,iconCls:'icon-edit',text:'操作'});
+                                $("a[name='opera3']").linkbutton({
+                                    plain:true,
+                                    iconCls:'icon-edit',
+                                    text:'操作'
+                                });
+                            },
+                            onClickCell:function (index,field,value) {
+                                if(field!="operate"){
+                                    return;
+                                }
+
+                                //让菜单出现在鼠标位置
+                                $('#mm').menu('show', {
+                                    left: xx+50,
+                                    top: yy
+                                });
+                                $(this).datagrid('selectRow',index);
+                                var row=$(this).datagrid('getSelected');
+
                             }
                         });
                         $('#done').datagrid('reload');
                         $('#none').datagrid('reload');
-
                         $('#dd').dialog('open');
+
+                    },
+                    onDblClickRow:function(index,row){
+                        $("table[name='ttc']").datagrid('unselectAll');
+                        $('#mmJob').menu('show', {
+                            left: xx+50,
+                            top: yy
+                        });
+                        $(this).datagrid('selectRow',index);
+                        var row=$(this).datagrid('getSelected');
                     }
                 });
                 //var data=row.jobs;
@@ -269,12 +311,156 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         return str;
     }
     function operate3(value,row,index){
-        var str = '<a href="#" name="opera3"  class="easyui-linkbutton" ></a>';
+        var str = '<a href="#" name="opera3"  class="easyui-linkbutton" ></a>';;
         return str;
+    }
+    //未上岗
+    function unhire(){
+        var row=$('#done').datagrid('getSelected');
+
+        $.post("job2person-updateJob2personById",
+            {
+                "id":row.id,
+                "jobid":row.jobid,
+                "jobtype":row.jobtype,
+                "perid.id":row.perid.id,
+                "perid.name":row.perid.name,
+                "perid.age":row.perid.age,
+                "perid.gender":row.perid.gender,
+                "perid.education":row.perid.education,
+                "perid.school":row.perid.school,
+                "perid.category":row.perid.category,
+                "perid.company":row.perid.company,
+                "perid.job":row.perid.job,
+                "perid.experience":row.perid.experience,
+                "perid.status":row.perid.status,
+                "perid.resume":row.perid.resume,
+                "perid.priority":row.perid.priority,
+                "status":33,
+                "isinter":row.isinter,
+                "ishire":row.ishire
+            },
+            function(){
+                $('#done').datagrid('reload');
+        });
+
+    }
+
+    //已上岗
+    function hire(){
+        var row=$('#done').datagrid('getSelected');
+
+        $.post("job2person-updateJob2personById",
+            {
+                "id":row.id,
+                "jobid":row.jobid,
+                "jobtype":row.jobtype,
+                "perid.id":row.perid.id,
+                "perid.name":row.perid.name,
+                "perid.age":row.perid.age,
+                "perid.gender":row.perid.gender,
+                "perid.education":row.perid.education,
+                "perid.school":row.perid.school,
+                "perid.category":row.perid.category,
+                "perid.company":row.perid.company,
+                "perid.job":row.perid.job,
+                "perid.experience":row.perid.experience,
+                "perid.status":row.perid.status,
+                "perid.resume":row.perid.resume,
+                "perid.priority":row.perid.priority,
+                "status":34,
+                "isinter":row.isinter,
+                "ishire":1
+            },
+            function(){
+                $('#done').datagrid('reload');
+            });
+
+    }
+
+    //面试通过
+    function pass(){
+        var row=$('#done').datagrid('getSelected');
+
+        $.post("job2person-updateJob2personById",
+            {
+                "id":row.id,
+                "jobid":row.jobid,
+                "jobtype":row.jobtype,
+                "perid.id":row.perid.id,
+                "perid.name":row.perid.name,
+                "perid.age":row.perid.age,
+                "perid.gender":row.perid.gender,
+                "perid.education":row.perid.education,
+                "perid.school":row.perid.school,
+                "perid.category":row.perid.category,
+                "perid.company":row.perid.company,
+                "perid.job":row.perid.job,
+                "perid.experience":row.perid.experience,
+                "perid.status":row.perid.status,
+                "perid.resume":row.perid.resume,
+                "perid.priority":row.perid.priority,
+                "status":31,
+                "isinter":1,
+                "ishire":row.ishire
+            },
+            function(){
+                $('#done').datagrid('reload');
+            });
+
+    }
+
+    //面试未通过
+    function unpass(){
+        var row=$('#done').datagrid('getSelected');
+
+        $.post("job2person-updateJob2personById",
+            {
+                "id":row.id,
+                "jobid":row.jobid,
+                "jobtype":row.jobtype,
+                "perid.id":row.perid.id,
+                "perid.name":row.perid.name,
+                "perid.age":row.perid.age,
+                "perid.gender":row.perid.gender,
+                "perid.education":row.perid.education,
+                "perid.school":row.perid.school,
+                "perid.category":row.perid.category,
+                "perid.company":row.perid.company,
+                "perid.job":row.perid.job,
+                "perid.experience":row.perid.experience,
+                "perid.status":row.perid.status,
+                "perid.resume":row.perid.resume,
+                "perid.priority":row.perid.priority,
+                "status":32,
+                "isinter":1,
+                "ishire":row.ishire
+            },
+            function(){
+                $('#done').datagrid('reload');
+            });
+
+    }
+    //添加岗位
+    function  addJob() {
+        var row=$("table[name='ttc']").datagrid('getSelected');
+        alert(row.id);
+    }
+
+    //编辑岗位
+    function  editJob() {
+        var row=$("table[name='ttc']").datagrid('getSelected');
+        alert(row.id);
+    }
+
+    //关闭岗位
+    function  removeJob() {
+        var row=$("table[name='ttc']").datagrid('getSelected');
+        alert(row.id);
     }
 
 </script>
-<body>
+<body >
 <div class="top">
     <img src="img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
@@ -380,7 +566,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </ul>
     </div>
 </div>
+<div id="mm" class="easyui-menu" style="width:120px;">
+    <div id="unpass" data-options="iconCls:'icon-undo'" onclick="unpass()">面试未过</div>
+    <div id="pass" data-options="iconCls:'icon-redo'" onclick="pass()">面试通过</div>
+    <div class="menu-sep"></div>
+    <div id="hire" data-options="iconCls:'icon-ok'" onclick="hire()">已上岗</div>
+    <div id="unhire" data-options="iconCls:'icon-cancel'" onclick="unhire()">未上岗</div>
+</div>
 
+<div id="mmJob" class="easyui-menu" style="width:120px;">
+    <div  data-options="iconCls:'icon-undo'" onclick="addJob()">添加岗位</div>
+    <div  data-options="iconCls:'icon-redo'" onclick="editJob()">编辑岗位</div>
+    <div  data-options="iconCls:'icon-cancel'" onclick="removeJob()">关闭岗位</div>
+</div>
 
 
 
