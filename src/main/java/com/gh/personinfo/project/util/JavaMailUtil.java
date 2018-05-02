@@ -52,13 +52,10 @@ public class JavaMailUtil {
         attachmentBodyPart.setFileName(MimeUtility.encodeWord(dataSource.getFile().getName()));
         multipart.addBodyPart(attachmentBodyPart);
         System.out.println("邮件发送成功");
-
         msg.setContent(multipart);
         Transport transport = session.getTransport();
         transport.connect(mailUser.getHost(), mailUser.getUname(), mailUser.getPwd());
-
         transport.sendMessage(msg, new Address[] { new InternetAddress(mailUser.getTo()) });
         transport.close();
     }
-
 }

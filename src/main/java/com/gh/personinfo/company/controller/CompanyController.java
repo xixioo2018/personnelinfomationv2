@@ -3,6 +3,7 @@ package com.gh.personinfo.company.controller;
 import com.gh.personinfo.company.model.Company;
 import com.gh.personinfo.company.service.CompanyService;
 import com.gh.personinfo.person.model.Person;
+import com.gh.personinfo.project.util.Pagination;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,16 +50,19 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping("company-querycompany")
     /*(value = "boxIds[]")*/
-    public List<Company> queryperson(@RequestParam String serch){
+    public Map<String,Object> queryperson(@RequestParam String serch,int start,int size){
         Map<String,Object> newMap = new HashMap<String, Object>();
+        Map<String,Object> result=new HashMap<String, Object>();
         System.out.println(serch);
         newMap = companyService.deal(serch);
         List<Company> companyList = companyService.queryCompany(newMap);
-        for (Company p:
-                companyList) {
-            System.out.println(p.toString());
-        }
-        return companyList;
+//        for (Company p:
+//                companyList) {
+//            System.out.println(p.toString());
+//        }
+        result.put("total", companyList.size());
+        result.put("rows", Pagination.subList(start,size ,companyList ));
+        return result;
     }
 
 

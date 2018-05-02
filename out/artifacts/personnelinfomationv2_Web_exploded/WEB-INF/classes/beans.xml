@@ -60,10 +60,10 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut expression="execution(* com.gh.personinfo.other.service.*.*(..))" id="txPointcut"/>
+        <aop:pointcut expression="execution(* com.gh.personinfo.*.service.*.*(..))" id="txPointcut"/>
         <aop:advisor advice-ref="txAdivce" pointcut-ref="txPointcut"/>
     </aop:config>
     <!-- 注解事务 -->
-    <!--<tx:annotation-driven transaction-manager="txManager"/>-->
+    <tx:annotation-driven transaction-manager="txManager"/>
 
 </beans>
