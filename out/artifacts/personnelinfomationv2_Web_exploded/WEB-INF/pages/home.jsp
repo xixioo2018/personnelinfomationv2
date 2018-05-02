@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         left: 210px;
         bottom: 13px;
     }
-    .main{                                                                     
+    .main{
         height: 88%;
         width: 100%;
         background-color: #2585d2;
