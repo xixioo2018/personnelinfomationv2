@@ -86,9 +86,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         border-spacing:10px 50px;
     }
     .mid button{
+        margin-top: 20px;
         margin-left: 50px;
-        width: 160px;
-        height: 40px;
+        width: 410px;
+        height: 50px;
     }
 </style>
 <script>
@@ -157,12 +158,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td><input type="text" class="form-control" placeholder="企业邮箱" name="conEmail"></td>
                 </tr>
                 <tr>
+                    <td><strong>公司地址:</strong></td>
+                    <td><input type="text" class="form-control" placeholder="公司地址" name="address"></td>
                     <td><strong>公司简介:</strong></td>
                     <td colspan="3">
                         <textarea class="form-control" name="description" placeholder="公司简介"></textarea>
                     </td>
-                    <td><strong>公司地址:</strong></td>
-                    <td><input type="text" class="form-control" placeholder="公司地址" name="address"></td>
                 </tr>
             </table>
                     <p align="center"><button type="submit" class="btn btn-primary">提交表单</button></p>
@@ -175,14 +176,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="left">快速导航&lt;&lt;</div>
     <div class="right">
         <ul>
-            <li><a href="server.html">主页</a></li>
+            <li><a href="server.jsp">主页</a></li>
             <h5>企业</h5>
-            <li><a href="company.html">企业查询</a></li>
-            <li><a href="addcompany.html">企业维护</a></li>
-            <li><a href="project.html">职位匹配</a></li>
+            <li><a href="company-tocompany.a">企业查询</a></li>
+            <li><a href="company-toaddcompany.a">企业维护</a></li>
+            <li><a href="company-toproject.a">职位匹配</a></li>
             <h5>人才</h5>
-            <li><a href="people.html">人才查询</a></li>
-            <li><a href="addperson.html">人才维护</a></li>
+            <li><a href="person-toperson.a">人才查询</a></li>
+            <li><a href="person-toaddperson.a">人才维护</a></li>
             <h5>数据</h5>
             <li><a href="#">字典维护</a></li>
             <li><a href="#">数据字典</a></li>

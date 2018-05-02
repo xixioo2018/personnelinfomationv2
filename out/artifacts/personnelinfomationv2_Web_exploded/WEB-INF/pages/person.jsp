@@ -213,14 +213,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="left">快速导航&lt;&lt;</div>
     <div class="right">
         <ul>
-            <li><a href="server.html">主页</a></li>
+            <li><a href="server.jsp">主页</a></li>
             <h5>企业</h5>
-            <li><a href="company.html">企业查询</a></li>
-            <li><a href="addcompany.html">企业维护</a></li>
-            <li><a href="project.html">职位匹配</a></li>
+            <li><a href="company-tocompany.a">企业查询</a></li>
+            <li><a href="company-toaddcompany.a">企业维护</a></li>
+            <li><a href="company-toproject.a">职位匹配</a></li>
             <h5>人才</h5>
-            <li><a href="people.html">人才查询</a></li>
-            <li><a href="addperson.html">人才维护</a></li>
+            <li><a href="person-toperson.a">人才查询</a></li>
+            <li><a href="person-toaddperson.a">人才维护</a></li>
             <h5>数据</h5>
             <li><a href="#">字典维护</a></li>
             <li><a href="#">数据字典</a></li>
