@@ -24,7 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/insdep/locale/easyui-lang-zh_CN.js"></script>
 <style>
     *{
-        margin: 0px;
         padding: 0px;
     }
     body,html{
@@ -110,12 +109,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script>
     var dicts;//数据字典
 
+    var jobffUrl;//岗位表单的url
+    var proffUrl;//项目表单的url
 
     var xx;
     var yy;
-
-
-
 
     $(function(){
         //对鼠标定位
@@ -136,6 +134,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             success : function(data){
                 var jsonStr1 = eval(data);
                 dicts=jsonStr1;
+                var lenth = jsonStr1.length;
+                for (var i=0;i<lenth;i++){
+                    /*if (jsonStr1[i].dctypeid==1){
+                        $("#ageajax").append("<a href=\"/\" class=\"abc\">"+jsonStr1[i].dictname+"</a>");
+                    }*/
+
+
+                    if (jsonStr1[i].dctypeid==4){
+                        $("#jobtype").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+                    }
+                }
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
             //contentType:'application/json;charset=UTF-8',
@@ -148,31 +157,60 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             height:'auto',
             remoteSort:false,
             singleSelect:true,
+            pagination:true,
+            pageSize:5,
+            pageList:[5],
+            pagePosition:'top',
             nowrap:false,
+            loadMsg:'正在加载...',
             fitColumns:true,
             url:'project-queryProjectById?id='+${company.id},
             columns:[[
-                {field:'id',title:'编号',width:80},
+                {field:'id',title:'编号',align:'center',width:60},
                 {field:'name',title:'项目名称',width:100,align:'center'},
-                {field:'category',title:'业务类型',width:80,align:'right',sortable:true,align:'center'},
+                {field:'category',title:'业务类型',width:80,align:'right',sortable:true,align:'center',
+                        formatter:function(val){
+                        return formatDict(val);}},
                 {field:'reqnum',title:'需要人数',width:80,align:'right',align:'center'},
                 {field:'nownum',title:'当前人数',width:150,align:'center'},
                 {field:'comid',title:'公司id',width:60,align:'center'},
                 {field:'state',title:'状态',width:60,align:'center'},
-                {field:'require',title:'项目需求',width:60,align:'center'}
+                {field:'require',title:'项目需求',width:60,align:'center'},
+                {field:'manager',
+                    title:'项目管理',
+                    align:'center',
+                    width:110,
+                    formatter:function(value, row, index){
+                        var str='<a href="javascript:void(0)" name="manager" class="easyui-linkbutton" >项目管理</a>';
+                        return str;
+                    }},
             ]],
+            onLoadSuccess:function(data){
+                $("a[name='manager']").linkbutton({plain:true,iconCls:'icon-edit'});
+            },
+            onClickCell:function(index,field,value){
+                if(field=='manager'){
+                    //出现菜单栏
+                    $('#proMm').menu('show', {
+                        left: xx-120,
+                        top: yy
+                    });
+                    //选中改行数据
+                    $('#tt').datagrid('selectRow',index);
+
+                }
+            },
             view: detailview,
             detailFormatter: function(Index, row){
-                return '<div style="padding:2px;position:relative;height:250px"><table name="ttc"></table></div>';
+                return '<div style="padding:2px;position:relative;height:250px"><table id="ttc"></table></div>';
             },
             onExpandRow: function(index,row){
-                var ttc = $(this).datagrid('getRowDetail',index).find("table[name='ttc']");
+                var ttc = $(this).datagrid('getRowDetail',index).find("table[id='ttc']");
                 ttc.datagrid({
                     fitColumns:true,
                     singleSelect:true,
                     loadMsg:'正在加载...',
                     height:'auto',
-                    toolbar:'#jtb',
                     pagination:true,
                     //查找岗位
                     url:'job-queryJobById?id='+row.id,
@@ -185,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             align:'center',
                             width:110,
                             formatter:function(value, row, index){
-                                var str = '<a href="#" name="opera"  class="easyui-linkbutton"  >匹配</a>';
+                                var str = '<a href="javascript:void(0)" name="opera"  class="easyui-linkbutton"  >匹配</a>';
                                 return str;
                             }},
                         {
@@ -196,6 +234,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         {
                             title:'所属项目',
                             field: 'proid',
+                            hidden:'true',
                             width:100
                         },
                         {
@@ -216,11 +255,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         {
                             title:'岗位类型',
                             field: 'jobtype',
-                            width:100
-                        }
+                            width:100,
+                            formatter:function(val){
+                                return formatDict(val);}
+                        },
+                        {field:'edit',
+                            title:'编辑',
+                            align:'center',
+                            width:80,
+                            formatter:function(value, row, index){
+                                var str = '<a href="javascript:void(0)" name="editJob"  class="easyui-linkbutton"  >修改</a>';
+                                return str;
+                            }},
+                        {field:'delete',
+                            title:'关闭',
+                            align:'center',
+                            width:80,
+                            formatter:function(value, row, index){
+                                var str = '<a href="javascript:void(0)" name="delJob"  class="easyui-linkbutton"  >关闭</a>';
+                                return str;
+                            }},
                     ]],
                     onLoadSuccess:function(data){
                         $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-search'});
+                        $("a[name='editJob']").linkbutton({plain:true,iconCls:'icon-edit'});
+                        $("a[name='delJob']").linkbutton({plain:true,iconCls:'icon-no'});
                     },
                     onClickRow:function(index,row){
                         //匹配
@@ -233,69 +292,87 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         */
                     },
                     onClickCell:function(index,field,value){
-                        if(field!="operate"){
-                            return;
+                        if(field=="operate"){
+                            $(this).datagrid('selectRow',index);
+                            var row=$(this).datagrid('getSelected');
+
+                            $('#none').datagrid({
+                                url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id,
+                                onLoadSuccess:function(data){
+                                    $("a[name='opera2']").linkbutton({plain:true,iconCls:'icon-redo',text:'推送'});
+                                },
+                                onClickCell:function (index,field,value) {
+                                    if(field!="operate"){
+                                        return;
+                                    }
+                                    $(this).datagrid('selectRow',index);
+                                    var row=$(this).datagrid('getSelected');
+                                    alert('推送');
+                                }
+                            });
+                            $('#done').datagrid({
+                                url:'job2person-queryJob2personByJid?id='+row.id,
+                                onLoadSuccess:function(data){
+                                    $("a[name='opera3']").linkbutton({
+                                        plain:true,
+                                        iconCls:'icon-edit',
+                                        text:'操作'
+                                    });
+                                },
+                                onClickCell:function (index,field,value) {
+                                    if(field!="operate"){
+                                        return;
+                                    }
+
+                                    //让菜单出现在鼠标位置
+                                    $('#mm').menu('show', {
+                                        left: xx+50,
+                                        top: yy
+                                    });
+                                    $(this).datagrid('selectRow',index);
+                                    var row=$(this).datagrid('getSelected');
+
+                                }
+                            });
+                            $('#done').datagrid('reload');
+                            $('#none').datagrid('reload');
+                            $('#dd').dialog('open');
                         }
-                        $(this).datagrid('selectRow',index);
-                        var row=$(this).datagrid('getSelected');
+                        //修改岗位
+                        if(field=='edit'){
+                            //选中当前行
+                            $(this).datagrid('selectRow',index);
+                            var row=$(this).datagrid('getSelected');
 
-                        $('#none').datagrid({
-                            url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id,
-                            onLoadSuccess:function(data){
-                                $("a[name='opera2']").linkbutton({plain:true,iconCls:'icon-redo',text:'推送'});
-                            },
-                            onClickCell:function (index,field,value) {
-                                if(field!="operate"){
-                                    return;
-                                }
-                                $(this).datagrid('selectRow',index);
-                                var row=$(this).datagrid('getSelected');
-                                alert(row.name);
-                            }
-                        });
-                        $('#done').datagrid({
-                            url:'job2person-queryJob2personByJid?id='+row.id,
-                            onLoadSuccess:function(data){
-                                $("a[name='opera3']").linkbutton({
-                                    plain:true,
-                                    iconCls:'icon-edit',
-                                    text:'操作'
-                                });
-                            },
-                            onClickCell:function (index,field,value) {
-                                if(field!="operate"){
-                                    return;
-                                }
+                            $('#jobdd').dialog({title:'修改岗位',
+                                iconCls:'icon-edit'
+                            });
+                            $('#jobdd').dialog('open');
+                            $('#jobff').form('clear');
+                            $('#jobff').form('load',row);
+                            jobffUrl='edit'+row.id;
 
-                                //让菜单出现在鼠标位置
-                                $('#mm').menu('show', {
-                                    left: xx+50,
-                                    top: yy
-                                });
-                                $(this).datagrid('selectRow',index);
-                                var row=$(this).datagrid('getSelected');
+                        }
+                        //关闭岗位
+                        if(field=='delete'){
+                            //选中当前行
+                            $(this).datagrid('selectRow',index);
+                            var row=$(this).datagrid('getSelected');
 
-                            }
-                        });
-                        $('#done').datagrid('reload');
-                        $('#none').datagrid('reload');
-                        $('#dd').dialog('open');
 
-                    },
-                    onDblClickRow:function(index,row){
-                        $("table[name='ttc']").datagrid('unselectAll');
-                        $('#mmJob').menu('show', {
-                            left: xx+50,
-                            top: yy
-                        });
-                        $(this).datagrid('selectRow',index);
-                        var row=$(this).datagrid('getSelected');
+                            //发送异步请求
+                            alert('del'+row.id);
+                        }
+
                     }
                 });
-                //var data=row.jobs;
-                //ttc.datagrid('loadData',data);
             }
         });
+
+        var page=$('#tt').datagrid('getPager');
+        page.pagination({
+            buttons: '#projectTb'
+        })
 
     });
     function formatDict(num){
@@ -307,11 +384,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
 
     function operate2(value,row,index){
-        var str = '<a href="#" name="opera2"  class="easyui-linkbutton" ></a>';
+        var str = '<a href="javascript:void(0)" name="opera2"  class="easyui-linkbutton" ></a>';
         return str;
     }
     function operate3(value,row,index){
-        var str = '<a href="#" name="opera3"  class="easyui-linkbutton" ></a>';;
+        var str = '<a href="javascript:void(0)" name="opera3"  class="easyui-linkbutton" ></a>';;
         return str;
     }
     //未上岗
@@ -443,20 +520,77 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     //添加岗位
     function  addJob() {
-        var row=$("table[name='ttc']").datagrid('getSelected');
-        alert(row.id);
+        var row=$('#tt').datagrid('getSelected');
+
+        $('#jobdd').dialog({title:'新增岗位',
+            iconCls:'icon-add'
+        });
+        $('#jobdd').dialog('close');
+        $('#jobdd').dialog('open');
+        $('#jobff').form('clear');
+        $('#jobff').form('load',{
+            proid:row.id,
+        });
+        jobffUrl='test'+row.id;
     }
 
-    //编辑岗位
-    function  editJob() {
-        var row=$("table[name='ttc']").datagrid('getSelected');
-        alert(row.id);
+
+
+
+    //关闭job对话框
+    function jobddClose(){
+        $('#jobdd').dialog('close');
     }
 
-    //关闭岗位
-    function  removeJob() {
-        var row=$("table[name='ttc']").datagrid('getSelected');
-        alert(row.id);
+    //job表单提交
+    function jobffSubmit(){
+        alert(jobffUrl);
+    }
+
+
+    //添加项目
+    function addPro(){
+        $('#prodd').dialog({title:'新增项目',
+            iconCls:'icon-add'
+        });
+        $('#prodd').dialog('close');
+        $('#prodd').dialog('open');
+        $('#proff').form('clear');
+        $('#proff').form('load',{
+            comid:${company.id},
+        });
+        proffUrl='test'+${company.id};
+    }
+
+    //修改项目
+    function editPro(){
+        var row=$('#tt').datagrid('getSelected');
+
+        $('#prodd').dialog({title:'修改项目',
+            iconCls:'icon-add'
+        });
+        $('#prodd').dialog('close');
+        $('#prodd').dialog('open');
+        $('#proff').form('clear');
+        $('#proff').form('load',row);
+        proffUrl='edit'+row.id;
+    }
+
+    //关闭项目
+    function delPro(){
+        var row=$('#tt').datagrid('getSelected');
+        alert('del'+row.id);
+    }
+
+
+    //关闭pro对话框
+    function proddClose(){
+        $('#prodd').dialog('close');
+    }
+
+    //job表单提交
+    function proffSubmit(){
+        alert(proffUrl);
     }
 
 </script>
@@ -490,7 +624,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="project">
         <table id="tt"></table>
-        <div id="dd" class="easyui-dialog" closed="true" title="人才匹配" closed="open"  modal="true" cache="true" style="width:1200px;height:600px;">
+        <div id="dd" class="easyui-dialog" closed="true" title="人才匹配" closed="open"  modal="true" cache="true" style="width:1300px;height:600px;">
             <div id="tabs" class="easyui-tabs" fit=true tabWidth=200 narrow=true>
                 <div title="未推送"  style="padding:20px;display:none;">
                     <table id="none" class="easyui-datagrid" style="width:100%;" pagination="true" pagePosition="top"
@@ -501,8 +635,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     return operate2(value,row,index);}">操作</th>
                             <th data-options="field:'id',width:100,align:'center',hidden:true">学生编号</th>
                             <th data-options="field:'name',width:100,align:'center'">名称</th>
-                            <th data-options="field:'age',width:100,align:'center'">年龄</th>
-                            <th data-options="field:'gender',width:100,align:'center'">性别</th>
+                            <th data-options="field:'age',width:80,align:'center'">年龄</th>
+                            <th data-options="field:'gender',width:80,align:'center'">性别</th>
                             <th data-options="field:'education',width:100,align:'center',formatter:function(val){
                     return formatDict(val);}">学历</th>
                             <th data-options="field:'school',width:100,align:'center'">毕业院校</th>
@@ -561,8 +695,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li><a href="people.html">人才查询</a></li>
             <li><a href="addperson.html">人才维护</a></li>
             <h5>数据</h5>
-            <li><a href="#">字典维护</a></li>
-            <li><a href="#">数据字典</a></li>
+            <li><a href="javascript:void(0)">字典维护</a></li>
+            <li><a href="javascript:void(0)">数据字典</a></li>
         </ul>
     </div>
 </div>
@@ -574,10 +708,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="unhire" data-options="iconCls:'icon-cancel'" onclick="unhire()">未上岗</div>
 </div>
 
-<div id="mmJob" class="easyui-menu" style="width:120px;">
-    <div  data-options="iconCls:'icon-undo'" onclick="addJob()">添加岗位</div>
-    <div  data-options="iconCls:'icon-redo'" onclick="editJob()">编辑岗位</div>
-    <div  data-options="iconCls:'icon-cancel'" onclick="removeJob()">关闭岗位</div>
+<!--项目管理菜单-->
+<div id="proMm" class="easyui-menu" style="width:120px;">
+    <div id="editPro" data-options="iconCls:'icon-edit'" onclick="editPro()">修改项目</div>
+    <div id="delPro" data-options="iconCls:'icon-no'" onclick="delPro()">关闭项目</div>
+    <div class="menu-sep"></div>
+    <div id="addJob" data-options="iconCls:'icon-add'" onclick="addJob()">新增岗位</div>
+</div>
+
+<div id="jobdd" class="easyui-dialog"  style="width:270px;height:370px;"
+     data-options="resizable:true,modal:true" closed="true" buttons="#jobddtb">
+    <form id="jobff">
+        &nbsp&nbsp&nbsp&nbsp<input name="id" type="text" hidden="true"><br/>
+        &nbsp&nbsp&nbsp&nbsp<input name="proid" type="text" hidden="true"><br/>
+        &nbsp&nbsp&nbsp&nbsp所需人数:<input name="reqNum" type="number"><br/>
+        <hr>
+        &nbsp&nbsp&nbsp&nbsp当前人数:<input name="nowNum" type="number"><br/>
+        <hr>
+        &nbsp&nbsp&nbsp&nbsp匹配人数:<input name="matNum" type="number" disabled="true"><br/>
+        <hr>
+        &nbsp&nbsp&nbsp&nbsp岗位类型:<select id="jobtype" name="jobtype"></select>
+    </form>
+</div>
+</div>
+<div id="jobddtb">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="jobffSubmit()">确认</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-no',plain:true" onclick="jobddClose()">取消</a>
+</div>
+
+<div id="projectTb">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addPro()">新增项目</a>
+</div>
+
+<!--项目对话框-->
+<div id="prodd" class="easyui-dialog"  style="width:270px;height:570px;"
+     data-options="resizable:true,modal:true" closed="true" buttons="#proddtb">
+    <form id="proff">
+        <input name="id" type="text"><br/>
+        <input name="name" type="text"><br/>
+        <input name="category" type="text"><br/>
+        <input name="reqnum" type="text"><br/>
+        <input name="nownum" type="text"><br/>
+        <input name="statime" type="datetime"><br/>
+        <input name="endtime" type="text"><br/>
+        <input name="comid" type="text"><br/>
+        <input name="state" type="text"><br/>
+        <input name="require" type="text"><br/>
+    </form>
+</div>
+<div id="proddtb">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="proffSubmit()">确认</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-no',plain:true" onclick="proddClose()">取消</a>
 </div>
 
 
