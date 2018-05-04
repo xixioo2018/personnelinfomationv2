@@ -223,6 +223,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 return '<div style="padding:2px;position:relative;height:250px"><table id="ttc"></table></div>';
             },
             onExpandRow: function(index,row){
+                if(row.state==37){
+                    $.messager.alert({
+                        title:'警告',
+                        msg:'该项目已被关闭,无法查看岗位信息',
+                        showType:'show',
+                        showSpeed:800
+                    });
+                    return;
+                }
                 var ttc = $(this).datagrid('getRowDetail',index).find("table[id='ttc']");
                 ttc.datagrid({
                     fitColumns:true,
@@ -310,10 +319,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         */
                     },
                     onClickCell:function(index,field,value){
+                        //匹配
                         if(field=="operate"){
+
                             $(this).datagrid('selectRow',index);
                             var row=$(this).datagrid('getSelected');
-
+                            if(row.reqnum<0){
+                                $.messager.alert({
+                                    title:'警告',
+                                    msg:'该岗位已关闭',
+                                });
+                                return false
+                            }
                             $('#none').datagrid({
                                 url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id,
                                 onLoadSuccess:function(data){
@@ -368,7 +385,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $('#jobdd').dialog('open');
                             $('#jobff').form('clear');
                             $('#jobff').form('load',row);
-                            jobffUrl='edit'+row.id;
+                            jobffUrl='job-updateJobById';
 
                         }
                         //关闭岗位
@@ -376,10 +393,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             //选中当前行
                             $(this).datagrid('selectRow',index);
                             var row=$(this).datagrid('getSelected');
-
+                            if(row.reqnum<0){
+                                $.messager.alert({
+                                    title:'警告',
+                                    msg:'该岗位已关闭',
+                                });
+                                return false
+                            }
 
                             //发送异步请求
-                            alert('del'+row.id);
+                            $.post("job-updateJobById",
+                                {
+                                    "id":row.id,
+                                    "reqnum":-1
+                                },
+                                function(data){
+                                });
+                            $(this).datagrid('reload');
+                            $.messager.show({
+                                title:'提示',
+                                msg:'操作成功,请刷新',
+                                showType:'show',
+                            });
+
                         }
 
                     }
@@ -548,8 +584,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $('#jobff').form('clear');
         $('#jobff').form('load',{
             proid:row.id,
+            nownum:0,
+            reqnum:0,
+            matnum:0
         });
-        jobffUrl='test'+row.id;
+        jobffUrl='job-addJob';
     }
 
 
@@ -562,7 +601,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     //job表单提交
     function jobffSubmit(){
-        alert(jobffUrl);
+        $('#jobff').form('submit', {
+            url:jobffUrl,
+            onSubmit: function(){
+                if($('#reqnumv').val()<0){
+                    $.messager.alert({
+                        title:'警告',
+                        msg:'所需人数不能小于0',
+                    });
+                    return false
+                }
+                if($('#nownumv').val()<0){
+                    $.messager.alert({
+                        title:'警告',
+                        msg:'当前人数不能小于0',
+                    });
+                    return false
+                }
+                if($('#reqnumv').val()<$('#nownumv').val()){
+                    $.messager.alert({
+                        title:'警告',
+                        msg:'所需人数不能小于当前人数',
+                    });
+                    return false
+                }
+            },
+            success:function(){
+                $.messager.show({
+                    title:'提示',
+                    msg:'操作成功,请刷新',
+                    showType:'show',
+                });
+                $('#jobdd').dialog('close');
+
+            }
+        });
     }
 
     //获取当前时间,并将当前时间转换成yyyymmdd格式
@@ -640,6 +713,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             function(){
                 $('#tt').datagrid('reload');
             });
+        $.messager.show({
+            title:'提示',
+            msg:'操作成功,请刷新',
+            showType:'show',
+        });
 
     }
 
@@ -795,11 +873,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <form id="jobff">
         &nbsp&nbsp&nbsp&nbsp<input name="id" type="text" hidden="true"><br/>
         &nbsp&nbsp&nbsp&nbsp<input name="proid" type="text" hidden="true"><br/>
-        &nbsp&nbsp&nbsp&nbsp所需人数:<input name="reqNum" type="number"><br/>
+        &nbsp&nbsp&nbsp&nbsp所需人数:<input id="reqnumv" name="reqnum" type="number"><br/>
         <hr>
-        &nbsp&nbsp&nbsp&nbsp当前人数:<input name="nowNum" type="number"><br/>
+        &nbsp&nbsp&nbsp&nbsp当前人数:<input id="nownumv" name="nownum" type="number"><br/>
         <hr>
-        &nbsp&nbsp&nbsp&nbsp匹配人数:<input name="matNum" type="number" readonly="true" style="background:#CCCCCC"><br/>
+        &nbsp&nbsp&nbsp&nbsp匹配人数:<input name="matnum" type="number" readonly="true" style="background:#CCCCCC"><br/>
         <hr>
         &nbsp&nbsp&nbsp&nbsp岗位类型:<select id="jobtype" name="jobtype"></select>
     </form>
@@ -823,9 +901,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <hr/>
         &nbsp&nbsp&nbsp&nbsp业务类型：<select name="category" id="category"></select><br/>
         <hr/>
-        &nbsp&nbsp&nbsp&nbsp所需人数：<input name="reqnum" type="text" readonly="true" style="background:#CCCCCC"><br/>
+        &nbsp&nbsp&nbsp&nbsp所需人数：<input  name="reqnum" type="text" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
-        &nbsp&nbsp&nbsp&nbsp当前人数：<input name="nownum" type="text" readonly="true" style="background:#CCCCCC"><br/>
+        &nbsp&nbsp&nbsp&nbsp当前人数：<input  name="nownum" type="text" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
         &nbsp&nbsp&nbsp&nbsp开始时间：<input name="statime" type="date" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>

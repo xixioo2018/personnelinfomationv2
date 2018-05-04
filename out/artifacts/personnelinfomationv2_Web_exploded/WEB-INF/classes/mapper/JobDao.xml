@@ -29,7 +29,14 @@
 	</insert>
 
     <update id="update" parameterType="com.gh.personinfo.job.model.Job" useGeneratedKeys="true" keyProperty="id">
-		update job set proId= #{proid},reqNum= #{reqnum},nowNum= #{nownum},matNum= #{matnum},jobType= #{jobtype}
+		update job
+        <set>
+            <if test="proid != null">proId=#{proid},</if>
+            <if test="reqnum != null">reqNum=#{reqnum},</if>
+            <if test="nownum != null">nowNum=#{nownum},</if>
+            <if test="matnum != null">matNum=#{matnum},</if>
+            <if test="jobtype != null">jobType=#{jobtype},</if>
+        </set>
 		 where jid = #{id}
 	</update>
 </mapper>

@@ -25,14 +25,14 @@ public class JobController {
     }
 
     @RequestMapping("job-addJob")
-    public String addJob(Job job){
+    public int addJob(Job job){
         jobService.addJob(job);
-        return "1";
+        return 1;
     }
     @RequestMapping("job-updateJobById")
-    public String updateJobById(Job job){
+    public int updateJobById(Job job){
         jobService.updateJobById(job);
-        return "1";
+        return  1;
     }
 
 
