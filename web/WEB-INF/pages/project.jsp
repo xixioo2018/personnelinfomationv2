@@ -745,15 +745,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      data-options="resizable:true,modal:true" closed="true" buttons="#proddtb">
     <form id="proff">
         <input name="id" type="text"><br/>
-        <input name="name" type="text"><br/>
-        <input name="category" type="text"><br/>
-        <input name="reqnum" type="text"><br/>
-        <input name="nownum" type="text"><br/>
-        <input name="statime" type="date"><br/>
-        <input name="endtime" type="date"><br/>
-        <input name="comid" type="text"><br/>
-        <input name="state" type="text"><br/>
-        <input name="require" type="text"><br/>
+        项目名称：<input name="category" type="text"><br/>
+        所需人数：<input name="reqnum" type="text"><br/>
+        当前人数：<input name="nownum" type="text"><br/>
+        开始时间：<input name="statime" type="date"><br/>
+        结束时间：<input name="endtime" type="date"><br/>
+        <input name="comid" type="text" hidden="true"><br/>
+        当前状态:<select name="state" id="projectState"></select><br/>
+        项目需求:<input name="require" type="text"><br/>
     </form>
 </div>
 <div id="proddtb">
