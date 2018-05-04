@@ -21,4 +21,16 @@ public class ProjectServiceImp implements ProjectService {
         map.put("id",id);
         return projectDao.find(map);
     }
+
+    @Override
+    public int addProject(Project project) {
+        projectDao.insert(project);
+        return 0;
+    }
+
+    @Override
+    public int updateProject(Project project) {
+        projectDao.update(project);
+        return 0;
+    }
 }

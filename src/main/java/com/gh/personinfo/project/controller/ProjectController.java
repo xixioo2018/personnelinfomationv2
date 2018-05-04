@@ -1,8 +1,10 @@
 package com.gh.personinfo.project.controller;
 
 import com.gh.personinfo.company.model.Company;
+import com.gh.personinfo.person.model.Person;
 import com.gh.personinfo.project.model.Project;
 import com.gh.personinfo.project.service.ProjectService;
+import com.gh.personinfo.project.util.Testmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -37,4 +40,36 @@ public class ProjectController {
 
         return projectList;
     }
+
+    @ResponseBody
+    @RequestMapping("project-addProject")
+    public Integer addProject(Project project){
+        projectService.addProject(project);
+        return 1;
+    }
+
+    @ResponseBody
+    @RequestMapping("project-updateProject")
+    public Integer updateProject(Project project){
+        projectService.updateProject(project);
+        return 1;
+    }
+    /**
+     * 发邮件接口
+     */
+
+    @RequestMapping("project-sendEmail")
+    public Integer sendEmail(String to,String fileName){
+        System.out.println(to+"------"+fileName);
+        to = "613327951@qq.com";
+        fileName = "E:\\test.txt";
+        Testmail testmail = new Testmail();
+        try {
+            testmail.Send(to,fileName);
+        } catch (IOException e) {
+            /*e.printStackTrace();*/
+        }
+        return 1;
+    }
+
 }

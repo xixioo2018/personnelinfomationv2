@@ -34,4 +34,6 @@ public class JobController {
         jobService.updateJobById(job);
         return "1";
     }
+
+
 }
