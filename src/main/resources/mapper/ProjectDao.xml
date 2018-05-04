@@ -24,7 +24,7 @@
 		(name,require,category,reqNum,nowNum,staTime,endTime,comId,state)
 		values
 		(	#{name,jdbcType=VARCHAR},
-		    #{require,jdbcType=TEXT},
+		    #{require,jdbcType=VARCHAR},
 		    #{category,jdbcType=INTEGER},
 		    #{reqNum,jdbcType=INTEGER},
 			#{nowNum,jdbcType=INTEGER},
