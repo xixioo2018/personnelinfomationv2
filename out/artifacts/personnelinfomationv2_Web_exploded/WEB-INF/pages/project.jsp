@@ -144,6 +144,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     if (jsonStr1[i].dctypeid==4){
                         $("#jobtype").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
                     }
+                    if (jsonStr1[i].dctypeid==3){
+                        $("#category").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+                    }
+                    if (jsonStr1[i].dctypeid==7&&data[i].dictvalue!=3){
+                        $("#projectState").append("<option value="+data[i].id+">"+data[i].dictname+"</option>");
+                    }
                 }
             }
             //注意：这里不能加下面这行，否则数据会传不到后台
@@ -173,8 +179,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         return formatDict(val);}},
                 {field:'reqnum',title:'需要人数',width:80,align:'right',align:'center'},
                 {field:'nownum',title:'当前人数',width:150,align:'center'},
-                {field:'comid',title:'公司id',width:60,align:'center'},
-                {field:'state',title:'状态',width:60,align:'center'},
+                {field:'comid',title:'公司id',width:60,align:'center',hidden:true},
+                {field:'state',title:'状态',width:60,align:'center',
+                    formatter:function(val){
+                        return formatDict(val);}},
                 {field:'require',title:'项目需求',width:60,align:'center'},
                 {field:'manager',
                     title:'项目管理',
@@ -741,18 +749,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <!--项目对话框-->
-<div id="prodd" class="easyui-dialog"  style="width:270px;height:570px;"
+<div id="prodd" class="easyui-dialog"  style="width:270px;height:550px;"
      data-options="resizable:true,modal:true" closed="true" buttons="#proddtb">
     <form id="proff">
-        <input name="id" type="text"><br/>
-        项目名称：<input name="category" type="text"><br/>
+        <input name="id" type="text" hidden="true"><br/>
+        项目名称：<input name="name" type="text"><br/>
+        <hr/>
+        业务类型：<select name="category" id="category"></select><br/>
+        <hr/>
         所需人数：<input name="reqnum" type="text"><br/>
+        <hr/>
         当前人数：<input name="nownum" type="text"><br/>
+        <hr/>
         开始时间：<input name="statime" type="date"><br/>
+        <hr/>
         结束时间：<input name="endtime" type="date"><br/>
+        <hr/>
         <input name="comid" type="text" hidden="true"><br/>
-        当前状态:<select name="state" type="text"><br/>
-        项目需求:<input name="require" type="text"><br/>
+        当前状态:<select name="state" id="projectState"></select><br/>
+        <hr/>
+        项目需求:<textarea name="require" type="text"></textarea><br/>
     </form>
 </div>
 <div id="proddtb">
