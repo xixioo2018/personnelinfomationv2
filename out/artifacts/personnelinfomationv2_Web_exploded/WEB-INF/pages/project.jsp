@@ -178,12 +178,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         formatter:function(val){
                         return formatDict(val);}},
                 {field:'reqnum',title:'需要人数',width:80,align:'right',align:'center'},
-                {field:'nownum',title:'当前人数',width:150,align:'center'},
+                {field:'nownum',title:'当前人数',width:80,align:'center'},
+                {field:'statime',title:'开始时间',width:120,align:'center'},
+                {field:'endtime',title:'结束时间',width:120,align:'center'},
                 {field:'comid',title:'公司id',width:60,align:'center',hidden:true},
                 {field:'state',title:'状态',width:60,align:'center',
                     formatter:function(val){
                         return formatDict(val);}},
-                {field:'require',title:'项目需求',width:60,align:'center'},
+                {field:'require',title:'项目需求',width:60,align:'center',hidden:true},
                 {field:'manager',
                     title:'项目管理',
                     align:'center',
@@ -207,6 +209,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     $('#tt').datagrid('selectRow',index);
 
                 }
+            },onDblClickRow:function(index,row){
+                $.messager.alert({
+                    title:row.name+'项目需求',
+                    msg:row.require,
+                    showType:'show',
+                    showSpeed:800
+                });
+
             },
             view: detailview,
             detailFormatter: function(Index, row){
@@ -567,7 +577,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $('#proff').form('load',{
             comid:${company.id},
         });
-        proffUrl='test'+${company.id};
+        proffUrl='project-addProject';
     }
 
     //修改项目
@@ -596,9 +606,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $('#prodd').dialog('close');
     }
 
-    //job表单提交
+    //项目表单提交
     function proffSubmit(){
         alert(proffUrl);
+        $('#proff').form('submit', {
+                url:proffUrl,
+                onSubmit: function(param){},
+                success:function(){
+                    $.messager.show({
+                        title:'提示',
+                        msg:'操作成功',
+                        showType:'show',
+                    });
+                }
+        });
     }
 
 </script>
@@ -751,7 +772,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--项目对话框-->
 <div id="prodd" class="easyui-dialog"  style="width:270px;height:550px;"
      data-options="resizable:true,modal:true" closed="true" buttons="#proddtb">
-    <form id="proff">
+    <form id="proff" >
         <input name="id" type="text" hidden="true"><br/>
         项目名称：<input name="name" type="text"><br/>
         <hr/>
