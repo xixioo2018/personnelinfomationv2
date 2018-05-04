@@ -30,6 +30,7 @@ public class ProjectServiceImp implements ProjectService {
 
     @Override
     public int updateProject(Project project) {
+        System.out.println(project.toString());
         projectDao.update(project);
         return 0;
     }
