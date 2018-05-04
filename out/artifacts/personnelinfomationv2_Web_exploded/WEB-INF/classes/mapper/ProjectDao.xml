@@ -18,5 +18,36 @@
         select * from project p where comId = #{id}
         <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
     </select>
+
+    <insert id="insert" parameterType="com.gh.personinfo.project.model.Project" useGeneratedKeys="true" keyProperty="id">
+		insert into project
+		(name,require,category,reqNum,nowNum,staTime,endTime,comId,state)
+		values
+		(	#{name,jdbcType=VARCHAR},
+		    #{require,jdbcType=VARCHAR},
+		    #{category,jdbcType=INTEGER},
+		    #{reqNum,jdbcType=INTEGER},
+			#{nowNum,jdbcType=INTEGER},
+			#{staTime,jdbcType=DATE},
+			#{endTime,jdbcType=DATE},
+			#{comId,jdbcType=INTEGER},
+			#{state,jdbcType=INTEGER},
+		)
+	</insert>
+    <update id="update" parameterType="com.gh.personinfo.project.model.Project">
+        update project
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="require != null">require=#{require}</if>
+            <if test="category != null">category=#{category}</if>
+            <if test="reqNum != null">reqNum=#{reqNum}</if>
+            <if test="nowNum != null">nowNum=#{nowNum}</if>
+            <if test="staTime != null">staTime=#{staTime}</if>
+            <if test="endTime != null">endTime=#{endTime}</if>
+            <if test="state != null">state=#{state}</if>
+        </set>
+        where proid=#{proid}
+    </update>
+
 </mapper>
 
