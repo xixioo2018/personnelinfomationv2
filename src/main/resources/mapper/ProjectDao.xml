@@ -4,7 +4,7 @@
     <resultMap id="projectRM" type="com.gh.personinfo.project.model.Project">
         <id column="proid" property="id" ></id>
         <result column="name" property="name"></result>
-        <result column="require" property="require"></result>
+        <result column="requires" property="require"></result>
         <result column="category" property="category"></result>
         <result column="reqNum" property="reqnum"></result>
         <result column="nowNum" property="nownum"></result>
@@ -21,29 +21,29 @@
 
     <insert id="insert" parameterType="com.gh.personinfo.project.model.Project" useGeneratedKeys="true" keyProperty="id">
 		insert into project
-		(name,require,category,reqNum,nowNum,staTime,endTime,comId,state)
+		(name,requires,category,reqNum,nowNum,staTime,endTime,comId,state)
 		values
-		(	#{name,jdbcType=VARCHAR},
-		    #{require,jdbcType=VARCHAR},
+		(	#{name},
+		    #{require},
 		    #{category,jdbcType=INTEGER},
-		    #{reqNum,jdbcType=INTEGER},
-			#{nowNum,jdbcType=INTEGER},
-			#{staTime,jdbcType=DATE},
-			#{endTime,jdbcType=DATE},
-			#{comId,jdbcType=INTEGER},
-			#{state,jdbcType=INTEGER},
+		    #{reqnum,jdbcType=INTEGER},
+			#{nownum,jdbcType=INTEGER},
+			#{statime,jdbcType=DATE},
+			#{endtime,jdbcType=DATE},
+			#{comid,jdbcType=INTEGER},
+			#{state,jdbcType=INTEGER}
 		)
 	</insert>
     <update id="update" parameterType="com.gh.personinfo.project.model.Project">
         update project
         <set>
             <if test="name != null">name=#{name},</if>
-            <if test="require != null">require=#{require}</if>
+            <if test="require != null">requires=#{require}</if>
             <if test="category != null">category=#{category}</if>
-            <if test="reqNum != null">reqNum=#{reqNum}</if>
-            <if test="nowNum != null">nowNum=#{nowNum}</if>
-            <if test="staTime != null">staTime=#{staTime}</if>
-            <if test="endTime != null">endTime=#{endTime}</if>
+            <if test="reqnum != null">reqNum=#{reqnum}</if>
+            <if test="nownum != null">nowNum=#{nownum}</if>
+            <if test="statime != null">staTime=#{statime}</if>
+            <if test="endtime != null">endTime=#{endtime}</if>
             <if test="state != null">state=#{state}</if>
         </set>
         where proid=#{proid}

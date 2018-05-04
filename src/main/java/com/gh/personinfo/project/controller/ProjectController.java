@@ -44,6 +44,7 @@ public class ProjectController {
     @ResponseBody
     @RequestMapping("project-addProject")
     public Integer addProject(Project project){
+        System.out.println(project);
         projectService.addProject(project);
         return 1;
     }

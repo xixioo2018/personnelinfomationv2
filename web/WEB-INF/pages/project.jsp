@@ -565,9 +565,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         alert(jobffUrl);
     }
 
+    //获取当前时间,并将当前时间转换成yyyymmdd格式
+    function nowtime(){
+        var mydate = new Date();
+        var str = "" + mydate.getFullYear()+"-";
+        var mm = mydate.getMonth()+1
+        if(mydate.getMonth()>9){
+            str += mm+'-';
+        }
+        else{
+            str += "0" + mm+'-';
+        }
+        if(mydate.getDate()>9){
+            str += mydate.getDate();
+        }
+        else{
+            str += "0" + mydate.getDate();
+        }
+        return str;
+    }
 
     //添加项目
     function addPro(){
+        var date=nowtime();
         $('#prodd').dialog({title:'新增项目',
             iconCls:'icon-add'
         });
@@ -576,6 +596,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $('#proff').form('clear');
         $('#proff').form('load',{
             comid:${company.id},
+            statime:date,
+            endtime:'2118-04-26',
+            reqnum:0,
+            nownum:0,
+            state:35
         });
         proffUrl='project-addProject';
     }
@@ -591,7 +616,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $('#prodd').dialog('open');
         $('#proff').form('clear');
         $('#proff').form('load',row);
-        proffUrl='edit'+row.id;
+        proffUrl='project-updateProject';
     }
 
     //关闭项目
@@ -618,8 +643,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         msg:'操作成功',
                         showType:'show',
                     });
+                    $('#prodd').dialog('close');
+
                 }
         });
+        $('#tt').datagrid('reload');
     }
 
 </script>
@@ -754,7 +782,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <hr>
         &nbsp&nbsp&nbsp&nbsp当前人数:<input name="nowNum" type="number"><br/>
         <hr>
-        &nbsp&nbsp&nbsp&nbsp匹配人数:<input name="matNum" type="number" disabled="true"><br/>
+        &nbsp&nbsp&nbsp&nbsp匹配人数:<input name="matNum" type="number" readonly="true" style="background:#CCCCCC"><br/>
         <hr>
         &nbsp&nbsp&nbsp&nbsp岗位类型:<select id="jobtype" name="jobtype"></select>
     </form>
@@ -770,26 +798,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <!--项目对话框-->
-<div id="prodd" class="easyui-dialog"  style="width:270px;height:550px;"
+<div id="prodd" class="easyui-dialog"  style="width:300px;height:640px;"
      data-options="resizable:true,modal:true" closed="true" buttons="#proddtb">
     <form id="proff" >
         <input name="id" type="text" hidden="true"><br/>
-        项目名称：<input name="name" type="text"><br/>
+        &nbsp&nbsp&nbsp&nbsp项目名称：<input name="name" type="text"><br/>
         <hr/>
-        业务类型：<select name="category" id="category"></select><br/>
+        &nbsp&nbsp&nbsp&nbsp业务类型：<select name="category" id="category"></select><br/>
         <hr/>
-        所需人数：<input name="reqnum" type="text"><br/>
+        &nbsp&nbsp&nbsp&nbsp所需人数：<input name="reqnum" type="text" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
-        当前人数：<input name="nownum" type="text"><br/>
+        &nbsp&nbsp&nbsp&nbsp当前人数：<input name="nownum" type="text" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
-        开始时间：<input name="statime" type="date"><br/>
+        &nbsp&nbsp&nbsp&nbsp开始时间：<input name="statime" type="date" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
-        结束时间：<input name="endtime" type="date"><br/>
+        &nbsp&nbsp&nbsp&nbsp结束时间：<input name="endtime" type="date" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
         <input name="comid" type="text" hidden="true"><br/>
-        当前状态:<select name="state" id="projectState"></select><br/>
+        &nbsp&nbsp&nbsp&nbsp当前状态:<select name="state" id="projectState"></select><br/>
         <hr/>
-        项目需求:<textarea name="require" type="text"></textarea><br/>
+        &nbsp&nbsp&nbsp&nbsp项目需求:<textarea name="require" type="text"></textarea><br/>
     </form>
 </div>
 <div id="proddtb">
