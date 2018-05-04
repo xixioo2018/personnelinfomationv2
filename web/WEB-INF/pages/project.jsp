@@ -749,8 +749,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <input name="category" type="text"><br/>
         <input name="reqnum" type="text"><br/>
         <input name="nownum" type="text"><br/>
-        <input name="statime" type="datetime"><br/>
-        <input name="endtime" type="text"><br/>
+        <input name="statime" type="date"><br/>
+        <input name="endtime" type="date"><br/>
         <input name="comid" type="text"><br/>
         <input name="state" type="text"><br/>
         <input name="require" type="text"><br/>

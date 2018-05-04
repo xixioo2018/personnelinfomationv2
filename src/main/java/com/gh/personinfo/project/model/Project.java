@@ -16,9 +16,9 @@ public class Project {
 
     private Integer nownum;//实际人数
 
-    private Date statime;//开始时间
+    private String statime;//开始时间
 
-    private Date endtime;//结束时间
+    private String endtime;//结束时间
 
     private Integer comid;//公司
 
@@ -66,19 +66,19 @@ public class Project {
         this.nownum = nownum;
     }
 
-    public Date getStatime() {
+    public String getStatime() {
         return statime;
     }
 
-    public void setStatime(Date statime) {
+    public void setStatime(String statime) {
         this.statime = statime;
     }
 
-    public Date getEndtime() {
+    public String getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(Date endtime) {
+    public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
 
