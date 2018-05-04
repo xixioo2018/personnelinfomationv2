@@ -182,7 +182,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 {field:'statime',title:'开始时间',width:120,align:'center'},
                 {field:'endtime',title:'结束时间',width:120,align:'center'},
                 {field:'comid',title:'公司id',width:60,align:'center',hidden:true},
-                {field:'state',title:'状态',width:60,align:'center',
+                {field:'state',title:'状态',width:80,align:'center',
                     formatter:function(val){
                         return formatDict(val);}},
                 {field:'require',title:'项目需求',width:60,align:'center',hidden:true},
@@ -622,7 +622,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     //关闭项目
     function delPro(){
         var row=$('#tt').datagrid('getSelected');
-        alert('del'+row.id);
+        if(row.state==37){
+            $.messager.alert({
+                title:'警告',
+                msg:'该项目已被关闭',
+                showType:'show',
+                showSpeed:800
+            });
+            return;
+        }
+        $.post("project-updateProject",
+            {
+                "id":row.id,
+                "state":37,
+                "endtime":nowtime()
+            },
+            function(){
+                $('#tt').datagrid('reload');
+            });
+
     }
 
 
@@ -633,14 +651,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     //项目表单提交
     function proffSubmit(){
-        alert(proffUrl);
         $('#proff').form('submit', {
                 url:proffUrl,
                 onSubmit: function(param){},
                 success:function(){
                     $.messager.show({
                         title:'提示',
-                        msg:'操作成功',
+                        msg:'操作成功,请刷新',
                         showType:'show',
                     });
                     $('#prodd').dialog('close');
