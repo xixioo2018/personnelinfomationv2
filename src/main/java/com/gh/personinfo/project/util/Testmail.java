@@ -12,7 +12,7 @@ public class Testmail {
     public void Test1()throws IOException{
         MailUser mailUser = new MailUser();
         String to = "613327951@qq.com";
-        String fileName = "E:\\ideaWork\\personnelinfomationv2\\out\\artifacts\\personnelinfomationv2_Web_exploded\\WEB-INF\\upload\\test.txt";
+        String fileName = "E:\\test.txt";
         Send(to,fileName);
     }
     public void Send(String to,String fileName) throws IOException {
