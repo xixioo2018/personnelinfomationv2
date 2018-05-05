@@ -74,6 +74,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .clearfix{
         margin-top: 5px;
     }
+
+    #tfm
+    {
+        border-collapse:separate;
+        border-spacing:10px 50px;
+        overflow: hidden;
+    }
+    #tfm tr:nth-child(1) td:nth-child(6) input{
+        width: 20px;
+    }
+    #tfm tr:nth-child(1) td:nth-child(6) strong{
+        position: relative;
+        bottom: 12px;
+    }
+
+    #tfm
+    {
+        border-collapse:separate;
+        border-spacing:10px 50px;
+    }
 </style>
 <body>
 <script type="application/javascript">
@@ -182,8 +202,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="information">
         <!--person表-->
-        <table id="ptb"class="easyui-datagrid" style="width:100%;height:250px"
-               data-options="fitColumns:true,singleSelect:true">
+        <table id="ptb"class="easyui-datagrid" style="width:100%;height:260px"
+               data-options="fitColumns:true,singleSelect:true" pagination="true" pageSize="5",
+               pageList="[5]",
+               pagePosition="top",>
             <thead>
             <tr>
                 <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
@@ -201,7 +223,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th data-options="field:'job',width:100,align:'center',formatter:function(val){
                     return formatDict(val);}">求职方向</th>
                 <th data-options="field:'experience',width:100,align:'center'">工作经验(年)</th>
-                <th data-options="field:'status',width:100,align:'center'">状态</th>
+                <th data-options="field:'status',width:100,align:'center',formatter:function(val){
+                    if(val==0){return '空闲';}else{return '在职';}}">状态</th>
                 <th data-options="field:'resume',width:100,align:'center',hidden:true">简历附件</th>
                 <th data-options="field:'priority',width:100,align:'center',hidden:true">优先度</th>
             </tr>
@@ -230,9 +253,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script>
     var dicts;
+    var number=1;//当前页码
+    var size=5;//显示行数
     $('#ptb').datagrid({
         onDblClickRow:function(index,row){
-         alert(row.education);
+        // alert(row.education);
         },
         onLoadSuccess:function(data){
             $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-edit'});
@@ -249,6 +274,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     });
     function test () {
         var serch = $(".crumb-select-item").find("a").text();
+        var start=(number-1)*size;
+        //alert(start+'---'+number+'----'+size);
         //alert(serch);
         /*var boxIds = new Array();
         boxIds.push("age=23");
@@ -262,7 +289,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             type : "POST",
             dataType : "JSON",
             /*traditional:true,*/
-            url : "person-queryperson",
+            url : "person-queryperson?start="+start+"&size="+size,
             data : {serch: serch},
             success : function(data){
                 /*if (data.flag){
@@ -425,18 +452,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         return str;
     }
 
-    function a(){
-        alert(1);
+    function sub(){
+
+        $('#fm').form('submit', {
+            url:'person-updatePersonById',
+            onSubmit: function(){
+            },
+            success:function(){
+                $.messager.show({
+                    title:'提示',
+                    msg:'操作成功',
+                    showType:'show',
+                });
+                $('#dd').dialog('close');
+                test ();
+            }
+        });
     }
+
+    $(function(){
+        var pager = $('#ptb').datagrid('getPager');	// get the pager of datagrid
+        pager.pagination({
+            onSelectPage:function(pageNumber, pageSize){
+                number=pageNumber;
+                size=pageSize;
+                test();
+            }
+        });
+    });
 
 
 </script>
 
-<div id="dd" class="easyui-dialog" style="width:900px;height:250px" closed="true"
-     data-options="title:'修改人才信息',modal:true,buttons:'#tb'">
-    <form id="fm" action="person-uploadperson"  method="post" enctype="multipart/form-data">
+<div id="dd" class="easyui-dialog" style="width:1000px;height:480px" closed="true"
+     data-options="title:'修改人才信息',modal:true,buttons:'#tb'" >
+    <form id="fm"  method="post" enctype="multipart/form-data">
         <input type="hidden" name="resume" value="abc">
-        <table >
+        <input type="hidden" name="id" >
+        <table id="tfm">
             <tr align="right">
                 <td><strong>姓名:</strong></td>
                 <td><input type="text" class="form-control" placeholder="姓名" name="name"></td>
@@ -474,7 +527,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td><strong>是否在职</strong></td>
                 <td>
                     <select class="form-control" name="status">
-                        <option value="0">不在职</option>
+                        <option value="0">空闲</option>
                         <option value="1">在职</option>
                     </select>
                 </td>
@@ -488,7 +541,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </form>
 </div>
 <div id="tb">
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="a()">提交</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="sub()">提交</a>
 </div>
 
 

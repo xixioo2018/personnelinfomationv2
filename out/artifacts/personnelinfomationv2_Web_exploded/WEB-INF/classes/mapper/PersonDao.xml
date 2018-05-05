@@ -86,8 +86,10 @@
 	</select>
 
 	<update id="update" parameterType="com.gh.personinfo.person.model.Person" useGeneratedKeys="true" keyProperty="id">
-		update person set name= #{name},age= #{age},gender= #{gender},education= #{education},school= #{school},category= #{category},company= #{company},job= #{job},experience= #{experience},status= #{status},resume= #{resume},priority=#{priority}
-		 where perid = #{id}
+		update person set name= #{name},age= #{age},gender= #{gender},education= #{education},school= #{school},category= #{category},company= #{company},job= #{job},experience= #{experience},status= #{status},
+		<if test="resume != null">resume= #{resume},</if>
+		priority=#{priority}
+		where perid = #{id}
 	</update>
 </mapper>
 

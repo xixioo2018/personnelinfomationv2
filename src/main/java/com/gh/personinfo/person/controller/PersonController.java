@@ -2,6 +2,7 @@ package com.gh.personinfo.person.controller;
 
 import com.gh.personinfo.person.model.Person;
 import com.gh.personinfo.person.service.PersonService;
+import com.gh.personinfo.project.util.Pagination;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,17 +58,22 @@ public class PersonController {
     @ResponseBody
     @RequestMapping("person-queryperson")
     /*(value = "boxIds[]")*/
-    public List<Person> queryperson(@RequestParam String serch){
+    public Map<String,Object> queryperson(@RequestParam String serch,int start,int size){
         Map<String,Object> newMap = new HashMap<String, Object>();
+        Map<String,Object> result = new HashMap<String, Object>();
         System.out.println(serch);
+//        System.out.println(start+"----"+size);
         newMap = personService.deal(serch);
         System.out.println(newMap.toString());
         List<Person> personList = personService.queryperson(newMap);
-        for (Person p:
-             personList) {
-            System.out.println(p.toString());
-        }
-        return personList;
+//        for (Person p:
+//             personList) {
+//            System.out.println(p.toString());
+//        }
+
+        result.put("total", personList.size());
+        result.put("rows",Pagination.subList(start,size , personList));
+        return result;
     }
 
     /*
@@ -89,9 +95,10 @@ public class PersonController {
     }
 
     @ResponseBody
-    @RequestMapping("company-updatePersonById")
+    @RequestMapping("person-updatePersonById")
     /*(value = "boxIds[]")*/
-    public String updatePersonById(Person person){
+    public String updatePersonById(Person person,MultipartFile file,HttpServletRequest request){
+        System.out.println("-------------"+person+"---------------");
         personService.updatePersonById(person);
         return "1";
     }
