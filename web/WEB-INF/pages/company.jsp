@@ -159,8 +159,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <div class="information">
         <!--company表-->
-        <table id="ctb"class="easyui-datagrid" style="width:100%;height:250px"
-               data-options="fitColumns:true,singleSelect:true">
+        <table id="ctb"class="easyui-datagrid" style="width:100%;height:260px"
+               data-options="fitColumns:true,singleSelect:true" pagination="true" pageSize="5" pageList="[5]",
+               pagePosition="top">
             <thead>
             <tr>
                 <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
@@ -202,6 +203,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <script>
     var dicts;
+    var number=1;//当前页码
+    var size=5;//显示行数
     $('#ctb').datagrid({
         onDblClickRow:function(index,row){
             alert(row.id);
@@ -219,6 +222,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         }
     });
     function test () {
+        var start=(number-1)*size;
         var serch = $(".crumb-select-item").find("a").text();
         //alert(serch);
         /*var boxIds = new Array();
@@ -234,7 +238,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             dataType : "JSON",
             /*traditional:true,*/
             url : "company-querycompany",
-            data : {serch: serch},
+            data : {serch: serch,start:start,size:size},
             success : function(data){
                 /*if (data.flag){
                     alert(data.flag+""+data.massage)
@@ -377,5 +381,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         }
     }
+
+    //分页,切换页面时改变页码
+    $(function(){
+        var pager = $('#ctb').datagrid('getPager');	// get the pager of datagrid
+        pager.pagination({
+            onSelectPage:function(pageNumber, pageSize){
+                number=pageNumber;
+                size=pageSize;
+                test();
+            }
+        });
+    });
 </script>
 </html>
