@@ -74,4 +74,18 @@ public class MailUser {
 
 	public MailUser() {
 	}
+
+	@Override
+	public String toString() {
+		return "MailUser{" +
+				"host='" + host + '\'' +
+				", uname='" + uname + '\'' +
+				", pwd='" + pwd + '\'' +
+				", from='" + from + '\'' +
+				", subject='" + subject + '\'' +
+				", content='" + content + '\'' +
+				", to='" + to + '\'' +
+				", fileName='" + fileName + '\'' +
+				'}';
+	}
 }

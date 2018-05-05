@@ -28,9 +28,11 @@ public class Testmail {
         String content = props.getProperty("content");//获取邮件内容
         content = MessageFormat.format(content, "");//替换{0}
         MailUser mailUser = new MailUser(host, uname, pwd, from, subject, content,to,fileName);
+        System.out.println(mailUser.toString());
         System.out.println(content);
         try {
-            JavaMail.SetEmail(mailUser);
+            JavaMailUtil abcd = new JavaMailUtil();
+            abcd.Send(mailUser);
             System.out.println("发送成功");
         } catch (Exception e1) {
             System.out.println("发送失败");

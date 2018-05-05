@@ -342,7 +342,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     }
                                     $(this).datagrid('selectRow',index);
                                     var row=$(this).datagrid('getSelected');
-                                    alert('推送');
+                                    alert(row.name);
+
+                                    $.post("project-sendEmail",
+                                        {
+                                            "to":"${company.conemail}",
+                                            "fileName":row.resume
+                                        },
+                                        function(){
+                                        });
                                 }
                             });
                             $('#done').datagrid({

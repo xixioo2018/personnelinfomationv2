@@ -60,17 +60,18 @@ public class ProjectController {
      */
 
     @RequestMapping("project-sendEmail")
-    public Integer sendEmail(String to,String fileName){
+    public void sendEmail(String to,String fileName){
         System.out.println(to+"------"+fileName);
         to = "613327951@qq.com";
         fileName = "E:\\test.txt";
+        System.out.println(to+"------"+fileName);
         Testmail testmail = new Testmail();
         try {
             testmail.Send(to,fileName);
         } catch (IOException e) {
             /*e.printStackTrace();*/
         }
-        return 1;
+        return ;
     }
 
 }
