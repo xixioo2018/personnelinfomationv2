@@ -289,8 +289,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             type : "POST",
             dataType : "JSON",
             /*traditional:true,*/
-            url : "person-queryperson?start="+start+"&size="+size,
-            data : {serch: serch},
+            url : "person-queryperson",
+            data : {serch: serch,start:start,size:size},
             success : function(data){
                 /*if (data.flag){
                     alert(data.flag+""+data.massage)
