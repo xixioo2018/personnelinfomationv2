@@ -55,23 +55,7 @@ public class ProjectController {
         projectService.updateProject(project);
         return 1;
     }
-    /**
-     * 发邮件接口
-     */
 
-    @RequestMapping("project-sendEmail")
-    public void sendEmail(String to,String fileName){
-        System.out.println(to+"------"+fileName);
-        to = "613327951@qq.com";
-        fileName = "E:\\test.txt";
-        System.out.println(to+"------"+fileName);
-        Testmail testmail = new Testmail();
-        try {
-            testmail.Send(to,fileName);
-        } catch (IOException e) {
-            /*e.printStackTrace();*/
-        }
-        return ;
-    }
+    
 
 }

@@ -48,6 +48,10 @@
         </set>
         where proid=#{id}
     </update>
+    <select id="get" parameterType="java.lang.Integer" resultMap="projectRM">
+        select * from project p where proid = #{id}
+        <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
+    </select>
 
 </mapper>
 

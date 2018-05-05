@@ -37,5 +37,18 @@
 		update job2Person set jobId= #{jobid},jobType= #{jobtype},perId= #{perid.id},status= #{status},isInter= #{isinter},isHire=#{ishire}
 		 where j2id = #{id}
 	</update>
+    
+    <insert id="insert" parameterType="com.gh.personinfo.job2person.model.Job2person" useGeneratedKeys="true" keyProperty="id">
+        insert into job2Person
+		(jobId,jobType,perId,status,isInter,isHire)
+		values
+		(	#{jobid,jdbcType=INTEGER},
+		    #{jobtype,jdbcType=INTEGER},
+		    #{person.perid,jdbcType=INTEGER},
+		    #{status,jdbcType=INTEGER},
+			#{isinter,jdbcType=INTEGER},
+			#{ishire,jdbcType=INTEGER}
+		)
+    </insert>
 </mapper>
 

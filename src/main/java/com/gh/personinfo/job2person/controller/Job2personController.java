@@ -3,12 +3,14 @@ package com.gh.personinfo.job2person.controller;
 import com.gh.personinfo.job.service.JobService;
 import com.gh.personinfo.job2person.model.Job2person;
 import com.gh.personinfo.job2person.service.Job2personService;
+import com.gh.personinfo.project.util.Testmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,5 +44,21 @@ public class Job2personController {
         map.put("result", 1);
         job2personService.updateJob2personById(job2person);
         return map;
+    }
+    /**
+     * 发邮件接口
+     */
+
+    @RequestMapping("project-sendEmail")
+    public void sendEmail(String to,String fileName,Job2person job2person){
+        System.out.println(to+"------"+fileName);
+        to = "613327951@qq.com";
+        fileName = "E:\\test.txt";
+        System.out.println(to+"------"+fileName);
+        //Testmail testmail = new Testmail();
+        job2personService.insertJob2person(to,fileName,job2person);
+            //testmail.Send(to,fileName);
+            /*e.printStackTrace();*/
+        return ;
     }
 }

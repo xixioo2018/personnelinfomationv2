@@ -39,5 +39,9 @@
         </set>
 		 where jid = #{id}
 	</update>
+    <select id="get" parameterType="java.lang.Integer" resultMap="jobRM">
+        select * from job j where jid = #{id}
+        <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
+    </select>
 </mapper>
 
