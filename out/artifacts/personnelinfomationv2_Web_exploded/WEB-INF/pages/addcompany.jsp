@@ -124,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 <body>
 <div class="top">
-    <img src="${pageContext.request.contextPath}img/logo.png" alt="光环国际">
+    <img src="${pageContext.request.contextPath}/img/logo.png" alt="光环国际">
     <h1>人才信息管理系统</h1>
 </div>
 <div class="main">
