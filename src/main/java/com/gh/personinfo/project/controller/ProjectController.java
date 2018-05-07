@@ -4,6 +4,7 @@ import com.gh.personinfo.company.model.Company;
 import com.gh.personinfo.person.model.Person;
 import com.gh.personinfo.project.model.Project;
 import com.gh.personinfo.project.service.ProjectService;
+import com.gh.personinfo.project.util.Pagination;
 import com.gh.personinfo.project.util.Testmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,9 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProjectController {
@@ -26,19 +29,20 @@ public class ProjectController {
 
     @RequestMapping("project-queryProjectById")
     @ResponseBody
-    public List<Project> queryProjectById(@RequestParam int id ){
+    public Map<String,Object> queryProjectById(@RequestParam int id,int start,int size ){
         List<Project> projectList = projectService.queryProjectById(id);
-
+        Map<String,Object> result=new HashMap<String,Object>();
+        result.put("total",projectList.size());
+        result.put("rows",Pagination.subList(start,size,projectList ));
         //转化时间格式
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("---------------");
-        System.out.println(projectList.size());
-        for (Project project:projectList) {
-            System.out.println(project);
-        }
-        System.out.println("---------------");
+//        System.out.println("---------------");
+//        System.out.println(projectList.size());
+//        for (Project project:projectList) {
+//            System.out.println(project);
+//        }
+//        System.out.println("---------------");
 
-        return projectList;
+        return result;
     }
 
     @ResponseBody

@@ -1,3 +1,5 @@
+<%--suppress ALL --%>
+<%--suppress ALL --%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -106,14 +108,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         padding: 5px;
     }
 </style>
+<%--suppress JSAnnotator --%>
 <script>
     var dicts;//数据字典
 
     var jobffUrl;//岗位表单的url
     var proffUrl;//项目表单的url
 
-    var xx;
-    var yy;
+    var xx;//鼠标x坐标
+    var yy;//鼠标y坐标
+
+    var proNumber=1;//项目表当前页码
+    var proSize=5;//项目表显示行数
+    var proStart=(proNumber-1)*proSize;
 
     $(function(){
         //对鼠标定位
@@ -170,7 +177,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             nowrap:false,
             loadMsg:'正在加载...',
             fitColumns:true,
-            url:'project-queryProjectById?id='+${company.id},
+            url:'project-queryProjectById?id='+${company.id}+'&start='+proStart+'&size='+proSize,
             columns:[[
                 {field:'id',title:'编号',align:'center',width:60},
                 {field:'name',title:'项目名称',width:100,align:'center'},
@@ -431,10 +438,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         });
 
-        var page=$('#tt').datagrid('getPager');
-        page.pagination({
-            buttons: '#projectTb'
+        //project分页
+        var ttPage=$('#tt').datagrid('getPager');
+        var ttops=$('#tt').datagrid('options');
+        ttPage.pagination({
+            buttons: '#projectTb',
+            onSelectPage:function(pageNumber, pageSize){
+                proNumber=pageNumber;
+                proSize=pageSize;
+                proStart=(pageNumber-1)*proSize;
+                ttops.url='project-queryProjectById?id='+${company.id}+'&start='+proStart+'&size='+proSize;
+                $('#tt').datagrid('reload');
+            }
         })
+
+
+
 
     });
     function formatDict(num){
