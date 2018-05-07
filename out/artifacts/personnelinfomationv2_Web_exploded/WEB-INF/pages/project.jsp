@@ -468,7 +468,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 return false
                             }
 
-                            $.messager.confirm('确认关闭', '您确认要关闭该岗位信息吗?', function(r){
+                            $.messager.confirm('确认关闭', '您确认要关闭该岗位吗?', function(r){
                                 //确认后
                                 if (r){
 
@@ -862,9 +862,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     });
                     $('#prodd').dialog('close');
 
+                    //刷新
+                    $('#tt').datagrid('reload');
                 }
         });
-        $('#tt').datagrid('reload');
+
     }
 
 </script>
