@@ -246,7 +246,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     pagination:true,
                     //查找岗位
                     url:'job-queryJobById?id='+row.id+'&start=0&size=5',
-                    pageList:[1],
+                    pageList:[5],
                     pagePosition:'top',
                     columns:[[
                         {field:'operate',
@@ -271,17 +271,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         {
                             title:'需求人数',
                             field: 'reqnum',
-                            width:100
+                            width:80,
+                            formatter:function(val){
+                            if(val<0){
+                                return '岗位关闭';
+                            }else{
+                                return val;
+                            }}
                         },
                         {
                             title:'当前人数',
                             field: 'nownum',
-                            width:100
+                            width:80
                         },
                         {
                             title:'匹配人数',
                             field: 'matnum',
-                            width:100
+                            width:80
                         },
                         {
                             title:'岗位类型',
@@ -298,6 +304,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 var str = '<a href="javascript:void(0)" name="editJob"  class="easyui-linkbutton"  >修改</a>';
                                 return str;
                             }},
+                        {field:'remove',
+                            title:'删除',
+                            align:'center',
+                            width:80,
+                            formatter:function(value, row, index){
+                                var str = '<a href="javascript:void(0)" name="removeJob"  class="easyui-linkbutton"  >删除</a>';
+                                return str;
+                            }},
                         {field:'delete',
                             title:'关闭',
                             align:'center',
@@ -310,7 +324,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     onLoadSuccess:function(data){
                         $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-search'});
                         $("a[name='editJob']").linkbutton({plain:true,iconCls:'icon-edit'});
-                        $("a[name='delJob']").linkbutton({plain:true,iconCls:'icon-no'});
+                        $("a[name='delJob']").linkbutton({plain:true,iconCls:'icon-cancel'});
+                        $("a[name='removeJob']").linkbutton({plain:true,iconCls:'icon-remove'});
                     },
                     onClickRow:function(index,row){
                         //匹配
@@ -434,6 +449,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $('#jobff').form('load',row);
                             jobffUrl='job-updateJobById';
 
+                            //更新页面
+                            ttc.datagrid('reload');
+
                         }
                         //关闭岗位
                         if(field=='delete'){
@@ -448,20 +466,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 return false
                             }
 
-                            //发送异步请求
-                            $.post("job-updateJobById",
-                                {
-                                    "id":row.id,
-                                    "reqnum":-1
-                                },
-                                function(data){
-                                });
-                            $(this).datagrid('reload');
-                            $.messager.show({
-                                title:'提示',
-                                msg:'操作成功,请刷新',
-                                showType:'show',
+                            $.messager.confirm('确认关闭', '您确认要关闭该岗位信息吗?', function(r){
+                                //确认后
+                                if (r){
+
+                                    //发送异步请求
+                                    $.post("job-updateJobById",
+                                        {
+                                            "id":row.id,
+                                            "reqnum":-1
+                                        },
+                                        function(data){
+                                        });
+                                    //更新页面
+                                    ttc.datagrid('reload');
+                                    $.messager.show({
+                                        title:'提示',
+                                        msg:'操作成功,请刷新',
+                                        showType:'show',
+                                    });
+
+                                }
                             });
+
+
+
+                        }
+                        //删除岗位
+                        if(field=='remove'){
+                            //选中当前行
+                            $(this).datagrid('selectRow',index);
+                            var row=$(this).datagrid('getSelected');
+
+                            //确认删除
+                            $.messager.confirm('确认删除', '您确认要删除该岗位信息吗?此操作将无法恢复', function(r){
+                                //确认后
+                                if (r){
+                                    alert(row.id);
+                                }
+                            });
+
+                            ttc.datagrid('reload');
+
 
                         }
 
