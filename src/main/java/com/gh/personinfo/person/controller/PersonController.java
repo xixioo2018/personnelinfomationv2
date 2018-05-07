@@ -82,16 +82,19 @@ public class PersonController {
     @ResponseBody
     @RequestMapping("person-matchperson")
     /*(value = "boxIds[]")*/
-    public List<Person> queryperson(@RequestParam int jobtype,int jobid){
-        System.out.println("jobid---"+jobid);
-        System.out.println("jobtype---"+jobtype);
+    public Map<String,Object> queryperson(@RequestParam int jobtype,int jobid,int start,int size){
+//        System.out.println("jobid---"+jobid);
+//        System.out.println("jobtype---"+jobtype);
+        Map<String,Object> result=new HashMap<String,Object>();
 
         List<Person> personList = personService.matchPerson(jobtype,jobid);
-        for (Person p:
-                personList) {
-            System.out.println(p.toString());
-        }
-        return personList;
+//        for (Person p:
+//                personList) {
+//            System.out.println(p.toString());
+//        }
+        result.put("total",personList.size());
+        result.put("rows",Pagination.subList(start,size ,personList ));
+        return result;
     }
 
     @ResponseBody

@@ -3,6 +3,7 @@ package com.gh.personinfo.job2person.controller;
 import com.gh.personinfo.job.service.JobService;
 import com.gh.personinfo.job2person.model.Job2person;
 import com.gh.personinfo.job2person.service.Job2personService;
+import com.gh.personinfo.project.util.Pagination;
 import com.gh.personinfo.project.util.Testmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,16 +23,20 @@ public class Job2personController {
 
     @RequestMapping("job2person-queryJob2personByJid")
     @ResponseBody
-    public List<Job2person> queryJob2personByJid(@RequestParam int id ){
+    public Map<String,Object> queryJob2personByJid(@RequestParam int id,int start,int size){
+        Map<String,Object> result=new HashMap<String,Object>();
         List<Job2person> job2peopleList = job2personService.queryJob2personByJid(id);
-        System.out.println("------job2person---------");
-        System.out.println(job2peopleList.size());
-        for (Job2person job2person: job2peopleList) {
-            System.out.println(job2person);
-        }
-        System.out.println("------job2person---------");
+//        System.out.println("------job2person---------");
+//        System.out.println(job2peopleList.size());
+//        for (Job2person job2person: job2peopleList) {
+//            System.out.println(job2person);
+//        }
+//        System.out.println("------job2person---------");
 
-        return job2peopleList;
+        result.put("total",job2peopleList.size() );
+        result.put("rows",Pagination.subList(start,size ,job2peopleList ));
+
+        return result;
     }
 
     @ResponseBody

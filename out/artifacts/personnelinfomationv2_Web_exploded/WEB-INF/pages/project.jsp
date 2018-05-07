@@ -118,9 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var xx;//鼠标x坐标
     var yy;//鼠标y坐标
 
-    var proNumber=1;//项目表当前页码
-    var proSize=5;//项目表显示行数
-    var proStart=(proNumber-1)*proSize;
+
 
     $(function(){
         //对鼠标定位
@@ -177,7 +175,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             nowrap:false,
             loadMsg:'正在加载...',
             fitColumns:true,
-            url:'project-queryProjectById?id='+${company.id}+'&start='+proStart+'&size='+proSize,
+            url: 'project-queryProjectById?start=0&size=5&id='+${company.id},
             columns:[[
                 {field:'id',title:'编号',align:'center',width:60},
                 {field:'name',title:'项目名称',width:100,align:'center'},
@@ -247,9 +245,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     height:'auto',
                     pagination:true,
                     //查找岗位
-                    url:'job-queryJobById?id='+row.id,
-                    pageSize:5,
-                    pageList:[5],
+                    url:'job-queryJobById?id='+row.id+'&start=0&size=5',
+                    pageList:[1],
                     pagePosition:'top',
                     columns:[[
                         {field:'operate',
@@ -339,7 +336,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 return false
                             }
                             $('#none').datagrid({
-                                url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id,
+                                url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id+'&start=0&size=10',
                                 onLoadSuccess:function(data){
                                     $("a[name='opera2']").linkbutton({plain:true,iconCls:'icon-redo',text:'推送'});
                                 },
@@ -360,8 +357,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         });
                                 }
                             });
+
+                            //none表分页
+                            var nonPage=$('#none').datagrid('getPager');
+                            var nonops=$('#none').datagrid('options');
+                            nonPage.pagination({
+                                onSelectPage:function(pageNumber, pageSize){
+                                    var start=(pageNumber-1)*pageSize;
+                                    // alert(start+"----"+pageSize);
+                                    nonops.url='person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id+'&start='+start+'&size='+pageSize;
+
+                                    $('#none').datagrid('reload');
+                                }
+                            })
+
+
                             $('#done').datagrid({
-                                url:'job2person-queryJob2personByJid?id='+row.id,
+                                url:'job2person-queryJob2personByJid?id='+row.id+'&start=0&size=10',
                                 onLoadSuccess:function(data){
                                     $("a[name='opera3']").linkbutton({
                                         plain:true,
@@ -384,6 +396,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                                 }
                             });
+
+
+                            //done表分页
+                            var donPage=$('#done').datagrid('getPager');
+                            var donops=$('#done').datagrid('options');
+                            donPage.pagination({
+                                onSelectPage:function(pageNumber, pageSize){
+                                    var start=(pageNumber-1)*pageSize;
+                                    // alert(start+"----"+pageSize);
+                                    donops.url='job2person-queryJob2personByJid?id='+row.id+'&start='+start+'&size='+pageSize;
+
+                                    $('#done').datagrid('reload');
+                                }
+                            })
+
+
+
+
+
+
                             $('#done').datagrid('reload');
                             $('#none').datagrid('reload');
                             $('#dd').dialog('open');
@@ -435,6 +467,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                     }
                 });
+
+                //拓展表分页
+                var ttcPage=ttc.datagrid('getPager');
+                var ttcops=ttc.datagrid('options');
+                ttcPage.pagination({
+                    onSelectPage:function(pageNumber, pageSize){
+                        var start=(pageNumber-1)*pageSize;
+                        // alert(start+"----"+pageSize);
+                        ttcops.url='job-queryJobById?id='+row.id+'&start='+start+'&size='+pageSize;
+
+                        ttc.datagrid('reload');
+                    }
+                })
+
+
+
+
             }
         });
 
@@ -444,13 +493,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         ttPage.pagination({
             buttons: '#projectTb',
             onSelectPage:function(pageNumber, pageSize){
-                proNumber=pageNumber;
-                proSize=pageSize;
-                proStart=(pageNumber-1)*proSize;
-                ttops.url='project-queryProjectById?id='+${company.id}+'&start='+proStart+'&size='+proSize;
+                var start =(pageNumber-1)*pageSize;
+                ttops.url='project-queryProjectById?id='+${company.id}+'&start='+start+'&size='+pageSize;
                 $('#tt').datagrid('reload');
             }
         })
+
+
 
 
 
