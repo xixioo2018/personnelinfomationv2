@@ -4,6 +4,7 @@ import com.gh.personinfo.job.service.JobService;
 import com.gh.personinfo.job2person.model.Job2person;
 import com.gh.personinfo.job2person.service.Job2personService;
 import com.gh.personinfo.project.util.Pagination;
+import com.gh.personinfo.project.util.Result;
 import com.gh.personinfo.project.util.Testmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,12 +44,12 @@ public class Job2personController {
     @RequestMapping("job2person-updateJob2personById")
     /*(value = "boxIds[]")*/
     public Map updateJob2personById( Job2person job2person){
-        Map map=new HashMap();
-        System.out.println("-------update---------");
-        System.out.println(job2person);
-        map.put("result", 1);
+//        System.out.println("-------update---------");
+//        System.out.println(job2person);
         job2personService.updateJob2personById(job2person);
-        return map;
+        int index=1;
+
+        return  Result.back(index);
     }
     /**
      * 发邮件接口

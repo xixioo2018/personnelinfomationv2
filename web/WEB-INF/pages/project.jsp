@@ -476,16 +476,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     $.post("job-updateJobById",
                                         {
                                             "id":row.id,
+                                            "proid":row.proid,
                                             "reqnum":-1
                                         },
                                         function(data,status){
                                             // alert(data.result);
                                             //更新页面
-                                            $.messager.show({
-                                                title:'提示',
-                                                msg:'操作成功,请刷新',
-                                                showType:'show',
-                                            });
+                                            resultShow(data);
 
                                             ttcRefresh.datagrid('reload');
                                         });
@@ -504,7 +501,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $.messager.confirm('确认删除', '您确认要删除该岗位信息吗?此操作将无法恢复', function(r){
                                 //确认后
                                 if (r){
-                                    alert(row.id);
+                                    //发送异步请求
+                                    $.post("job-deleteJobById",
+                                        {
+                                            "id":row.id,
+                                            "proid":row.proid
+                                        },
+                                        function(data,status){
+                                            // alert(data.result);
+                                            //更新页面
+                                            resultShow(data);
+
+                                            ttcRefresh.datagrid('reload');
+                                        });
                                 }
                             });
 
@@ -592,8 +601,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 "isinter":row.isinter,
                 "ishire":row.ishire
             },
-            function(){
+            function(data){
+                resultShow(data);
                 $('#done').datagrid('reload');
+            });
+
+        $.messager.progress({
+            interval:200
         });
 
     }
@@ -624,9 +638,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 "isinter":row.isinter,
                 "ishire":1
             },
-            function(){
+            function(data){
+                resultShow(data);
                 $('#done').datagrid('reload');
             });
+
+        $.messager.progress({
+            interval:200
+        });
 
     }
 
@@ -656,9 +675,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 "isinter":1,
                 "ishire":row.ishire
             },
-            function(){
+            function(data){
+                resultShow(data);
                 $('#done').datagrid('reload');
             });
+
+        $.messager.progress({
+            interval:200
+        });
 
     }
 
@@ -688,9 +712,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 "isinter":1,
                 "ishire":row.ishire
             },
-            function(){
+            function(data){
+                resultShow(data);
                 $('#done').datagrid('reload');
             });
+
+        $.messager.progress({
+            interval:200
+        });
 
     }
     //添加岗位
@@ -869,6 +898,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     }
 
+    //将结果弹窗
+    function resultShow(data){
+        $.messager.progress('close');
+        if(data.result=='成功'){
+            $.messager.show({
+                title:'提示',
+                msg:'操作成功',
+                showType:'show',
+            });
+        }else if(data.result=='失败'){
+            $.messager.show({
+                title:'提示',
+                msg:'操作失败,请重试',
+                showType:'show',
+            });
+        }
+    }
+
 </script>
 <body >
 <div class="top">
@@ -1029,9 +1076,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <hr/>
         &nbsp&nbsp&nbsp&nbsp当前人数：<input  name="nownum" type="text" readonly="true" style="background:#CCCCCC"><br/>
         <hr/>
-        &nbsp&nbsp&nbsp&nbsp开始时间：<input name="statime" type="date" readonly="true" style="background:#CCCCCC"><br/>
+        &nbsp&nbsp&nbsp&nbsp开始时间：<input name="statime" type="date" ><br/>
         <hr/>
-        &nbsp&nbsp&nbsp&nbsp结束时间：<input name="endtime" type="date" readonly="true" style="background:#CCCCCC"><br/>
+        &nbsp&nbsp&nbsp&nbsp结束时间：<input name="endtime" type="date" ><br/>
         <hr/>
         <input name="comid" type="text" hidden="true"><br/>
         &nbsp&nbsp&nbsp&nbsp当前状态:<select name="state" id="projectState"></select><br/>

@@ -10,4 +10,6 @@ public interface JobService {
     public void addJob(Job job);
 
     public void updateJobById(Job job);
+
+    public void deleteJobById(Job job);
 }

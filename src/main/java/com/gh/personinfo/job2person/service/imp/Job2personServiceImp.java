@@ -70,8 +70,7 @@ public class Job2personServiceImp implements Job2personService {
             updatematchjob(job);
         }
         List<Job> newjobs = jobDao.find(promap);
-        for (Job job:
-                jobs) {
+        for (Job job: newjobs) {
             /*if(job.getNownum()<0){
                 job.setNownum(0);
             }*/

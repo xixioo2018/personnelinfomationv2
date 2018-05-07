@@ -43,5 +43,9 @@
         select * from job j where jid = #{id}
         <!--<if test="telphone != null"> and telphone = #{telphone}</if>-->
     </select>
+
+    <update id="deleteById" parameterType="java.lang.Integer" useGeneratedKeys="true" keyProperty="id">
+        delete from job where jid=#{id}
+    </update>
 </mapper>
 

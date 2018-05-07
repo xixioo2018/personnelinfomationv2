@@ -47,5 +47,13 @@ public class JobController {
         return Result.back(index);
     }
 
+    @RequestMapping("job-deleteJobById")
+    @ResponseBody
+    public Map<String,String> deleteJobById(Job job){
+        jobService.deleteJobById(job);
+        int index=1;
+        return Result.back(index);
+    }
+
 
 }
