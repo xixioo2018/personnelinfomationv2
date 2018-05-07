@@ -5,6 +5,7 @@ import com.gh.personinfo.person.model.Person;
 import com.gh.personinfo.project.model.Project;
 import com.gh.personinfo.project.service.ProjectService;
 import com.gh.personinfo.project.util.Pagination;
+import com.gh.personinfo.project.util.Result;
 import com.gh.personinfo.project.util.Testmail;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,19 +46,26 @@ public class ProjectController {
         return result;
     }
 
-    @ResponseBody
+
     @RequestMapping("project-addProject")
-    public Integer addProject(Project project){
-        System.out.println(project);
+    @ResponseBody
+    public Map<String,String> addProject(Project project){
+//        System.out.println(project);
         projectService.addProject(project);
-        return 1;
+        int index=1;
+
+        return Result.back(index);
     }
 
-    @ResponseBody
+
     @RequestMapping("project-updateProject")
-    public Integer updateProject(Project project){
+    @ResponseBody
+    public Map<String,String> updateProject(Project project){
+
         projectService.updateProject(project);
-        return 1;
+        int index=1;
+
+        return Result.back(index);
     }
 
     

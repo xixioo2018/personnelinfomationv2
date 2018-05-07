@@ -3,6 +3,7 @@ package com.gh.personinfo.person.controller;
 import com.gh.personinfo.person.model.Person;
 import com.gh.personinfo.person.service.PersonService;
 import com.gh.personinfo.project.util.Pagination;
+import com.gh.personinfo.project.util.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,9 +101,10 @@ public class PersonController {
     @ResponseBody
     @RequestMapping("person-updatePersonById")
     /*(value = "boxIds[]")*/
-    public String updatePersonById(Person person,MultipartFile file,HttpServletRequest request){
+    public Map<String,String> updatePersonById(Person person,MultipartFile file,HttpServletRequest request){
         System.out.println("-------------"+person+"---------------");
         personService.updatePersonById(person);
-        return "1";
+        int index=1;
+        return Result.back(index);
     }
 }

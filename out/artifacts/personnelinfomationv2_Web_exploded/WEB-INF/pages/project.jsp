@@ -118,6 +118,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var xx;//鼠标x坐标
     var yy;//鼠标y坐标
 
+    var ttcRefresh;//ttc表刷新
+
+
 
 
     $(function(){
@@ -449,8 +452,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $('#jobff').form('load',row);
                             jobffUrl='job-updateJobById';
 
-                            //更新页面
-                            ttc.datagrid('reload');
+                            ttcRefresh=ttc;
 
                         }
                         //关闭岗位
@@ -476,19 +478,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                             "id":row.id,
                                             "reqnum":-1
                                         },
-                                        function(data){
-                                        });
-                                    //更新页面
-                                    ttc.datagrid('reload');
-                                    $.messager.show({
-                                        title:'提示',
-                                        msg:'操作成功,请刷新',
-                                        showType:'show',
-                                    });
+                                        function(data,status){
+                                            // alert(data.result);
+                                            //更新页面
+                                            $.messager.show({
+                                                title:'提示',
+                                                msg:'操作成功,请刷新',
+                                                showType:'show',
+                                            });
 
+                                            ttcRefresh.datagrid('reload');
+                                        });
                                 }
                             });
-
 
 
                         }
@@ -505,9 +507,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     alert(row.id);
                                 }
                             });
-
-                            ttc.datagrid('reload');
-
 
                         }
 
@@ -527,7 +526,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }
                 })
 
-
+                ttc.datagrid('reload');
 
 
             }
@@ -756,6 +755,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 });
                 $('#jobdd').dialog('close');
 
+                ttcRefresh.datagrid('reload');
             }
         });
     }

@@ -4,6 +4,7 @@ import com.gh.personinfo.job.model.Job;
 import com.gh.personinfo.job.service.JobService;
 import com.gh.personinfo.project.model.Project;
 import com.gh.personinfo.project.util.Pagination;
+import com.gh.personinfo.project.util.Result;
 import org.junit.Test;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +31,20 @@ public class JobController {
         return result;
     }
 
+
     @RequestMapping("job-addJob")
-    public int addJob(Job job){
+    public Map<String,String> addJob(Job job){
         jobService.addJob(job);
-        return 1;
+        int index=1;
+        return Result.back(index);
     }
+
     @RequestMapping("job-updateJobById")
-    public int updateJobById(Job job){
+    @ResponseBody
+    public Map<String,String> updateJobById(Job job){
         jobService.updateJobById(job);
-        return  1;
+        int index=1;
+        return Result.back(index);
     }
 
 
