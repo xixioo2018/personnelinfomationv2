@@ -43,12 +43,19 @@ public class Job2personServiceImp implements Job2personService {
     @Override
     public void insertJob2person(String to, String fileName, Job2person job2person) {
         Testmail testmail = new Testmail();
-        try {
-            testmail.Send(to,fileName);
+//        try {
+//            testmail.Send(to,fileName);
             job2personDao.insert(job2person);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            //查出所有匹配的job2person
+        List<Job2person> job2personList = queryJob2personByJid(job2person.getJobid());
+            //修改对应岗位的job的匹配人数
+            Job job=new Job();
+            job.setId(job2person.getJobid());
+            job.setMatnum(job2personList.size());
+            jobDao.update(job);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 

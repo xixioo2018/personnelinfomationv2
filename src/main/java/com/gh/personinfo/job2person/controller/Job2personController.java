@@ -56,15 +56,17 @@ public class Job2personController {
      */
 
     @RequestMapping("project-sendEmail")
-    public void sendEmail(String to,String fileName,Job2person job2person){
+    @ResponseBody
+    public Map<String,String> sendEmail(String to,String fileName,Job2person job2person){
         System.out.println(to+"------"+fileName);
         to = "613327951@qq.com";
-        fileName = "E:\\test.txt";
+        fileName = "d:\\test.txt";
         System.out.println(to+"------"+fileName);
+        System.out.println(job2person);
         //Testmail testmail = new Testmail();
         job2personService.insertJob2person(to,fileName,job2person);
             //testmail.Send(to,fileName);
             /*e.printStackTrace();*/
-        return ;
+        return Result.back(1);
     }
 }

@@ -356,6 +356,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                             $(this).datagrid('selectRow',index);
                             var row=$(this).datagrid('getSelected');
+                            var jobRow=row;
                             if(row.reqnum<0){
                                 $.messager.alert({
                                     title:'警告',
@@ -377,13 +378,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     var row=$(this).datagrid('getSelected');
                                     alert(row.name);
 
+                                    $.messager.progress({
+                                        interval:65
+                                    })
                                     $.post("project-sendEmail",
                                         {
                                             "to":"${company.conemail}",
-                                            "fileName":row.resume
+                                            "fileName":row.resume,
                                             // "job2person"
+                                            "jobid":jobRow.id,
+                                            "jobtype":jobRow.jobtype,
+                                            "perid.id":row.id,
+                                            "status":30,
+                                            "isinter":0,
+                                            "ishire":0
                                         },
-                                        function(){
+                                        function(data){
+                                            resultShow(data);
+                                            $('#done').datagrid('reload');
+                                            $('#none').datagrid('reload');
                                         });
                                 }
                             });
