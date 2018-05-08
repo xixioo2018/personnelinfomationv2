@@ -25,6 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .top{
         height: 12%;
         width: 100%;
+        background-color: #FFFFFF;
         position: relative;
     }
     .top img{
@@ -41,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .main{
         height: 88%;
         width: 100%;
-        background-color: #2585d2;
+        background-color: #8DB6CD;
         padding-top: 20px;
     }
     h6{
@@ -78,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="display">
                     <div class="icon icon1 animated flipInY"></div>
                     <div class="title">企业管理</div>
-                    <div class="introduction">提升宝贝搜索排名，玩转免费流量</div>
+                    <div class="introduction">选择平台很重要，了解企业动向就能更好的发展</div>
                 </div>
                 <div class="behind">
                     <div class="function-list-wrap">
@@ -95,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="display">
                     <div class="icon icon2 animated flipInY"></div>
                     <div class="title">人才管理</div>
-                    <div class="introduction">抓住每一个流量，千方百计促使成交</div>
+                    <div class="introduction">人才是第一资源，掌握人才信息就是掌握未来</div>
                 </div>
                 <div class="behind">
                     <div class="function-list-wrap">
@@ -112,7 +113,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="display">
                     <div class="icon icon5 animated flipInY"></div>
                     <div class="title">系统管理</div>
-                    <div class="introduction">用全能掌柜，让您轻轻松松做掌柜</div>
+                    <div class="introduction">适合的才是最好的，最懂您的系统由您自己创建</div>
                 </div>
                 <div class="behind">
                     <div class="function-list-wrap">

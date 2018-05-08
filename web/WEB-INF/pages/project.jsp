@@ -50,14 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .main{
         min-height: 88%;
         width: 100%;
-        background-color: #2585d2;
+        background-color: #8DB6CD;
         overflow: hidden;
     }
     .companyinf{
         width: 1200px;
         min-height: 150px;
         margin: 0 auto;
-        background-color:  rgba(255,255,255,0.4);
+        background-color:  #efefef;
         margin-top: 10px;
         border-radius: 10px;
         padding: 5px;
@@ -231,7 +231,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 return '<div style="padding:2px;position:relative;height:250px"><table id="ttc"></table></div>';
             },
             onExpandRow: function(index,row){
-                if(row.state==37){
+                var proRow=row;
+                if(proRow.state==37){
                     $.messager.alert({
                         title:'警告',
                         msg:'该项目已被关闭,无法查看岗位信息',
@@ -343,6 +344,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     onClickCell:function(index,field,value){
                         //匹配
                         if(field=="operate"){
+                            if(proRow.state!=35){
+                                $.messager.alert({
+                                    title:'警告',
+                                    msg:'该项目不处于招募状态,无法进行匹配',
+                                    showType:'show',
+                                    showSpeed:800
+                                });
+                                return;
+                            }
 
                             $(this).datagrid('selectRow',index);
                             var row=$(this).datagrid('getSelected');
@@ -351,8 +361,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     title:'警告',
                                     msg:'该岗位已关闭',
                                 });
-                                return false
+                                return ;
                             }
+
                             $('#none').datagrid({
                                 url:'person-matchperson?jobtype='+row.jobtype+'&jobid='+row.id+'&start=0&size=10',
                                 onLoadSuccess:function(data){
@@ -370,6 +381,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         {
                                             "to":"${company.conemail}",
                                             "fileName":row.resume
+                                            // "job2person"
                                         },
                                         function(){
                                         });
@@ -471,7 +483,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $.messager.confirm('确认关闭', '您确认要关闭该岗位吗?', function(r){
                                 //确认后
                                 if (r){
-
+                                    $.messager.progress({
+                                        interval:100
+                                    });
                                     //发送异步请求
                                     $.post("job-updateJobById",
                                         {
@@ -484,6 +498,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                             //更新页面
                                             resultShow(data);
 
+                                            ttcRefresh.datagrid('reload');
                                             ttcRefresh.datagrid('reload');
                                         });
                                 }
@@ -501,6 +516,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             $.messager.confirm('确认删除', '您确认要删除该岗位信息吗?此操作将无法恢复', function(r){
                                 //确认后
                                 if (r){
+                                    $.messager.progress({
+                                        interval:100
+                                    });
                                     //发送异步请求
                                     $.post("job-deleteJobById",
                                         {
@@ -775,8 +793,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     });
                     return false
                 }
+                    $.messager.progress({
+                    interval:100
+                });
+                    return true;
             },
             success:function(){
+                $.messager.progress('close');
                 $.messager.show({
                     title:'提示',
                     msg:'操作成功,请刷新',
@@ -855,21 +878,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
             return;
         }
+        $.messager.progress({
+            interval:100
+        })
         $.post("project-updateProject",
             {
                 "id":row.id,
                 "state":37,
                 "endtime":nowtime()
             },
-            function(){
+            function(data){
+                resultShow(data);
                 $('#tt').datagrid('reload');
             });
-        $.messager.show({
-            title:'提示',
-            msg:'操作成功,请刷新',
-            showType:'show',
-        });
-
     }
 
 
@@ -882,13 +903,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function proffSubmit(){
         $('#proff').form('submit', {
                 url:proffUrl,
-                onSubmit: function(param){},
-                success:function(){
-                    $.messager.show({
-                        title:'提示',
-                        msg:'操作成功,请刷新',
-                        showType:'show',
-                    });
+                onSubmit: function(param){
+                    $.messager.progress({
+                        interval:40
+                    })
+                    return true
+                },
+                success:function(data){
+                    data=eval('('+data+')');
+                    resultShow(data);
                     $('#prodd').dialog('close');
 
                     //刷新
@@ -913,6 +936,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 msg:'操作失败,请重试',
                 showType:'show',
             });
+        }
+        if(ttcRefresh!=null){
+            ttcRefresh.datagrid('reload');
         }
     }
 
@@ -1046,7 +1072,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         &nbsp&nbsp&nbsp&nbsp<input name="proid" type="text" hidden="true"><br/>
         &nbsp&nbsp&nbsp&nbsp所需人数:<input id="reqnumv" name="reqnum" type="number"><br/>
         <hr>
-        &nbsp&nbsp&nbsp&nbsp当前人数:<input id="nownumv" name="nownum" type="number"><br/>
+        &nbsp&nbsp&nbsp&nbsp当前人数:<input id="nownumv" name="nownum" type="number" readonly="true" style="background:#CCCCCC"><br/>
         <hr>
         &nbsp&nbsp&nbsp&nbsp匹配人数:<input name="matnum" type="number" readonly="true" style="background:#CCCCCC"><br/>
         <hr>

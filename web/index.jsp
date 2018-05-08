@@ -20,7 +20,7 @@
         .main{
             height: 88%;
             width: 100%;
-            background-color: #2585d2;
+            background-color: #8DB6CD;
             overflow: hidden;
         }
         .top img{
@@ -61,7 +61,7 @@
         }
         .login input:nth-child(3){
             color: #ffffff;
-            background-color:#2585d2 ;
+            background-color:#8DB6CD ;
             border: 3px solid white;
             font-size: 20px;
         }

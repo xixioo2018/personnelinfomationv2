@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .main{
         min-height: 80%;
         width: 100%;
-        background-color:#2585d2 ;
+        background-color:#8DB6CD ;
         overflow: hidden;
         text-align: center;
     }
@@ -207,7 +207,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      <td colspan="2"></td>
                  </tr>
              </table>
-            <p align="center"><button type="submit" class="btn btn-primary" style="width: 365px;height: 50px">上传信息</button></p>
+            <p align="center"><button type="submit" class="btn btn-primary" style="width: 365px;height: 50px;background-color:#8DB6CD">上传信息</button></p>
         </form>
     </div>
 </div>
