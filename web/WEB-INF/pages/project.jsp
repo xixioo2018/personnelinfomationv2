@@ -228,7 +228,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             },
             view: detailview,
             detailFormatter: function(Index, row){
-                return '<div style="padding:2px;position:relative;height:250px"><table id="ttc"></table></div>';
+                return '<div style="padding:2px;position:relative;height: 290px;0px"><table id="ttc"></table></div>';
             },
             onExpandRow: function(index,row){
                 var proRow=row;
@@ -253,6 +253,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     pageList:[5],
                     pagePosition:'top',
                     columns:[[
+                        {field:'opt',title:'岗位信息',width:100,align:'center', colspan:6},
+                        {field:'opt',title:'管理员专用',width:100,align:'center', colspan:4}
+                    ],[
                         {field:'operate',
                             title:'操作',
                             align:'center',
@@ -264,7 +267,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         {
                             title:'岗位编号',
                             field: 'id',
-                            width:100
+                            width:80
                         },
                         {
                             title:'所属项目',
@@ -323,13 +326,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             formatter:function(value, row, index){
                                 var str = '<a href="javascript:void(0)" name="delJob"  class="easyui-linkbutton"  >关闭</a>';
                                 return str;
-                            }},
+                            }}
                     ]],
                     onLoadSuccess:function(data){
                         $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-search'});
                         $("a[name='editJob']").linkbutton({plain:true,iconCls:'icon-edit'});
                         $("a[name='delJob']").linkbutton({plain:true,iconCls:'icon-cancel'});
                         $("a[name='removeJob']").linkbutton({plain:true,iconCls:'icon-remove'});
+
                     },
                     onClickRow:function(index,row){
                         //匹配
@@ -485,6 +489,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             //选中当前行
                             $(this).datagrid('selectRow',index);
                             var row=$(this).datagrid('getSelected');
+                            ttcRefresh=ttc;
                             if(row.reqnum<0){
                                 $.messager.alert({
                                     title:'警告',
@@ -524,6 +529,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             //选中当前行
                             $(this).datagrid('selectRow',index);
                             var row=$(this).datagrid('getSelected');
+                            ttcRefresh=ttc;
 
                             //确认删除
                             $.messager.confirm('确认删除', '您确认要删除该岗位信息吗?此操作将无法恢复', function(r){
@@ -756,6 +762,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     //添加岗位
     function  addJob() {
         var row=$('#tt').datagrid('getSelected');
+        var index=$('#tt').datagrid('getRowIndex',row);
+        ttcRefresh = $('#tt').datagrid('getRowDetail',index).find("table[id='ttc']");
 
         $('#jobdd').dialog({title:'新增岗位',
             iconCls:'icon-add'
