@@ -292,7 +292,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             width:80
                         },
                         {
-                            title:'匹配人数',
+                            title:'推送人数',
                             field: 'matnum',
                             width:80
                         },

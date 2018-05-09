@@ -208,12 +208,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                pagePosition="top",>
             <thead>
             <tr>
-                <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
-                    return operate(value,row,index);}">操作</th>
+                <th data-options="field:'resumeOpe',width:110,align:'center',formatter:function(value,row,index){
+                    return resume(value,row,index);}">简历</th>
                 <th data-options="field:'id',width:100,align:'center',hidden:true">学生编号</th>
-                <th data-options="field:'name',width:100,align:'center'">名称</th>
-                <th data-options="field:'age',width:100,align:'center'">年龄</th>
-                <th data-options="field:'gender',width:100,align:'center'">性别</th>
+                <th data-options="field:'name',width:90,align:'center'">名称</th>
+                <th data-options="field:'age',width:70,align:'center'">年龄</th>
+                <th data-options="field:'gender',width:70,align:'center'">性别</th>
                 <th data-options="field:'education',width:100,align:'center',formatter:function(val){
                     return formatDict(val);}">学历</th>
                 <th data-options="field:'school',width:100,align:'center'">毕业院校</th>
@@ -227,6 +227,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     if(val==0){return '空闲';}else{return '在职';}}">状态</th>
                 <th data-options="field:'resume',width:100,align:'center',hidden:true">简历附件</th>
                 <th data-options="field:'priority',width:100,align:'center',hidden:true">优先度</th>
+                <th data-options="field:'operate',width:110,align:'center',formatter:function(value,row,index){
+                    return operate(value,row,index);}">操作</th>
             </tr>
             </thead>
         </table>
@@ -255,21 +257,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var dicts;
     var number=1;//当前页码
     var size=5;//显示行数
+    var xx;//鼠标x坐标
+    var yy;//鼠标y坐标
+
+
     $('#ptb').datagrid({
         onDblClickRow:function(index,row){
         // alert(row.education);
         },
         onLoadSuccess:function(data){
             $("a[name='opera']").linkbutton({plain:true,iconCls:'icon-edit'});
+            $("a[name='resu']").linkbutton({plain:true,iconCls:'icon-man'});
         },
         onClickCell:function(index,field,value){
-            if(field!="operate"){
-                return;
+            if(field=="operate"){
+                $(this).datagrid('selectRow',index);
+                var row=$(this).datagrid('getSelected');
+                $('#dd').dialog('open');
+                $('#fm').form('load',row);
             }
-            $(this).datagrid('selectRow',index);
-            var row=$(this).datagrid('getSelected');
-            $('#dd').dialog('open');
-            $('#fm').form('load',row);
+            if(field=='resumeOpe'){
+                //出现操作菜单
+                //出现菜单栏
+                $(this).datagrid('selectRow',index);
+                $('#resMm').menu('show', {
+                    left: xx-120,
+                    top: yy
+                });
+
+            }
         }
     });
     function test () {
@@ -309,6 +325,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
     }
     $(function(){
+
+
+        //对鼠标定位
+        $('body').mousemove(function(e) {
+            e = e || window.event;
+            xx = e.pageX || e.clientX + document.body.scroolLeft;
+            yy = e.pageY || e.clientY + document.body.scrollTop;
+        });
 
         /*请求数据年龄*/
         $.ajax({
@@ -448,7 +472,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
 
     function operate(value,row,index){
-        var str = '<a href="#" name="opera"  class="easyui-linkbutton" >修改</a>';
+        var str = '<a href="javascript:void(0)" name="opera"  class="easyui-linkbutton" >修改</a>';
+        return str;
+    }
+
+    function resume(value,row,index){
+        var str = '<a href="javascript:void(0)" name="resu"  class="easyui-linkbutton" >简历</a>';
         return str;
     }
 
@@ -458,7 +487,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             url:'person-updatePersonById',
             onSubmit: function(){
             },
-            success:function(){
+            success:function(data){
                 $.messager.show({
                     title:'提示',
                     msg:'操作成功',
@@ -480,6 +509,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }
         });
     });
+
+    //简历预览
+    function lookRes(){
+        var row=$('#ptb').datagrid('getSelected');
+        alert(row.name);
+    }
+
+    //简历下载
+    function downRes(){
+        var row=$('#ptb').datagrid('getSelected');
+        //简历下载
+        window.open('person-downPersonResume?file='+row.resume+'&filename='+row.name+'简历.txt', '简历下载', 'height=300, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=false, location=no, status=no');
+    }
 
 
 </script>
@@ -542,6 +584,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div id="tb">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="sub()">提交</a>
+</div>
+<!--项目管理菜单-->
+<div id="resMm" class="easyui-menu" style="width:70px;">
+    <div id="lookRes" data-options="iconCls:'icon-search'" onclick="lookRes()">预览</div>
+    <div id="downRes" data-options="iconCls:'icon-save'" onclick="downRes()">下载</div>
 </div>
 
 

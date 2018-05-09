@@ -13,8 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,5 +107,38 @@ public class PersonController {
         personService.updatePersonById(person);
         int index=1;
         return Result.back(index);
+    }
+
+
+    /**
+     * 简历下载
+     * @param file
+     * @param filename
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("person-downPersonResume")
+    public void download(String file,String filename, HttpServletRequest request,
+                           HttpServletResponse response) throws Exception {
+        //模拟文件，myfile.txt为需要下载的文件
+//        String fileName = file;
+        //获取输入流
+        InputStream bis = new BufferedInputStream(new FileInputStream(new File(file)));
+        //假如以中文名下载的话
+//        String filename = filename;
+        //转码，免得文件名中文乱码
+        filename = URLEncoder.encode(filename,"UTF-8");
+        //设置文件下载头
+        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+        //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
+        response.setContentType("multipart/form-data");
+        BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+        int len = 0;
+        while((len = bis.read()) != -1){
+            out.write(len);
+            out.flush();
+        }
+        out.close();
     }
 }
